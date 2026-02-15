@@ -6,6 +6,8 @@ export interface Service {
   priceText: string;
   description: string;
   iconPath: string;
+  imagePath: string;
+  imageAlt: string;
   rateKey?: keyof ServiceRate;
   defaultRate?: number;
   isInspectionBased?: boolean;
@@ -18,6 +20,8 @@ export const SERVICES: Service[] = [
     priceText: 'Starting at ₹65 per sq.ft',
     description: 'Elegant and cost-effective ceiling designs for homes and offices.',
     iconPath: '/assets/generated/icon-pop-gypsum.dim_256x256.png',
+    imagePath: '/images/service1.jpg',
+    imageAlt: 'Modern POP and Gypsum false ceiling installation in a residential space',
     rateKey: 'popGypsum',
     defaultRate: 65,
   },
@@ -27,6 +31,8 @@ export const SERVICES: Service[] = [
     priceText: 'Starting at ₹110 per sq.ft',
     description: 'Durable, waterproof and low maintenance ceiling solutions.',
     iconPath: '/assets/generated/icon-pvc.dim_256x256.png',
+    imagePath: '/images/service2.jpg',
+    imageAlt: 'Waterproof PVC ceiling panels installed in a modern interior',
     rateKey: 'pvc',
     defaultRate: 110,
   },
@@ -36,6 +42,8 @@ export const SERVICES: Service[] = [
     priceText: 'Starting at ₹100 per sq.ft',
     description: 'Modern decorative wall molding for premium interiors.',
     iconPath: '/assets/generated/icon-wall-molding.dim_256x256.png',
+    imagePath: '/images/service3.jpg',
+    imageAlt: 'Elegant decorative wall molding and panels in a luxury home',
     rateKey: 'wallMolding',
     defaultRate: 100,
   },
@@ -45,6 +53,8 @@ export const SERVICES: Service[] = [
     priceText: 'Inspection based pricing',
     description: 'Crack repair, redesign and ceiling restoration services.',
     iconPath: '/assets/generated/icon-gypsum-repair.dim_256x256.png',
+    imagePath: '/images/service4.jpg',
+    imageAlt: 'Professional gypsum ceiling repair and restoration work',
     isInspectionBased: true,
   },
 ];

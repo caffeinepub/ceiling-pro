@@ -4,15 +4,18 @@ import { CEILING_PRO_CONFIG } from '../../config/ceilingPro';
 
 interface HeroSectionProps {
   onBookClick: () => void;
+  heroImagePath?: string;
 }
 
-export default function HeroSection({ onBookClick }: HeroSectionProps) {
+export default function HeroSection({ onBookClick, heroImagePath }: HeroSectionProps) {
+  const backgroundImage = heroImagePath || '/assets/generated/ceilingpro-hero-bg.dim_1920x1080.png';
+
   return (
     <section className="relative flex min-h-[600px] items-center justify-center overflow-hidden bg-gradient-to-br from-accent/20 to-background md:min-h-[700px]">
       {/* Background Image */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20"
-        style={{ backgroundImage: 'url(/assets/generated/ceilingpro-hero-bg.dim_1920x1080.png)' }}
+        style={{ backgroundImage: `url(${backgroundImage})` }}
       />
 
       {/* Overlay */}

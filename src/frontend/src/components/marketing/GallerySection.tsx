@@ -1,21 +1,35 @@
 import Section from './Section';
 
-const GALLERY_ITEMS = [
-  {
-    id: 'before-1',
-    type: 'before',
-    imagePath: '/assets/generated/gallery-before-1.dim_1200x900.png',
-    label: 'Before',
-  },
-  {
-    id: 'after-1',
-    type: 'after',
-    imagePath: '/assets/generated/gallery-after-1.dim_1200x900.png',
-    label: 'After',
-  },
-];
+interface GallerySectionProps {
+  galleryImages?: string[];
+}
 
-export default function GallerySection() {
+export default function GallerySection({ galleryImages }: GallerySectionProps) {
+  const defaultGalleryItems = [
+    {
+      id: 'before-1',
+      type: 'before',
+      imagePath: '/assets/generated/gallery-before-1.dim_1200x900.png',
+      label: 'Before',
+    },
+    {
+      id: 'after-1',
+      type: 'after',
+      imagePath: '/assets/generated/gallery-after-1.dim_1200x900.png',
+      label: 'After',
+    },
+  ];
+
+  // Use custom gallery images if provided, otherwise use defaults
+  const galleryItems = galleryImages && galleryImages.length > 0
+    ? galleryImages.map((path, index) => ({
+        id: `gallery-${index}`,
+        type: index % 2 === 0 ? 'before' : 'after',
+        imagePath: path,
+        label: index % 2 === 0 ? 'Before' : 'After',
+      }))
+    : defaultGalleryItems;
+
   return (
     <Section variant="grey">
       <div className="mb-12 text-center">
@@ -26,7 +40,7 @@ export default function GallerySection() {
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">
-        {GALLERY_ITEMS.map((item) => (
+        {galleryItems.map((item) => (
           <div key={item.id} className="overflow-hidden rounded-lg bg-background shadow-md">
             <div className="relative aspect-[4/3]">
               <img src={item.imagePath} alt={item.label} className="h-full w-full object-cover" />

@@ -28,7 +28,17 @@ export function useUpdateServiceRates() {
   return useMutation({
     mutationFn: async (rates: { popGypsum: bigint; pvc: bigint; wallMolding: bigint }) => {
       if (!actor) throw new Error('Actor not initialized');
-      return actor.updateServiceRates(rates.popGypsum, rates.pvc, rates.wallMolding);
+      try {
+        return await actor.updateServiceRates(rates.popGypsum, rates.pvc, rates.wallMolding);
+      } catch (error: any) {
+        console.error('Failed to update service rates:', error);
+        // If unauthorized, clear admin session
+        if (error?.message?.includes('Unauthorized') || error?.message?.includes('Only admins')) {
+          localStorage.removeItem('admin_session');
+          queryClient.clear();
+        }
+        throw error;
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['serviceRates'] });

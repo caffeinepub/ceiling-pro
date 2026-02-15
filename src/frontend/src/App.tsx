@@ -1,10 +1,12 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import HomePage from './pages/HomePage';
 import AdminPage from './pages/AdminPage';
+import AccountPage from './pages/AccountPage';
 import { createRouter, RouterProvider, createRoute, createRootRoute } from '@tanstack/react-router';
 import SiteHeader from './components/layout/SiteHeader';
 import SiteFooter from './components/layout/SiteFooter';
 import { Outlet } from '@tanstack/react-router';
+import { Toaster } from '@/components/ui/sonner';
 
 // Layout component that wraps all routes
 function Layout() {
@@ -15,6 +17,7 @@ function Layout() {
         <Outlet />
       </main>
       <SiteFooter />
+      <Toaster />
     </div>
   );
 }
@@ -36,8 +39,14 @@ const adminRoute = createRoute({
   component: AdminPage,
 });
 
+const accountRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/account',
+  component: AccountPage,
+});
+
 // Create router
-const routeTree = rootRoute.addChildren([indexRoute, adminRoute]);
+const routeTree = rootRoute.addChildren([indexRoute, adminRoute, accountRoute]);
 const router = createRouter({ routeTree });
 
 // Declare router type for TypeScript

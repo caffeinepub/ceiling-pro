@@ -21,7 +21,6 @@ export default function SiteFooter() {
             <div className="space-y-2 text-sm text-muted-foreground">
               <p>Phone: {CEILING_PRO_CONFIG.phone}</p>
               <p>Email: {CEILING_PRO_CONFIG.email}</p>
-              <p>GST: {CEILING_PRO_CONFIG.gst}</p>
             </div>
           </div>
 

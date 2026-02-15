@@ -1,14 +1,18 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 3,
-  "summary": "Build a premium, ultra mobile-friendly service booking website for the interior services brand \"Ceiling Pro\" with mobile-first design, fixed daily time slots booking system, live estimate calculator, trust/content sections, and an admin panel (email notifications removed).",
+  "projectStateVersion": 11,
+  "summary": "Build a premium, ultra mobile-friendly service booking website for the interior services brand \"Ceiling Pro\" with mobile-first design, fixed daily time slots booking system, live estimate calculator, trust/content sections, updated contact numbers (phone + WhatsApp: 9834587806), an owner-only admin panel (not visible to customers; email notifications removed) using a password-based login system (not Internet Identity), ability for admin to edit website images, removal of GST column/placeholder, and a customer account area where customers can view their own bookings via a service menu bar.",
   "architectural_notes": [
     "Email notifications for bookings were explicitly removed; backend should not attempt to send admin emails (placeholder optional).",
-    "Booking time slots are limited to 4 fixed options per day, with admin ability to enable/disable slots."
+    "Booking time slots are limited to 4 fixed options per day, with admin ability to enable/disable slots.",
+    "Admin panel must not be visible/linked from public customer-facing pages; protect admin routes behind authentication (owner-only access).",
+    "Use phone number 9834587806 for click-to-call and WhatsApp CTAs across the site.",
+    "Remove GST field/column/placeholder from all customer-facing UI sections.",
+    "Replace Internet Identity authentication for /admin with a password-based owner login (username/password), while still keeping admin routes hidden from the public site and protected behind authentication.",
+    "Admin username/password defaults need to be updated to the owner-provided credentials (Sirajahmad / S1i2r3)."
   ],
   "known_issues": [],
   "isFixRequest": false,
-  "imageRequirements": "## Required Images\n- Bright modern ceiling interior hero background photo (ceilingpro-hero-bg.dim_1920x1080.png)\n- Minimal line icon for POP & Gypsum ceiling (icon-pop-gypsum.dim_256x256.png)\n- Minimal line icon for PVC ceiling installation (icon-pvc.dim_256x256.png)\n- Minimal line icon for wall molding & decorative panels (icon-wall-molding.dim_256x256.png)\n- Minimal line icon for gypsum ceiling repairing (icon-gypsum-repair.dim_256x256.png)\n- Minimal line icon for step 1 (book online) (icon-step-book.dim_256x256.png)\n- Minimal line icon for step 2 (site visit & estimate) (icon-step-visit.dim_256x256.png)\n- Minimal line icon for step 3 (installation & clean finish) (icon-step-install.dim_256x256.png)\n- Before image of a simple room ceiling interior (gallery-before-1.dim_1200x900.png)\n- After image of the same room with upgraded false ceiling (gallery-after-1.dim_1200x900.png)",
   "existing_features": [
     {
       "id": "feature-build-a-mobile-first-premium-marketing-website-for-the-interior-services-brand-ceiling-pro-with-a-clean-white-natural-look-fresh-white-background-soft-light-grey-sections-light-beige-soft-natural-green-accents-elegant-modern-sans-serif-typography-spacious-layout-with-lots-of-white-space-smooth-scroll-section-reveal-animations-and-fast-loading-responsive-layout-optimized-for-smartphones",
@@ -105,6 +109,94 @@
         "REQ-13"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-hide-the-admin-ui-entry-points-from-public-customers-by-removing-the-visible-admin-navigation-link-button-from-the-site-header-on-all-screen-sizes",
+      "title": "Hide the Admin UI entry points from public customers by removing the visible “Admin” navigation link/button from the site header on all screen sizes.",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-require-internet-identity-authentication-owner-only-authorization-to-access-the-admin-route-and-show-a-clear-access-screen-when-unauthorized-login-prompt-if-not-logged-in-access-denied-if-logged-in-but-not-the-owner",
+      "title": "Require Internet Identity authentication + owner-only authorization to access the /admin route, and show a clear access screen when unauthorized (login prompt if not logged in; access denied if logged in but not the owner).",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-service-images-to-the-our-services-section-by-updating-the-service-data-model-to-include-an-image-path-per-service-and-rendering-each-service-card-with-its-corresponding-service-image-while-keeping-current-service-name-description-and-price-text",
+      "title": "Add service images to the “Our Services” section by updating the service data model to include an image path per service and rendering each service card with its corresponding service image (while keeping current service name, description, and price text).",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-all-public-contact-ctas-to-use-phone-number-9834587806-and-whatsapp-contact-9834587806-header-click-to-call-hero-call-button-contact-section-phone-link-footer-phone-text-and-floating-whatsapp-button",
+      "title": "Update all public contact CTAs to use phone number 9834587806 and WhatsApp contact 9834587806 (header click-to-call, hero call button, contact section phone link, footer phone text, and floating WhatsApp button).",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-gst-from-the-customer-facing-website-ui-and-configuration-so-no-gst-label-value-placeholder-is-displayed-anywhere",
+      "title": "Remove GST from the customer-facing website UI and configuration so no GST label/value/placeholder is displayed anywhere.",
+      "reqIds": [
+        "REQ-19"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-owner-only-admin-dashboard-feature-to-manage-website-image-paths-used-by-the-marketing-site-at-minimum-hero-background-image-the-4-service-card-images-and-the-before-after-gallery-images-admin-must-be-able-to-update-these-image-paths-from-the-dashboard-and-the-public-site-must-render-using-the-saved-values",
+      "title": "Add an owner-only Admin Dashboard feature to manage website image paths used by the marketing site (at minimum: hero background image, the 4 service card images, and the before/after gallery images). Admin must be able to update these image paths from the dashboard, and the public site must render using the saved values.",
+      "reqIds": [
+        "REQ-20"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-customer-account-area-where-customers-can-sign-in-and-view-only-their-own-bookings-and-add-a-service-menu-bar-in-the-site-header-that-includes-an-account-entry-for-this-area-keep-the-admin-entry-hidden-from-public-users-as-currently-required",
+      "title": "Implement a customer account area where customers can sign in and view only their own bookings, and add a service menu bar in the site header that includes an “Account” entry for this area (keep the Admin entry hidden from public users as currently required).",
+      "reqIds": [
+        "REQ-21"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-the-current-internet-identity-based-admin-access-control-with-a-username-password-login-flow-for-the-admin-route-because-the-admin-cannot-be-granted-internet-identity-owner-access",
+      "title": "Replace the current Internet Identity–based admin access control with a username/password login flow for the /admin route, because the admin cannot be granted Internet Identity owner access.",
+      "reqIds": [
+        "REQ-23"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-admin-frontend-access-gate-to-use-the-new-username-password-login-ui-instead-of-internet-identity-and-wire-it-to-the-backend-login-logout-session-check-endpoints-so-that-admin-pages-images-editor-service-rates-time-slots-bookings-table-render-only-when-logged-in",
+      "title": "Update the /admin frontend access gate to use the new username/password login UI instead of Internet Identity, and wire it to the backend login/logout/session-check endpoints so that admin pages (images editor, service rates, time slots, bookings table) render only when logged in.",
+      "reqIds": [
+        "REQ-25"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-change-the-public-contact-email-displayed-across-the-website-to-ceilingpro9-gmail-com-by-updating-the-shared-contact-configuration-and-ensuring-all-ui-that-renders-email-at-minimum-contact-section-and-footer-reflects-the-new-value",
+      "title": "Change the public contact email displayed across the website to \"ceilingpro9@gmail.com\" by updating the shared contact configuration and ensuring all UI that renders email (at minimum: Contact section and Footer) reflects the new value.",
+      "reqIds": [
+        "REQ-27"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-restore-insert-the-previous-images-for-the-4-service-cards-in-the-our-services-section-by-switching-the-service-card-image-paths-back-to-the-prior-set-used-by-the-project-e-g-the-images-service-jpg-style-paths-so-that-the-services-section-shows-those-previous-images-again",
+      "title": "Restore/insert the previous images for the 4 service cards in the \"Our Services\" section by switching the service card image paths back to the prior set used by the project (e.g., the /images/service*.jpg style paths) so that the Services section shows those previous images again.",
+      "reqIds": [
+        "REQ-28"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -149,6 +241,98 @@
       "summary": "Create backend persistence and APIs for: (a) creating a booking record, (b) listing all bookings for the admin dashboard, (c) editing service pricing, and (d) enabling/disabling each of the 4 daily time slots (global setting).",
       "reqIds": [
         "REQ-6"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-13",
+      "summary": "Restrict admin panel to owner-only access: hide/remove admin UI links from public site and require authentication to access admin routes",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-14",
+      "summary": "Update Services section to use service images (in addition to or replacing icons) for the 4 service cards",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-17",
+      "summary": "Enforce owner-only access control in the backend for all admin-only APIs (listing all bookings, updating service rates, updating time slot availability). Public APIs (createBooking, getServiceRates, getTimeSlotAvailability, calculateEstimate) must remain usable by customers.",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-18",
+      "summary": "Admin dashboard feature to edit/manage website images (update service/website images from admin UI)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-19",
+      "summary": "Remove GST column/placeholder from the website UI (footer and any contact details sections)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-20",
+      "summary": "Update public contact CTAs to use phone number 9834587806 and WhatsApp contact 9834587806",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-21",
+      "summary": "Add a customer account area and service menu bar where customers can sign in and view their own booking(s)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-26",
+      "summary": "Associate bookings with an authenticated customer identity when available so that “My Bookings” can be computed reliably. If the booking is created by an authenticated user, persist the owner principal on the booking and use it for filtering in the customer account view.",
+      "reqIds": [
+        "REQ-22"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-27",
+      "summary": "Switch admin authentication from Internet Identity to a password-based login (username/password) while keeping admin routes owner-only and hidden from public users",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-29",
+      "summary": "Update the backend authorization checks for all admin-only APIs (view all bookings, update service rates, update time slot availability, update image paths, and any admin-check endpoint) to validate the new password-based admin session instead of checking Internet Identity admin/owner permissions.",
+      "reqIds": [
+        "REQ-24"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-30",
+      "summary": "Update admin login credentials to username \"Sirajahmad\" and password \"S1i2r3\" (replace current defaults)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-31",
+      "summary": "Update public site contact email to ceilingpro9@gmail.com wherever email is displayed (contact section/footer/etc.)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-32",
+      "summary": "Restore/insert the previous images in the Services section (revert service card images to the prior set)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-33",
+      "summary": "Update the backend’s admin login credentials to username \"Sirajahmad\" and password \"S1i2r3\" so that logging into /admin only succeeds with these new values (replacing the current defaults). Ensure the change applies to upgraded canisters as well (i.e., existing persisted credential state should be updated to the new username/password during upgrade).",
+      "reqIds": [
+        "REQ-26"
       ],
       "status": "pending"
     }

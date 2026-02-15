@@ -2,7 +2,19 @@ import { SiWhatsapp } from 'react-icons/si';
 import { CEILING_PRO_CONFIG } from '../../config/ceilingPro';
 
 export default function FloatingWhatsAppButton() {
-  const whatsappUrl = `https://wa.me/${CEILING_PRO_CONFIG.whatsapp}`;
+  // Normalize phone number for WhatsApp (remove spaces, dashes, and ensure it starts with country code)
+  const normalizePhoneNumber = (phone: string): string => {
+    // Remove all non-digit characters
+    const digits = phone.replace(/\D/g, '');
+    // If it doesn't start with country code, assume India (+91)
+    if (digits.length === 10) {
+      return `91${digits}`;
+    }
+    return digits;
+  };
+
+  const normalizedPhone = normalizePhoneNumber(CEILING_PRO_CONFIG.whatsapp);
+  const whatsappUrl = `https://wa.me/${normalizedPhone}`;
 
   return (
     <a

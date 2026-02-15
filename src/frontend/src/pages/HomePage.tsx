@@ -11,10 +11,12 @@ import ContactSection from '../components/marketing/ContactSection';
 import StickyBookCta from '../components/conversion/StickyBookCta';
 import FloatingWhatsAppButton from '../components/conversion/FloatingWhatsAppButton';
 import { useBookingPrefill } from '../state/bookingPrefill';
+import { useImagePaths } from '../hooks/useImagePaths';
 
 export default function HomePage() {
   const bookingSectionRef = useRef<HTMLDivElement>(null);
-  const { preselectedService, clearPrefill } = useBookingPrefill();
+  const { preselectedService } = useBookingPrefill();
+  const { data: imagePaths } = useImagePaths();
 
   // Scroll to booking section when service is preselected
   useEffect(() => {
@@ -31,15 +33,26 @@ export default function HomePage() {
 
   return (
     <>
-      <HeroSection onBookClick={scrollToBooking} />
-      <ServicesSection />
+      <HeroSection onBookClick={scrollToBooking} heroImagePath={imagePaths?.heroImage} />
+      <ServicesSection
+        serviceImagePaths={
+          imagePaths
+            ? {
+                serviceCard1: imagePaths.serviceCard1,
+                serviceCard2: imagePaths.serviceCard2,
+                serviceCard3: imagePaths.serviceCard3,
+                serviceCard4: imagePaths.serviceCard4,
+              }
+            : undefined
+        }
+      />
       <HowItWorksSection />
       <EstimateCalculatorSection />
       <div ref={bookingSectionRef}>
         <BookingSection />
       </div>
       <WhyChooseSection />
-      <GallerySection />
+      <GallerySection galleryImages={imagePaths?.beforeAfterGallery} />
       <ReviewsSection />
       <ContactSection />
       <StickyBookCta onClick={scrollToBooking} />

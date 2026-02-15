@@ -14,6 +14,7 @@ export interface Booking {
   'id' : string,
   'service' : string,
   'propertyType' : string,
+  'owner' : [] | [Principal],
   'area' : bigint,
   'date' : string,
   'createdAt' : Time,
@@ -21,6 +22,14 @@ export interface Booking {
   'mobileNumber' : string,
   'location' : string,
   'timeSlot' : string,
+}
+export interface ImagePaths {
+  'heroImage' : string,
+  'beforeAfterGallery' : Array<string>,
+  'serviceCard1' : string,
+  'serviceCard2' : string,
+  'serviceCard3' : string,
+  'serviceCard4' : string,
 }
 export interface ServiceRate {
   'pvc' : bigint,
@@ -34,15 +43,34 @@ export interface TimeSlotAvailability {
   'slot7pm' : boolean,
   'slot10am' : boolean,
 }
+export interface UserProfile { 'name' : string }
+export type UserRole = { 'admin' : null } |
+  { 'user' : null } |
+  { 'guest' : null };
 export interface _SERVICE {
+  '_initializeAccessControlWithSecret' : ActorMethod<[string], undefined>,
+  'adminLogin' : ActorMethod<[string, string], boolean>,
+  'assignCallerUserRole' : ActorMethod<[Principal, UserRole], undefined>,
   'calculateEstimate' : ActorMethod<[string, bigint], [] | [bigint]>,
   'createBooking' : ActorMethod<
     [string, string, string, string, string, string, string, bigint],
     Booking
   >,
   'getAllBookings' : ActorMethod<[], Array<Booking>>,
+  'getCallerUserProfile' : ActorMethod<[], [] | [UserProfile]>,
+  'getCallerUserRole' : ActorMethod<[], UserRole>,
+  'getImagePaths' : ActorMethod<[], ImagePaths>,
+  'getMyBookings' : ActorMethod<[], Array<Booking>>,
   'getServiceRates' : ActorMethod<[], ServiceRate>,
   'getTimeSlotAvailability' : ActorMethod<[], TimeSlotAvailability>,
+  'getUserProfile' : ActorMethod<[Principal], [] | [UserProfile]>,
+  'isAdminUser' : ActorMethod<[], boolean>,
+  'isCallerAdmin' : ActorMethod<[], boolean>,
+  'saveCallerUserProfile' : ActorMethod<[UserProfile], undefined>,
+  'updateImagePaths' : ActorMethod<
+    [string, string, string, string, string, Array<string>],
+    undefined
+  >,
   'updateServiceRates' : ActorMethod<[bigint, bigint, bigint], undefined>,
   'updateTimeSlotAvailability' : ActorMethod<
     [boolean, boolean, boolean, boolean],

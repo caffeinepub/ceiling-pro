@@ -8,11 +8,17 @@
 
 import { IDL } from '@icp-sdk/core/candid';
 
+export const UserRole = IDL.Variant({
+  'admin' : IDL.Null,
+  'user' : IDL.Null,
+  'guest' : IDL.Null,
+});
 export const Time = IDL.Int;
 export const Booking = IDL.Record({
   'id' : IDL.Text,
   'service' : IDL.Text,
   'propertyType' : IDL.Text,
+  'owner' : IDL.Opt(IDL.Principal),
   'area' : IDL.Nat,
   'date' : IDL.Text,
   'createdAt' : Time,
@@ -20,6 +26,15 @@ export const Booking = IDL.Record({
   'mobileNumber' : IDL.Text,
   'location' : IDL.Text,
   'timeSlot' : IDL.Text,
+});
+export const UserProfile = IDL.Record({ 'name' : IDL.Text });
+export const ImagePaths = IDL.Record({
+  'heroImage' : IDL.Text,
+  'beforeAfterGallery' : IDL.Vec(IDL.Text),
+  'serviceCard1' : IDL.Text,
+  'serviceCard2' : IDL.Text,
+  'serviceCard3' : IDL.Text,
+  'serviceCard4' : IDL.Text,
 });
 export const ServiceRate = IDL.Record({
   'pvc' : IDL.Nat,
@@ -34,6 +49,9 @@ export const TimeSlotAvailability = IDL.Record({
 });
 
 export const idlService = IDL.Service({
+  '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
+  'adminLogin' : IDL.Func([IDL.Text, IDL.Text], [IDL.Bool], []),
+  'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
   'calculateEstimate' : IDL.Func(
       [IDL.Text, IDL.Nat],
       [IDL.Opt(IDL.Nat)],
@@ -54,8 +72,25 @@ export const idlService = IDL.Service({
       [],
     ),
   'getAllBookings' : IDL.Func([], [IDL.Vec(Booking)], ['query']),
+  'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
+  'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
+  'getImagePaths' : IDL.Func([], [ImagePaths], ['query']),
+  'getMyBookings' : IDL.Func([], [IDL.Vec(Booking)], ['query']),
   'getServiceRates' : IDL.Func([], [ServiceRate], ['query']),
   'getTimeSlotAvailability' : IDL.Func([], [TimeSlotAvailability], ['query']),
+  'getUserProfile' : IDL.Func(
+      [IDL.Principal],
+      [IDL.Opt(UserProfile)],
+      ['query'],
+    ),
+  'isAdminUser' : IDL.Func([], [IDL.Bool], ['query']),
+  'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
+  'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
+  'updateImagePaths' : IDL.Func(
+      [IDL.Text, IDL.Text, IDL.Text, IDL.Text, IDL.Text, IDL.Vec(IDL.Text)],
+      [],
+      [],
+    ),
   'updateServiceRates' : IDL.Func([IDL.Nat, IDL.Nat, IDL.Nat], [], []),
   'updateTimeSlotAvailability' : IDL.Func(
       [IDL.Bool, IDL.Bool, IDL.Bool, IDL.Bool],
@@ -67,11 +102,17 @@ export const idlService = IDL.Service({
 export const idlInitArgs = [];
 
 export const idlFactory = ({ IDL }) => {
+  const UserRole = IDL.Variant({
+    'admin' : IDL.Null,
+    'user' : IDL.Null,
+    'guest' : IDL.Null,
+  });
   const Time = IDL.Int;
   const Booking = IDL.Record({
     'id' : IDL.Text,
     'service' : IDL.Text,
     'propertyType' : IDL.Text,
+    'owner' : IDL.Opt(IDL.Principal),
     'area' : IDL.Nat,
     'date' : IDL.Text,
     'createdAt' : Time,
@@ -79,6 +120,15 @@ export const idlFactory = ({ IDL }) => {
     'mobileNumber' : IDL.Text,
     'location' : IDL.Text,
     'timeSlot' : IDL.Text,
+  });
+  const UserProfile = IDL.Record({ 'name' : IDL.Text });
+  const ImagePaths = IDL.Record({
+    'heroImage' : IDL.Text,
+    'beforeAfterGallery' : IDL.Vec(IDL.Text),
+    'serviceCard1' : IDL.Text,
+    'serviceCard2' : IDL.Text,
+    'serviceCard3' : IDL.Text,
+    'serviceCard4' : IDL.Text,
   });
   const ServiceRate = IDL.Record({
     'pvc' : IDL.Nat,
@@ -93,6 +143,9 @@ export const idlFactory = ({ IDL }) => {
   });
   
   return IDL.Service({
+    '_initializeAccessControlWithSecret' : IDL.Func([IDL.Text], [], []),
+    'adminLogin' : IDL.Func([IDL.Text, IDL.Text], [IDL.Bool], []),
+    'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
     'calculateEstimate' : IDL.Func(
         [IDL.Text, IDL.Nat],
         [IDL.Opt(IDL.Nat)],
@@ -113,8 +166,25 @@ export const idlFactory = ({ IDL }) => {
         [],
       ),
     'getAllBookings' : IDL.Func([], [IDL.Vec(Booking)], ['query']),
+    'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
+    'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
+    'getImagePaths' : IDL.Func([], [ImagePaths], ['query']),
+    'getMyBookings' : IDL.Func([], [IDL.Vec(Booking)], ['query']),
     'getServiceRates' : IDL.Func([], [ServiceRate], ['query']),
     'getTimeSlotAvailability' : IDL.Func([], [TimeSlotAvailability], ['query']),
+    'getUserProfile' : IDL.Func(
+        [IDL.Principal],
+        [IDL.Opt(UserProfile)],
+        ['query'],
+      ),
+    'isAdminUser' : IDL.Func([], [IDL.Bool], ['query']),
+    'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
+    'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
+    'updateImagePaths' : IDL.Func(
+        [IDL.Text, IDL.Text, IDL.Text, IDL.Text, IDL.Text, IDL.Vec(IDL.Text)],
+        [],
+        [],
+      ),
     'updateServiceRates' : IDL.Func([IDL.Nat, IDL.Nat, IDL.Nat], [], []),
     'updateTimeSlotAvailability' : IDL.Func(
         [IDL.Bool, IDL.Bool, IDL.Bool, IDL.Bool],

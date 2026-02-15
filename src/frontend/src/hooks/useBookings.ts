@@ -4,12 +4,37 @@ import type { Booking } from '../backend';
 
 export function useBookings() {
   const { actor, isFetching } = useActor();
+  const queryClient = useQueryClient();
 
   return useQuery<Booking[]>({
     queryKey: ['bookings'],
     queryFn: async () => {
       if (!actor) return [];
-      return actor.getAllBookings();
+      try {
+        return await actor.getAllBookings();
+      } catch (error: any) {
+        console.error('Failed to fetch bookings:', error);
+        // If unauthorized, clear admin session
+        if (error?.message?.includes('Unauthorized') || error?.message?.includes('Only admins')) {
+          localStorage.removeItem('admin_session');
+          queryClient.clear();
+        }
+        throw error;
+      }
+    },
+    enabled: !!actor && !isFetching,
+    retry: false,
+  });
+}
+
+export function useMyBookings() {
+  const { actor, isFetching } = useActor();
+
+  return useQuery<Booking[]>({
+    queryKey: ['myBookings'],
+    queryFn: async () => {
+      if (!actor) return [];
+      return actor.getMyBookings();
     },
     enabled: !!actor && !isFetching,
   });
@@ -44,6 +69,7 @@ export function useCreateBooking() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['bookings'] });
+      queryClient.invalidateQueries({ queryKey: ['myBookings'] });
     },
   });
 }
