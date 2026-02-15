@@ -7,10 +7,16 @@ export interface None {
     __kind__: "None";
 }
 export type Option<T> = Some<T> | None;
-export interface ServiceRate {
-    pvc: bigint;
-    wallMolding: bigint;
-    popGypsum: bigint;
+export class ExternalBlob {
+    getBytes(): Promise<Uint8Array<ArrayBuffer>>;
+    getDirectURL(): string;
+    static fromURL(url: string): ExternalBlob;
+    static fromBytes(blob: Uint8Array<ArrayBuffer>): ExternalBlob;
+    withUploadProgress(onProgress: (percentage: number) => void): ExternalBlob;
+}
+export interface StoredImage {
+    path: string;
+    image: ExternalBlob;
 }
 export interface TimeSlotAvailability {
     slot1pm: boolean;
@@ -18,7 +24,20 @@ export interface TimeSlotAvailability {
     slot7pm: boolean;
     slot10am: boolean;
 }
+export interface ServiceRate {
+    pvc: bigint;
+    wallMolding: bigint;
+    popGypsum: bigint;
+}
 export type Time = bigint;
+export interface ImagePaths {
+    heroImage: string;
+    beforeAfterGallery: Array<StoredImage>;
+    serviceCard1?: StoredImage;
+    serviceCard2?: StoredImage;
+    serviceCard3?: StoredImage;
+    serviceCard4?: StoredImage;
+}
 export interface Booking {
     id: string;
     service: string;
@@ -35,21 +54,12 @@ export interface Booking {
 export interface UserProfile {
     name: string;
 }
-export interface ImagePaths {
-    heroImage: string;
-    beforeAfterGallery: Array<string>;
-    serviceCard1: string;
-    serviceCard2: string;
-    serviceCard3: string;
-    serviceCard4: string;
-}
 export enum UserRole {
     admin = "admin",
     user = "user",
     guest = "guest"
 }
 export interface backendInterface {
-    adminLogin(username: string, password: string): Promise<boolean>;
     assignCallerUserRole(user: Principal, role: UserRole): Promise<void>;
     calculateEstimate(service: string, area: bigint): Promise<bigint | null>;
     createBooking(fullName: string, mobileNumber: string, location: string, propertyType: string, service: string, date: string, timeSlot: string, area: bigint): Promise<Booking>;
@@ -61,10 +71,17 @@ export interface backendInterface {
     getServiceRates(): Promise<ServiceRate>;
     getTimeSlotAvailability(): Promise<TimeSlotAvailability>;
     getUserProfile(user: Principal): Promise<UserProfile | null>;
-    isAdminUser(): Promise<boolean>;
     isCallerAdmin(): Promise<boolean>;
     saveCallerUserProfile(profile: UserProfile): Promise<void>;
-    updateImagePaths(heroImage: string, serviceCard1: string, serviceCard2: string, serviceCard3: string, serviceCard4: string, beforeAfterGallery: Array<string>): Promise<void>;
+    updateImagePaths(imagePathsInput: {
+        heroImage: string;
+        beforeAfterGallery: Array<StoredImage>;
+        serviceCard1?: StoredImage;
+        serviceCard2?: StoredImage;
+        serviceCard3?: StoredImage;
+        serviceCard4?: StoredImage;
+    }): Promise<void>;
     updateServiceRates(popGypsum: bigint, pvc: bigint, wallMolding: bigint): Promise<void>;
     updateTimeSlotAvailability(slot10am: boolean, slot1pm: boolean, slot4pm: boolean, slot7pm: boolean): Promise<void>;
+    uploadImage(image: ExternalBlob, path: string): Promise<StoredImage>;
 }

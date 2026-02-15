@@ -1,74 +1,85 @@
 {
   "kind": "build_request",
-  "title": "Fix admin login so correct username/password grants access to /admin",
-  "priority": "high",
+  "title": "Enable real image uploads for Service section images",
+  "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-29",
-      "text": "Fix backend admin authentication so that a successful `adminLogin(username, password)` reliably grants admin access for the same caller on subsequent calls (including page refresh), and so that `isAdminUser()` returns `true` immediately after a successful login for that caller.",
+      "id": "REQ-39",
+      "text": "Implement a real backend image upload API backed by the existing blob-storage mixin so that uploaded service-card images can be stored in the canister and referenced by a stable URL/path usable as an <img src> value.",
       "target": "backend",
       "source": {
         "messageIds": [
-          "recent-messages-5"
+          "msg-4"
         ],
         "quotes": [
-          "They can't give me access admin panel even if put right username and password fix it"
+          "Upload images in our service section"
         ]
       },
       "acceptanceCriteria": [
-        "Calling `adminLogin(\"Sirajahmad\",\"S1i2r3\")` returns `true`.",
-        "After a successful `adminLogin`, calling `isAdminUser()` from the same browser/session returns `true` (no incognito window required).",
-        "Calling `adminLogin` with an incorrect username or password returns `false` and does not grant admin access (subsequent `isAdminUser()` remains `false`)."
+        "Backend exposes a public method to upload an image file (bytes + content type/filename or equivalent) and returns a stable, directly usable image URL/path string.",
+        "Uploaded image data is persisted in canister storage (not returned only as a base64 data URL).",
+        "Returned URL/path can be used by anonymous/public users to view the image in the marketing site <img> tags (i.e., it is retrievable over HTTP from the canister)."
       ]
     },
     {
-      "id": "REQ-30",
-      "text": "Update backend authorization checks for all admin-only endpoints (at minimum: `getAllBookings`, `updateServiceRates`, `updateTimeSlotAvailability`, `updateImagePaths`) to use the same admin-auth mechanism as `isAdminUser()` so that the admin dashboard can load and perform all admin actions after login.",
-      "target": "backend",
-      "source": {
-        "messageIds": [
-          "recent-messages-5"
-        ],
-        "quotes": [
-          "They can't give me access admin panel even if put right username and password fix it"
-        ]
-      },
-      "acceptanceCriteria": [
-        "After successful admin login, the admin dashboard can load: bookings table, service rates editor, time slot editor, and images editor without unauthorized traps.",
-        "If not logged in as admin, each admin-only endpoint traps/denies access and the frontend remains behind the login screen."
-      ]
-    },
-    {
-      "id": "REQ-31",
-      "text": "Adjust the frontend admin auth flow to verify backend session state after login and to handle session validation consistently (so the UI does not show a logged-in admin state unless `isAdminUser()` confirms it).",
+      "id": "REQ-40",
+      "text": "Update the frontend image upload hooks used by the /riyaz Images editor so that uploading a service-card image calls the backend upload API and uses the returned URL/path (instead of generating a base64 data URL in the browser).",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "recent-messages-5"
+          "msg-4"
         ],
         "quotes": [
-          "They can't give me access admin panel even if put right username and password fix it"
+          "Upload images in our service section"
         ]
       },
       "acceptanceCriteria": [
-        "After clicking “Login” with correct credentials, the admin dashboard content renders (not stuck on login form).",
-        "After a page refresh, if the browser has the stored admin session marker, the app re-validates via `isAdminUser()` and shows the dashboard when the backend confirms admin status.",
-        "If credentials are wrong, the login form shows an error and the dashboard content does not render."
+        "In /riyaz → Website Images → Service Card Images, selecting a file uploads it to the backend and populates the corresponding Service Card path field with the returned URL/path.",
+        "The upload flow no longer stores base64 data URLs as the primary result for service-card uploads.",
+        "Uploading a file and then clicking “Save Image Paths” causes the public Services section to render the newly uploaded service images after refresh (or after the next imagePaths refetch)."
+      ]
+    },
+    {
+      "id": "REQ-41",
+      "text": "Ensure the public “Our Services” section reliably renders the uploaded service-card images from saved image paths and provides a graceful fallback if an uploaded image fails to load.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-4"
+        ],
+        "quotes": [
+          "Upload images in our service section"
+        ]
+      },
+      "acceptanceCriteria": [
+        "When imagePaths.serviceCard1–serviceCard4 are set to uploaded-image URLs/paths, the Services section displays those images.",
+        "If an uploaded image URL/path is broken/unavailable, the service card falls back to its default imagePath from the service definition (or a safe placeholder) without breaking layout."
       ]
     }
   ],
   "constraints": [
-    "Backend must remain a single Motoko actor in backend/main.mo.",
-    "Do not edit files in frontend immutablePaths (notably frontend/src/hooks/useActor.ts).",
-    "Use English for any user-facing text."
+    "Respect the single-actor backend architecture; keep all Motoko logic in backend/main.mo (only add backend/migration.mo if an actual stable-state upgrade is required).",
+    "Do not edit any frontend files under frontend/src/components/ui or any paths listed in frontend.immutablePaths.",
+    "Use English for any user-facing text.",
+    "Do not introduce external databases or third-party storage/services; store images in the canister using the existing blob-storage capability."
   ],
   "nonGoals": [
-    "Adding Internet Identity as a requirement for admin access.",
-    "Adding third-party authentication providers.",
-    "Implementing email notifications or any email sending."
+    "Do not change the number of services (must remain exactly 4 service cards).",
+    "Do not add any new admin authentication flow (the /riyaz route remains direct access as currently designed).",
+    "Do not add email, push notifications, or real-time features."
   ],
   "imageRequirements": {
     "required": [],
     "edits": []
+  },
+  "userProfileUpdate": {
+    "goalsToAdd": [],
+    "goalsToRemove": [],
+    "preferencesToAdd": [],
+    "preferencesToRemove": [],
+    "miscToAdd": [],
+    "miscToRemove": [],
+    "fieldsToSet": {},
+    "fieldsToDelete": []
   }
 }

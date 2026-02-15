@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Section from './Section';
@@ -15,15 +16,23 @@ interface ServicesSectionProps {
 
 export default function ServicesSection({ serviceImagePaths }: ServicesSectionProps) {
   const { setPreselectedService } = useBookingPrefill();
+  const [imageErrors, setImageErrors] = useState<Record<number, boolean>>({});
 
   const handleBookNow = (serviceId: string) => {
     setPreselectedService(serviceId);
   };
 
   const getServiceImage = (index: number, defaultPath: string): string => {
+    // If image failed to load, use default
+    if (imageErrors[index]) return defaultPath;
+    
     if (!serviceImagePaths) return defaultPath;
     const key = `serviceCard${index + 1}` as keyof typeof serviceImagePaths;
     return serviceImagePaths[key] || defaultPath;
+  };
+
+  const handleImageError = (index: number) => {
+    setImageErrors(prev => ({ ...prev, [index]: true }));
   };
 
   return (
@@ -43,6 +52,7 @@ export default function ServicesSection({ serviceImagePaths }: ServicesSectionPr
                 src={getServiceImage(index, service.imagePath)} 
                 alt={service.imageAlt} 
                 className="h-full w-full object-cover transition-transform hover:scale-105"
+                onError={() => handleImageError(index)}
               />
             </div>
             <CardHeader>

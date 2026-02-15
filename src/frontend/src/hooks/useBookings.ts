@@ -4,23 +4,12 @@ import type { Booking } from '../backend';
 
 export function useBookings() {
   const { actor, isFetching } = useActor();
-  const queryClient = useQueryClient();
 
   return useQuery<Booking[]>({
     queryKey: ['bookings'],
     queryFn: async () => {
       if (!actor) return [];
-      try {
-        return await actor.getAllBookings();
-      } catch (error: any) {
-        console.error('Failed to fetch bookings:', error);
-        // If unauthorized, clear admin session
-        if (error?.message?.includes('Unauthorized') || error?.message?.includes('Only admins')) {
-          localStorage.removeItem('admin_session');
-          queryClient.clear();
-        }
-        throw error;
-      }
+      return await actor.getAllBookings();
     },
     enabled: !!actor && !isFetching,
     retry: false,

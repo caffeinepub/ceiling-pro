@@ -2,14 +2,12 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-adjust-the-frontend-admin-auth-flow-to-verify-backend-session-state-after-login-and-to-handle-session-validation-consistently-so-the-ui-does-not-show-a-logged-in-admin-state-unless-isadminuser-confirms-it",
-      "featureTitle": "Adjust the frontend admin auth flow to verify backend session state after login and to handle session validation consistently (so the UI does not show a logged-in admin state unless `isAdminUser()` confirms it).",
+      "featureId": "feature-update-the-frontend-image-upload-hooks-used-by-the-riyaz-images-editor-so-that-uploading-a-service-card-image-calls-the-backend-upload-api-and-uses-the-returned-url-path-instead-of-generating-a-base64-data-url-in-the-browser",
+      "featureTitle": "Update the frontend image upload hooks used by the /riyaz Images editor so that uploading a service-card image calls the backend upload API and uses the returned URL/path (instead of generating a base64 data URL in the browser).",
       "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/components/auth/AdminAccessGate.tsx",
-        "frontend/src/components/auth/AdminLoginForm.tsx",
-        "frontend/src/context/AdminAuthContext.tsx",
-        "frontend/src/pages/AdminPage.tsx"
+        "frontend/src/components/admin/ImagesEditor.tsx",
+        "frontend/src/hooks/useImagePaths.ts",
+        "frontend/src/hooks/useImageUpload.ts"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -17,10 +15,32 @@
         "build-template-react@1.0.0",
         "initial-app@1.0.0",
         "github-export-icp-cli@1.0.0",
-        "authorization@4.0.0"
+        "authorization@4.0.0",
+        "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-31"
+        "REQ-40"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-ensure-the-public-our-services-section-reliably-renders-the-uploaded-service-card-images-from-saved-image-paths-and-provides-a-graceful-fallback-if-an-uploaded-image-fails-to-load",
+      "featureTitle": "Ensure the public “Our Services” section reliably renders the uploaded service-card images from saved image paths and provides a graceful fallback if an uploaded image fails to load.",
+      "files": [
+        "frontend/src/components/marketing/ServicesSection.tsx",
+        "frontend/src/hooks/useImagePaths.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0",
+        "blob-storage@4.0.0"
+      ],
+      "testIds": [
+        "REQ-41"
       ],
       "confidence": "high"
     }

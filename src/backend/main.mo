@@ -2,15 +2,19 @@ import Map "mo:core/Map";
 import Array "mo:core/Array";
 import Time "mo:core/Time";
 import Runtime "mo:core/Runtime";
-import Text "mo:core/Text";
 import Iter "mo:core/Iter";
+import Text "mo:core/Text";
 import Principal "mo:core/Principal";
 import MixinAuthorization "authorization/MixinAuthorization";
 import AccessControl "authorization/access-control";
+import MixinStorage "blob-storage/Mixin";
+import Storage "blob-storage/Storage";
 import Migration "migration";
 
 (with migration = Migration.run)
 actor {
+  include MixinStorage();
+
   let accessControlState = AccessControl.initState();
   include MixinAuthorization(accessControlState);
 
@@ -41,13 +45,18 @@ actor {
     slot7pm : Bool;
   };
 
+  type StoredImage = {
+    image : Storage.ExternalBlob;
+    path : Text;
+  };
+
   type ImagePaths = {
     heroImage : Text;
-    serviceCard1 : Text;
-    serviceCard2 : Text;
-    serviceCard3 : Text;
-    serviceCard4 : Text;
-    beforeAfterGallery : [Text];
+    serviceCard1 : ?StoredImage;
+    serviceCard2 : ?StoredImage;
+    serviceCard3 : ?StoredImage;
+    serviceCard4 : ?StoredImage;
+    beforeAfterGallery : [StoredImage];
   };
 
   public type UserProfile = {
@@ -73,26 +82,11 @@ actor {
 
   var imagePaths : ImagePaths = {
     heroImage = "/images/hero.jpg";
-    serviceCard1 = "/images/service1.jpg";
-    serviceCard2 = "/images/service2.jpg";
-    serviceCard3 = "/images/service3.jpg";
-    serviceCard4 = "/images/service4.jpg";
+    serviceCard1 = null;
+    serviceCard2 = null;
+    serviceCard3 = null;
+    serviceCard4 = null;
     beforeAfterGallery = [];
-  };
-
-  // Admin credential verification with role assignment
-  public shared ({ caller }) func adminLogin(username : Text, password : Text) : async Bool {
-    let isValid = username == "Sirajahmad" and password == "S1i2r3";
-    if (isValid) {
-      // Grant admin role to the caller upon successful login
-      AccessControl.assignRole(accessControlState, caller, caller, #admin);
-    };
-    isValid;
-  };
-
-  // Check if caller has admin privileges
-  public query ({ caller }) func isAdminUser() : async Bool {
-    AccessControl.isAdmin(accessControlState, caller);
   };
 
   // User profile management
@@ -119,12 +113,13 @@ actor {
 
   // Booking management - Admin only
   public query ({ caller }) func getAllBookings() : async [Booking] {
-    if (not (AccessControl.isAdmin(accessControlState, caller))) {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #admin))) {
       Runtime.trap("Unauthorized: Only admins can view all bookings");
     };
     bookings.values().toArray();
   };
 
+  // Public booking creation - anyone can book
   public shared ({ caller }) func createBooking(
     fullName : Text,
     mobileNumber : Text,
@@ -168,7 +163,7 @@ actor {
     pvc : Nat,
     wallMolding : Nat,
   ) : async () {
-    if (not (AccessControl.isAdmin(accessControlState, caller))) {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #admin))) {
       Runtime.trap("Unauthorized: Only admins can update service rates");
     };
     serviceRates := {
@@ -189,7 +184,7 @@ actor {
     slot4pm : Bool,
     slot7pm : Bool,
   ) : async () {
-    if (not (AccessControl.isAdmin(accessControlState, caller))) {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #admin))) {
       Runtime.trap("Unauthorized: Only admins can update time slot availability");
     };
     timeSlotAvailability := {
@@ -217,23 +212,25 @@ actor {
 
   // Image path management - Admin only
   public shared ({ caller }) func updateImagePaths(
-    heroImage : Text,
-    serviceCard1 : Text,
-    serviceCard2 : Text,
-    serviceCard3 : Text,
-    serviceCard4 : Text,
-    beforeAfterGallery : [Text],
+    imagePathsInput : {
+      heroImage : Text;
+      serviceCard1 : ?StoredImage;
+      serviceCard2 : ?StoredImage;
+      serviceCard3 : ?StoredImage;
+      serviceCard4 : ?StoredImage;
+      beforeAfterGallery : [StoredImage];
+    }
   ) : async () {
-    if (not (AccessControl.isAdmin(accessControlState, caller))) {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #admin))) {
       Runtime.trap("Unauthorized: Only admins can update image paths");
     };
     imagePaths := {
-      heroImage;
-      serviceCard1;
-      serviceCard2;
-      serviceCard3;
-      serviceCard4;
-      beforeAfterGallery;
+      heroImage = imagePathsInput.heroImage;
+      serviceCard1 = imagePathsInput.serviceCard1;
+      serviceCard2 = imagePathsInput.serviceCard2;
+      serviceCard3 = imagePathsInput.serviceCard3;
+      serviceCard4 = imagePathsInput.serviceCard4;
+      beforeAfterGallery = imagePathsInput.beforeAfterGallery;
     };
   };
 
@@ -255,5 +252,14 @@ actor {
       }
     );
     myBookings;
+  };
+
+  // Store an image file and return its reference and path
+  public shared ({ caller }) func uploadImage(image : Storage.ExternalBlob, path : Text) : async StoredImage {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #admin))) {
+      Runtime.trap("Unauthorized: Only admins can upload images");
+    };
+
+    { image; path };
   };
 };

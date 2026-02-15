@@ -23,19 +23,21 @@ export interface Booking {
   'location' : string,
   'timeSlot' : string,
 }
+export type ExternalBlob = Uint8Array;
 export interface ImagePaths {
   'heroImage' : string,
-  'beforeAfterGallery' : Array<string>,
-  'serviceCard1' : string,
-  'serviceCard2' : string,
-  'serviceCard3' : string,
-  'serviceCard4' : string,
+  'beforeAfterGallery' : Array<StoredImage>,
+  'serviceCard1' : [] | [StoredImage],
+  'serviceCard2' : [] | [StoredImage],
+  'serviceCard3' : [] | [StoredImage],
+  'serviceCard4' : [] | [StoredImage],
 }
 export interface ServiceRate {
   'pvc' : bigint,
   'wallMolding' : bigint,
   'popGypsum' : bigint,
 }
+export interface StoredImage { 'path' : string, 'image' : ExternalBlob }
 export type Time = bigint;
 export interface TimeSlotAvailability {
   'slot1pm' : boolean,
@@ -47,9 +49,34 @@ export interface UserProfile { 'name' : string }
 export type UserRole = { 'admin' : null } |
   { 'user' : null } |
   { 'guest' : null };
+export interface _CaffeineStorageCreateCertificateResult {
+  'method' : string,
+  'blob_hash' : string,
+}
+export interface _CaffeineStorageRefillInformation {
+  'proposed_top_up_amount' : [] | [bigint],
+}
+export interface _CaffeineStorageRefillResult {
+  'success' : [] | [boolean],
+  'topped_up_amount' : [] | [bigint],
+}
 export interface _SERVICE {
+  '_caffeineStorageBlobIsLive' : ActorMethod<[Uint8Array], boolean>,
+  '_caffeineStorageBlobsToDelete' : ActorMethod<[], Array<Uint8Array>>,
+  '_caffeineStorageConfirmBlobDeletion' : ActorMethod<
+    [Array<Uint8Array>],
+    undefined
+  >,
+  '_caffeineStorageCreateCertificate' : ActorMethod<
+    [string],
+    _CaffeineStorageCreateCertificateResult
+  >,
+  '_caffeineStorageRefillCashier' : ActorMethod<
+    [[] | [_CaffeineStorageRefillInformation]],
+    _CaffeineStorageRefillResult
+  >,
+  '_caffeineStorageUpdateGatewayPrincipals' : ActorMethod<[], undefined>,
   '_initializeAccessControlWithSecret' : ActorMethod<[string], undefined>,
-  'adminLogin' : ActorMethod<[string, string], boolean>,
   'assignCallerUserRole' : ActorMethod<[Principal, UserRole], undefined>,
   'calculateEstimate' : ActorMethod<[string, bigint], [] | [bigint]>,
   'createBooking' : ActorMethod<
@@ -64,11 +91,19 @@ export interface _SERVICE {
   'getServiceRates' : ActorMethod<[], ServiceRate>,
   'getTimeSlotAvailability' : ActorMethod<[], TimeSlotAvailability>,
   'getUserProfile' : ActorMethod<[Principal], [] | [UserProfile]>,
-  'isAdminUser' : ActorMethod<[], boolean>,
   'isCallerAdmin' : ActorMethod<[], boolean>,
   'saveCallerUserProfile' : ActorMethod<[UserProfile], undefined>,
   'updateImagePaths' : ActorMethod<
-    [string, string, string, string, string, Array<string>],
+    [
+      {
+        'heroImage' : string,
+        'beforeAfterGallery' : Array<StoredImage>,
+        'serviceCard1' : [] | [StoredImage],
+        'serviceCard2' : [] | [StoredImage],
+        'serviceCard3' : [] | [StoredImage],
+        'serviceCard4' : [] | [StoredImage],
+      },
+    ],
     undefined
   >,
   'updateServiceRates' : ActorMethod<[bigint, bigint, bigint], undefined>,
@@ -76,6 +111,7 @@ export interface _SERVICE {
     [boolean, boolean, boolean, boolean],
     undefined
   >,
+  'uploadImage' : ActorMethod<[ExternalBlob, string], StoredImage>,
 }
 export declare const idlService: IDL.ServiceClass;
 export declare const idlInitArgs: IDL.Type[];

@@ -1,20 +1,17 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 13,
-  "summary": "Build a premium, ultra mobile-friendly service booking website for the interior services brand \"Ceiling Pro\" with mobile-first design, fixed daily time slots booking system, live estimate calculator, trust/content sections, updated contact numbers (phone + WhatsApp: 9834587806), an owner-only admin panel (not visible to customers; email notifications removed) using a password-based login system (not Internet Identity), ability for admin to edit website images, removal of GST column/placeholder, and a customer account area where customers can view their own bookings via a service menu bar.",
+  "projectStateVersion": 19,
+  "summary": "Build a premium, ultra mobile-friendly service booking website for the interior services brand \"Ceiling Pro\" with mobile-first design, fixed daily time slots booking system, live estimate calculator, trust/content sections, updated contact numbers (phone + WhatsApp: 9834587806), an admin panel that is accessed directly via a custom hidden URL (/riyaz) without a password login, ability for admin to edit website images, removal of GST column/placeholder, and a customer account area where customers can view their own bookings via a service menu bar.",
   "architectural_notes": [
     "Email notifications for bookings were explicitly removed; backend should not attempt to send admin emails (placeholder optional).",
     "Booking time slots are limited to 4 fixed options per day, with admin ability to enable/disable slots.",
-    "Admin panel must not be visible/linked from public customer-facing pages; protect admin routes behind authentication (owner-only access).",
     "Use phone number 9834587806 for click-to-call and WhatsApp CTAs across the site.",
     "Remove GST field/column/placeholder from all customer-facing UI sections.",
-    "Replace Internet Identity authentication for /admin with a password-based owner login (username/password), while still keeping admin routes hidden from the public site and protected behind authentication.",
-    "Admin username/password defaults need to be updated to the owner-provided credentials (Sirajahmad / S1i2r3)."
+    "Admin panel should be accessible directly via the custom route /riyaz with no password-based login; keep the route unlinked/hidden from public pages (security by obscurity).",
+    "Current admin Images section only supports editing image URLs/paths; add true file upload capability in the admin panel so uploaded images can be stored and then referenced by the public site."
   ],
-  "known_issues": [
-    "Admin panel login is failing to grant access even when using the correct username/password (Sirajahmad / S1i2r3); user requests a fix."
-  ],
-  "isFixRequest": true,
+  "known_issues": [],
+  "isFixRequest": false,
   "existing_features": [
     {
       "id": "feature-build-a-mobile-first-premium-marketing-website-for-the-interior-services-brand-ceiling-pro-with-a-clean-white-natural-look-fresh-white-background-soft-light-grey-sections-light-beige-soft-natural-green-accents-elegant-modern-sans-serif-typography-spacious-layout-with-lots-of-white-space-smooth-scroll-section-reveal-animations-and-fast-loading-responsive-layout-optimized-for-smartphones",
@@ -207,6 +204,54 @@
         "REQ-31"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-change-the-admin-dashboard-route-from-admin-to-riyaz-so-the-admin-panel-is-accessible-by-directly-visiting-riyaz-in-the-browser",
+      "title": "Change the admin dashboard route from `/admin` to `/riyaz` so the admin panel is accessible by directly visiting `/riyaz` in the browser.",
+      "reqIds": [
+        "REQ-32"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-the-admin-username-password-login-gate-so-the-admin-dashboard-does-not-show-a-login-screen-and-does-not-require-any-credentials-direct-access",
+      "title": "Remove the admin username/password login gate so the admin dashboard does not show a login screen and does not require any credentials (direct access).",
+      "reqIds": [
+        "REQ-33"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-riyaz-admin-images-editor-ui-to-support-real-file-uploads-for-1-hero-background-image-2-each-of-the-4-service-card-images-and-3-adding-one-or-multiple-gallery-images-so-the-admin-can-upload-files-instead-of-manually-typing-image-paths",
+      "title": "Update the /riyaz admin Images editor UI to support real file uploads for: (1) Hero background image, (2) each of the 4 service card images, and (3) adding one or multiple gallery images, so the admin can upload files instead of manually typing image paths.",
+      "reqIds": [
+        "REQ-37"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-integrate-the-new-upload-flow-with-the-existing-image-path-saving-flow-so-that-uploaded-images-can-be-immediately-used-by-the-public-marketing-site-services-section-images-and-before-after-gallery-after-clicking-save-in-the-admin-panel",
+      "title": "Integrate the new upload flow with the existing image path saving flow so that uploaded images can be immediately used by the public marketing site (Services section images and Before & After gallery) after clicking Save in the admin panel.",
+      "reqIds": [
+        "REQ-38"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-frontend-image-upload-hooks-used-by-the-riyaz-images-editor-so-that-uploading-a-service-card-image-calls-the-backend-upload-api-and-uses-the-returned-url-path-instead-of-generating-a-base64-data-url-in-the-browser",
+      "title": "Update the frontend image upload hooks used by the /riyaz Images editor so that uploading a service-card image calls the backend upload API and uses the returned URL/path (instead of generating a base64 data URL in the browser).",
+      "reqIds": [
+        "REQ-40"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-public-our-services-section-reliably-renders-the-uploaded-service-card-images-from-saved-image-paths-and-provides-a-graceful-fallback-if-an-uploaded-image-fails-to-load",
+      "title": "Ensure the public “Our Services” section reliably renders the uploaded service-card images from saved image paths and provides a graceful fallback if an uploaded image fails to load.",
+      "reqIds": [
+        "REQ-41"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -255,23 +300,9 @@
       "status": "pending"
     },
     {
-      "id": "AR-13",
-      "summary": "Restrict admin panel to owner-only access: hide/remove admin UI links from public site and require authentication to access admin routes",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
       "id": "AR-14",
       "summary": "Update Services section to use service images (in addition to or replacing icons) for the 4 service cards",
       "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-17",
-      "summary": "Enforce owner-only access control in the backend for all admin-only APIs (listing all bookings, updating service rates, updating time slot availability). Public APIs (createBooking, getServiceRates, getTimeSlotAvailability, calculateEstimate) must remain usable by customers.",
-      "reqIds": [
-        "REQ-16"
-      ],
       "status": "pending"
     },
     {
@@ -307,26 +338,6 @@
       "status": "pending"
     },
     {
-      "id": "AR-27",
-      "summary": "Switch admin authentication from Internet Identity to a password-based login (username/password) while keeping admin routes owner-only and hidden from public users",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-29",
-      "summary": "Update the backend authorization checks for all admin-only APIs (view all bookings, update service rates, update time slot availability, update image paths, and any admin-check endpoint) to validate the new password-based admin session instead of checking Internet Identity admin/owner permissions.",
-      "reqIds": [
-        "REQ-24"
-      ],
-      "status": "pending"
-    },
-    {
-      "id": "AR-30",
-      "summary": "Update admin login credentials to username \"Sirajahmad\" and password \"S1i2r3\" (replace current defaults)",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
       "id": "AR-31",
       "summary": "Update public site contact email to ceilingpro9@gmail.com wherever email is displayed (contact section/footer/etc.)",
       "reqIds": [],
@@ -339,26 +350,46 @@
       "status": "pending"
     },
     {
-      "id": "AR-33",
-      "summary": "Update the backend’s admin login credentials to username \"Sirajahmad\" and password \"S1i2r3\" so that logging into /admin only succeeds with these new values (replacing the current defaults). Ensure the change applies to upgraded canisters as well (i.e., existing persisted credential state should be updated to the new username/password during upgrade).",
+      "id": "AR-36",
+      "summary": "Remove the admin password login system and move the admin panel route from /admin to a custom hidden URL (/riyaz) for direct access (no login screen)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-39",
+      "summary": "Remove the backend admin login/password mechanism and admin-session-based authorization checks that currently block admin APIs, so admin dashboard actions work without logging in.",
       "reqIds": [
-        "REQ-26"
+        "REQ-34"
       ],
       "status": "pending"
     },
     {
-      "id": "AR-34",
-      "summary": "Fix backend admin authentication so that a successful `adminLogin(username, password)` reliably grants admin access for the same caller on subsequent calls (including page refresh), and so that `isAdminUser()` returns `true` immediately after a successful login for that caller.",
+      "id": "AR-40",
+      "summary": "Add real image file upload in the /riyaz admin panel (e.g., upload button for gallery and service images) so admins can upload files instead of only entering image URLs/paths",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-41",
+      "summary": "Add backend support for storing uploaded image files inside the existing Motoko canister and returning a stable, directly usable image URL/path that the frontend can place into `imagePaths` (hero image, 4 service card images, and before/after gallery images).",
       "reqIds": [
-        "REQ-29"
+        "REQ-35"
       ],
       "status": "pending"
     },
     {
-      "id": "AR-35",
-      "summary": "Update backend authorization checks for all admin-only endpoints (at minimum: `getAllBookings`, `updateServiceRates`, `updateTimeSlotAvailability`, `updateImagePaths`) to use the same admin-auth mechanism as `isAdminUser()` so that the admin dashboard can load and perform all admin actions after login.",
+      "id": "AR-42",
+      "summary": "Expose uploaded images over HTTP so that paths/URLs returned by the backend upload method can be used as `<img src>` values by the React frontend (including anonymous/public users).",
       "reqIds": [
-        "REQ-30"
+        "REQ-36"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-43",
+      "summary": "Implement a real backend image upload API backed by the existing blob-storage mixin so that uploaded service-card images can be stored in the canister and referenced by a stable URL/path usable as an <img src> value.",
+      "reqIds": [
+        "REQ-39"
       ],
       "status": "pending"
     }

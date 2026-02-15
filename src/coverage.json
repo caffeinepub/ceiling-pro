@@ -1,47 +1,49 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-15T21:07:13.953Z",
+  "generatedAt": "2026-02-15T21:47:37.560Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
     "total": 3,
-    "implemented": 1,
+    "implemented": 2,
     "items": [
       {
-        "id": "REQ-29",
-        "summary": "Fix backend admin authentication so that a successful `adminLogin(username, password)` reliably grants admin access for the same caller on subsequent calls (including page refresh), and so that `isAdminUser()` returns `true` immediately after a successful login for that caller.",
+        "id": "REQ-39",
+        "summary": "Implement a real backend image upload API backed by the existing blob-storage mixin so that uploaded service-card images can be stored in the canister and referenced by a stable URL/path usable as an <img src> value.",
         "status": "unknown",
         "plannedFiles": [],
         "matchedFiles": []
       },
       {
-        "id": "REQ-30",
-        "summary": "Update backend authorization checks for all admin-only endpoints (at minimum: `getAllBookings`, `updateServiceRates`, `updateTimeSlotAvailability`, `updateImagePaths`) to use the same admin-auth mechanism as `isAdminUser()` so that the admin dashboard can load and perform all admin actions after login.",
-        "status": "unknown",
-        "plannedFiles": [],
-        "matchedFiles": []
-      },
-      {
-        "id": "REQ-31",
-        "summary": "Adjust the frontend admin auth flow to verify backend session state after login and to handle session validation consistently (so the UI does not show a logged-in admin state unless `isAdminUser()` confirms it).",
+        "id": "REQ-40",
+        "summary": "Update the frontend image upload hooks used by the /riyaz Images editor so that uploading a service-card image calls the backend upload API and uses the returned URL/path (instead of generating a base64 data URL in the browser).",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/context/AdminAuthContext.tsx",
-          "frontend/src/App.tsx",
-          "frontend/src/hooks/useAdminAuth.ts",
-          "frontend/src/components/auth/AdminAccessGate.tsx",
-          "frontend/src/components/auth/AdminLoginForm.tsx",
-          "frontend/src/pages/AdminPage.tsx"
+          "frontend/src/hooks/useImageUpload.ts",
+          "frontend/src/components/admin/ImagesEditor.tsx",
+          "frontend/src/hooks/useImagePaths.ts",
+          "frontend/src/pages/HomePage.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/context/AdminAuthContext.tsx",
-          "frontend/src/App.tsx",
-          "frontend/src/components/auth/AdminAccessGate.tsx",
-          "frontend/src/components/auth/AdminLoginForm.tsx",
-          "frontend/src/pages/AdminPage.tsx"
+          "frontend/src/hooks/useImageUpload.ts",
+          "frontend/src/components/admin/ImagesEditor.tsx",
+          "frontend/src/hooks/useImagePaths.ts"
+        ]
+      },
+      {
+        "id": "REQ-41",
+        "summary": "Ensure the public “Our Services” section reliably renders the uploaded service-card images from saved image paths and provides a graceful fallback if an uploaded image fails to load.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/marketing/ServicesSection.tsx",
+          "frontend/src/hooks/useImagePaths.ts"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/marketing/ServicesSection.tsx",
+          "frontend/src/hooks/useImagePaths.ts"
         ]
       }
     ]
@@ -53,11 +55,14 @@
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/src/App.tsx",
-    "frontend/src/components/auth/AdminAccessGate.tsx",
-    "frontend/src/components/auth/AdminLoginForm.tsx",
-    "frontend/src/context/AdminAuthContext.tsx",
-    "frontend/src/pages/AdminPage.tsx",
+    "frontend/src/backend.d.ts",
+    "frontend/src/backend.ts",
+    "frontend/src/components/admin/ImagesEditor.tsx",
+    "frontend/src/components/marketing/ServicesSection.tsx",
+    "frontend/src/declarations/backend.did.d.ts",
+    "frontend/src/declarations/backend.did.js",
+    "frontend/src/hooks/useImagePaths.ts",
+    "frontend/src/hooks/useImageUpload.ts",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

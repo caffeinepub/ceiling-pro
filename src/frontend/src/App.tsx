@@ -7,7 +7,6 @@ import SiteHeader from './components/layout/SiteHeader';
 import SiteFooter from './components/layout/SiteFooter';
 import { Outlet } from '@tanstack/react-router';
 import { Toaster } from '@/components/ui/sonner';
-import { AdminAuthProvider } from './context/AdminAuthContext';
 
 // Layout component that wraps all routes
 function Layout() {
@@ -36,7 +35,7 @@ const indexRoute = createRoute({
 
 const adminRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: '/admin',
+  path: '/riyaz',
   component: AdminPage,
 });
 
@@ -57,10 +56,12 @@ declare module '@tanstack/react-router' {
   }
 }
 
+const queryClient = new QueryClient();
+
 export default function App() {
   return (
-    <AdminAuthProvider>
+    <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
-    </AdminAuthProvider>
+    </QueryClientProvider>
   );
 }

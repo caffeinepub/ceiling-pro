@@ -29,22 +29,12 @@ export function useUpdateTimeSlotAvailability() {
   return useMutation({
     mutationFn: async (availability: TimeSlotAvailability) => {
       if (!actor) throw new Error('Actor not initialized');
-      try {
-        return await actor.updateTimeSlotAvailability(
-          availability.slot10am,
-          availability.slot1pm,
-          availability.slot4pm,
-          availability.slot7pm
-        );
-      } catch (error: any) {
-        console.error('Failed to update time slot availability:', error);
-        // If unauthorized, clear admin session
-        if (error?.message?.includes('Unauthorized') || error?.message?.includes('Only admins')) {
-          localStorage.removeItem('admin_session');
-          queryClient.clear();
-        }
-        throw error;
-      }
+      return await actor.updateTimeSlotAvailability(
+        availability.slot10am,
+        availability.slot1pm,
+        availability.slot4pm,
+        availability.slot7pm
+      );
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['timeSlotAvailability'] });
