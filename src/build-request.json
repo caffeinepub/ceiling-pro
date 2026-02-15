@@ -1,0 +1,280 @@
+{
+  "kind": "build_request",
+  "title": "Ceiling Pro mobile-first service booking website with admin dashboard (no email notifications)",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Build a mobile-first, premium marketing website for the interior services brand “Ceiling Pro” with a clean white/natural look: fresh white background, soft light-grey sections, light beige + soft natural green accents, elegant modern sans-serif typography, spacious layout with lots of white space, smooth scroll/section reveal animations, and fast-loading responsive layout optimized for smartphones.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Create a premium, ultra mobile-friendly service booking website for my interior service brand.\n\nBusiness Name: Ceiling Pro\n\nDESIGN STYLE:\n- Mobile-first design (optimize for smartphones first)\n- White, fresh, natural background\n- Soft light grey sections\n- Light beige / soft natural green accent colors\n- Clean modern typography (use elegant sans-serif font)\n- Spacious layout with lots of white space\n- Minimal, premium, professional feel\n- Smooth scrolling animations\n- Fast loading"
+        ]
+      },
+      "acceptanceCriteria": [
+        "All primary pages/sections render correctly on common mobile widths (e.g., 360px) with a mobile-first layout.",
+        "Site uses white/natural palette and maintains consistent typography/spacing across sections.",
+        "Scroll/section animations are subtle and do not block interaction or significantly impact performance."
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Implement the homepage hero section with a bright modern ceiling interior background image, headline “Affordable & Premium False Ceiling Services”, subheadline “Starting at ₹65 per sq.ft – Book Expert Consultation Online”, and two CTA buttons: “Book Consultation” (opens/scrolls to booking form) and “Call Now” (click-to-call).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "HERO SECTION:\n- Bright modern ceiling interior background\n- Headline:\n  \"Affordable & Premium False Ceiling Services\"\n- Subheadline:\n  \"Starting at ₹65 per sq.ft – Book Expert Consultation Online\"\n- Two buttons:\n  [Book Consultation]\n  [Call Now]"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Hero renders background image with readable overlay text on mobile.",
+        "Book Consultation button brings user to booking section/form.",
+        "Call Now button triggers a tel: link configured in one place (constant/config)."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Add a services section that displays exactly 4 service cards with soft shadow, each containing an icon, short description, starting price (or inspection-based text), and a “Book Now” button that leads to the booking form with that service preselected.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "SERVICES SECTION (ONLY 4):\n\n1. POP & Gypsum False Ceiling\n   Starting at ₹65 per sq.ft\n   Short description: Elegant and cost-effective ceiling designs for homes and offices.\n\n2. PVC Ceiling Installation\n   Starting at ₹110 per sq.ft\n   Short description: Durable, waterproof and low maintenance ceiling solutions.\n\n3. Wall Molding & Decorative Panels\n   Starting at ₹100 per sq.ft\n   Short description: Modern decorative wall molding for premium interiors.\n\n4. Gypsum Ceiling Repairing\n   Inspection based pricing\n   Short description: Crack repair, redesign and ceiling restoration services.\n\nEach card must include:\n- Icon\n- Short description\n- Starting price clearly visible\n- Book Now button"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Exactly 4 service cards are shown with the specified titles/descriptions/pricing text.",
+        "Each card shows an icon and a Book Now button.",
+        "Clicking Book Now preselects the chosen service in the booking form."
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Add a “How it works” section showing a simple 3-step process with icons: (1) Book Your Slot Online, (2) Site Visit & Final Estimate, (3) Professional Installation & Clean Finish.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "HOW IT WORKS SECTION:\n\nSimple 3 Step Process with icons:\n\n1. Book Your Slot Online\n2. Site Visit & Final Estimate\n3. Professional Installation & Clean Finish"
+        ]
+      },
+      "acceptanceCriteria": [
+        "The 3 steps are displayed in order with icons and readable labels on mobile."
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Implement a booking system UI section with a booking form containing fields: Full Name, Mobile Number, Location, Property Type (Flat/Office/Shop), Select Service (4 services), Select Date (calendar), Select Time Slot (restricted to 10:00 AM, 1:00 PM, 4:00 PM, 7:00 PM and only those enabled), Enter Area in Square Feet, and Submit. After submission, show an on-page confirmation message.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "BOOKING SYSTEM:\n\nAllow only 4 fixed time slots per day:\n• 10:00 AM\n• 1:00 PM\n• 4:00 PM\n• 7:00 PM\n\nBooking Form Fields:\n- Full Name\n- Mobile Number\n- Location\n- Property Type (Flat / Office / Shop)\n- Select Service (Dropdown – 4 services)\n- Select Date (Calendar)\n- Select Time Slot (Only 4 options)\n- Enter Area in Square Feet\n- Submit Button\n\nAfter submission:\n- Show confirmation message\n- Save booking in admin dashboard"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Booking form enforces required fields and only allows the 4 fixed time slots (subject to enabled/disabled state).",
+        "Submitting a valid booking persists it in the backend and shows a confirmation message without a full page reload.",
+        "Admin dashboard reflects the newly created booking."
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "text": "Create backend persistence and APIs for: (a) creating a booking record, (b) listing all bookings for the admin dashboard, (c) editing service pricing, and (d) enabling/disabling each of the 4 daily time slots (global setting).",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "ADMIN PANEL:\n- View all bookings\n- Edit service pricing\n- Enable/Disable time slots\n- Export booking list"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend stores bookings with all submitted fields plus a created-at timestamp.",
+        "Backend exposes methods to get/set the 4 service prices and to get/set enabled flags for the 4 time slots.",
+        "When a time slot is disabled in backend settings, it is not selectable in the booking form UI."
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "text": "Build an admin panel UI that allows: viewing all bookings in a table (with sorting by created date), editing the 4 service rates, enabling/disabling each of the 4 fixed time slots, and exporting the booking list to a downloadable CSV file.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "ADMIN PANEL:\n- View all bookings\n- Edit service pricing\n- Enable/Disable time slots\n- Export booking list"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Admin page shows a bookings table including at least: name, phone, location, property type, service, date, time slot, area, created-at.",
+        "Admin can edit and save the 4 service rates and see the estimate calculator and booking UI reflect updated rates.",
+        "Admin can enable/disable each slot and the booking form updates accordingly.",
+        "Export produces a valid CSV download containing all bookings."
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "text": "Add a live estimate calculator section with inputs: Area in Square Feet and Select Service. Compute estimated cost as Area × Service Rate for POP & Gypsum (₹65 default), PVC (₹110 default), Wall Molding (₹100 default); for Gypsum Repair show the message “Final estimate after inspection”. Update the result instantly without page reload.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "LIVE ESTIMATE CALCULATOR SECTION:\n\nUser Inputs:\n- Area in Square Feet\n- Select Service\n\nPricing Logic:\nPOP & Gypsum False Ceiling – ₹65 per sq.ft\nPVC Ceiling – ₹110 per sq.ft\nWall Molding – ₹100 per sq.ft\nGypsum Repair – Show message: \"Final estimate after inspection\"\n\nDisplay:\nEstimated Cost = Area × Service Rate\n\nShow result instantly without page reload."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Changing area or service updates the estimate immediately.",
+        "Gypsum Repair selection shows the inspection message instead of a numeric estimate.",
+        "Default rates match the specified values and can be overridden by admin-edited pricing."
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "text": "Add trust/content sections: “Why Choose Ceiling Pro” (Affordable, Skilled Experts, On-Time Delivery), a Before & After gallery, a Customer Reviews section, a Contact section, and a clean footer containing phone number, email, and a GST placeholder.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "TRUST SECTIONS:\n\n- Why Choose Ceiling Pro (Affordable, Skilled Experts, On-Time Delivery)\n- Before & After Gallery\n- Customer Reviews\n- Contact Section\n- Clean footer with:\n  Phone number\n  Email\n  GST placeholder"
+        ]
+      },
+      "acceptanceCriteria": [
+        "All listed trust/content sections exist on the site and are styled consistently with the premium mobile-first design.",
+        "Footer displays phone, email, and a GST placeholder string."
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "text": "Implement mobile conversion UI elements: a sticky bottom “Book Consultation” button on mobile, a floating WhatsApp button, and a header click-to-call button.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Sticky bottom \"Book Consultation\" button on mobile\n- Floating WhatsApp button\n- Click-to-call button in header"
+        ]
+      },
+      "acceptanceCriteria": [
+        "On mobile viewports, a sticky bottom Book Consultation CTA remains visible and opens/scrolls to the booking form.",
+        "Floating WhatsApp button opens a wa.me link (phone number configurable in one place).",
+        "Header call button triggers a tel: link and is accessible (proper aria-label)."
+      ]
+    },
+    {
+      "id": "REQ-11",
+      "text": "Apply on-page SEO basics for the homepage/sections: descriptive title/description meta tags, semantic headings, and content targeting the keywords: “POP false ceiling”, “PVC ceiling installation”, “Wall molding services”, “Gypsum ceiling repair”.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "SEO OPTIMIZATION:\n\nOptimize for:\n“POP false ceiling”\n“PVC ceiling installation”\n“Wall molding services”\n“Gypsum ceiling repair”"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Page includes a meaningful <title> and meta description.",
+        "H1/H2 structure is semantic and includes the target keyword phrases naturally in section headings or body text.",
+        "Lighthouse SEO checks show no critical SEO errors (where applicable in a SPA context)."
+      ]
+    },
+    {
+      "id": "REQ-12",
+      "text": "Remove/omit the ‘send booking details to admin email’ requirement entirely and ensure no email-sending code paths, UI, or configuration are included in the build.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Reme the email requirement"
+        ]
+      },
+      "acceptanceCriteria": [
+        "No backend methods attempt to send email.",
+        "UI does not claim that an email is sent; confirmation only indicates booking submission/received.",
+        "No email API keys, SMTP settings, or third-party email integrations exist in the codebase."
+      ]
+    },
+    {
+      "id": "REQ-13",
+      "text": "Add generated static images to the project and render them in the UI from frontend/public/assets/generated (do not serve images via the backend).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "- Bright modern ceiling interior background",
+          "Each card must include: - Icon",
+          "Simple 3 Step Process with icons",
+          "Before & After Gallery"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Generated images are placed under frontend/public/assets/generated and referenced directly by the frontend.",
+        "Hero uses the generated background image.",
+        "Service cards and How-it-works steps use the generated icon assets.",
+        "Gallery uses the generated before/after images."
+      ]
+    }
+  ],
+  "constraints": [
+    "Do not implement email sending or admin email notifications.",
+    "Backend must remain a single Motoko actor (no additional backend services).",
+    "Do not modify frontend immutable paths: frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, frontend/src/components/ui."
+  ],
+  "nonGoals": [
+    "Internet Identity login or role-based authentication for the admin panel (not requested).",
+    "Integrations with external databases or third-party APIs beyond basic links (e.g., WhatsApp wa.me, tel:).",
+    "Real-time updates via websockets or push notifications."
+  ],
+  "imageRequirements": {
+    "required": [
+      "Bright modern ceiling interior hero background photo (ceilingpro-hero-bg.dim_1920x1080.png)",
+      "Minimal line icon for POP & Gypsum ceiling (icon-pop-gypsum.dim_256x256.png)",
+      "Minimal line icon for PVC ceiling installation (icon-pvc.dim_256x256.png)",
+      "Minimal line icon for wall molding & decorative panels (icon-wall-molding.dim_256x256.png)",
+      "Minimal line icon for gypsum ceiling repairing (icon-gypsum-repair.dim_256x256.png)",
+      "Minimal line icon for step 1 (book online) (icon-step-book.dim_256x256.png)",
+      "Minimal line icon for step 2 (site visit & estimate) (icon-step-visit.dim_256x256.png)",
+      "Minimal line icon for step 3 (installation & clean finish) (icon-step-install.dim_256x256.png)",
+      "Before image of a simple room ceiling interior (gallery-before-1.dim_1200x900.png)",
+      "After image of the same room with upgraded false ceiling (gallery-after-1.dim_1200x900.png)"
+    ],
+    "edits": []
+  },
+  "userProfileUpdate": {
+    "goalsToAdd": [],
+    "goalsToRemove": [],
+    "preferencesToAdd": [
+      "User-facing text must be in English."
+    ],
+    "preferencesToRemove": [],
+    "miscToAdd": [],
+    "miscToRemove": [],
+    "fieldsToSet": {},
+    "fieldsToDelete": []
+  }
+}

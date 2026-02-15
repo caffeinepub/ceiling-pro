@@ -1,0 +1,115 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-15T19:30:49.686Z",
+  "summary": "Diff adds a Motoko backend actor with booking persistence + settings APIs, and a new React frontend with marketing sections (hero/services/how-it-works/etc), booking form, estimate calculator, conversion CTAs, and admin components (bookings table + CSV export, rates editor, time-slot editor). Some requirements cannot be confirmed from the provided diff summary (notably SEO/meta tags, exact 4 services data, and scroll-to-booking behavior) because key files are omitted/truncated.",
+  "missing_requirements": [
+    {
+      "id": "REQ-2",
+      "requirement": "Book Consultation CTA should open/scroll to the booking form section; Call Now tel: should be configured in one place.",
+      "reason": "HeroSection receives an onBookClick callback, but there is no evidence in the diff summary that HomePage wires this to scroll to the booking form. Tel: uses CEILING_PRO_CONFIG (good), but scroll behavior is not evidenced.",
+      "evidence": [
+        "frontend/src/components/marketing/HeroSection.tsx",
+        "frontend/src/App.tsx"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "requirement": "Services section displays exactly 4 service cards and Book Now leads to booking form with that service preselected.",
+      "reason": "ServicesSection renders cards from SERVICES, but the diff summary does not include the SERVICES definition, so 'exactly 4' cannot be verified. Also Book Now sets preselected service but there is no evidence it navigates/scrolls to the booking form section.",
+      "evidence": [
+        "frontend/src/components/marketing/ServicesSection.tsx",
+        "frontend/src/components/booking/BookingSection.tsx (truncated)"
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "requirement": "Sticky bottom “Book Consultation” button remains visible on mobile and opens/scrolls to booking form; floating WhatsApp; header click-to-call.",
+      "reason": "StickyBookCta and FloatingWhatsAppButton components exist, and header has tel: with aria-label, but there is no evidence shown that StickyBookCta is mounted on mobile and wired to scroll/open the booking form.",
+      "evidence": [
+        "frontend/src/components/conversion/StickyBookCta.tsx",
+        "frontend/src/components/conversion/FloatingWhatsAppButton.tsx",
+        "frontend/src/components/layout/SiteHeader.tsx"
+      ]
+    },
+    {
+      "id": "REQ-11",
+      "requirement": "On-page SEO basics: meaningful <title> and meta description, semantic headings, and keyword targeting.",
+      "reason": "No files showing document <title> or meta description changes are included in the diff summary (e.g., index.html/head management). While headings exist in components, meta tags are not evidenced.",
+      "evidence": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/marketing/HeroSection.tsx",
+        "frontend/src/components/marketing/ServicesSection.tsx",
+        "frontend/src/components/marketing/WhyChooseSection.tsx"
+      ]
+    },
+    {
+      "id": "REQ-13",
+      "requirement": "Generated static images are added under frontend/public/assets/generated and referenced by the UI.",
+      "reason": "UI references generated asset paths, but the diff summary does not show the actual image files being added (they may be among omitted files). Placement under frontend/public/assets/generated cannot be verified from the visible diff.",
+      "evidence": [
+        "frontend/src/components/marketing/HeroSection.tsx",
+        "frontend/src/components/marketing/HowItWorksSection.tsx",
+        "frontend/src/components/marketing/GallerySection.tsx"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "Footer includes a promotional 'Built with caffeine.ai' link and a heart icon.",
+      "reason": "Not requested in any requirement; could be considered an unrequested branding/attribution addition.",
+      "evidence": [
+        "frontend/src/components/layout/SiteFooter.tsx"
+      ]
+    },
+    {
+      "description": "Backend exposes a calculateEstimate API method.",
+      "reason": "Not required by REQ-6 (which specifies booking CRUD + service rates + time-slot enable/disable). Estimate calculation was required as a frontend live calculator (REQ-8) and to reflect admin-edited rates, but adding a dedicated backend estimate method was not requested.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    }
+  ],
+  "confidence": 0.62,
+  "changed_files": [
+    "all_files_summary.json",
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/components/admin/BookingsTable.tsx",
+    "frontend/src/components/admin/ServiceRatesEditor.tsx",
+    "frontend/src/components/admin/TimeSlotsEditor.tsx",
+    "frontend/src/components/booking/BookingSection.tsx",
+    "frontend/src/components/booking/bookingValidation.ts",
+    "frontend/src/components/conversion/FloatingWhatsAppButton.tsx",
+    "frontend/src/components/conversion/StickyBookCta.tsx",
+    "frontend/src/components/estimate/EstimateCalculatorSection.tsx",
+    "frontend/src/components/layout/SiteFooter.tsx",
+    "frontend/src/components/layout/SiteHeader.tsx",
+    "frontend/src/components/marketing/ContactSection.tsx",
+    "frontend/src/components/marketing/GallerySection.tsx",
+    "frontend/src/components/marketing/HeroSection.tsx",
+    "frontend/src/components/marketing/HowItWorksSection.tsx",
+    "frontend/src/components/marketing/ReviewsSection.tsx",
+    "frontend/src/components/marketing/Section.tsx",
+    "frontend/src/components/marketing/ServicesSection.tsx",
+    "frontend/src/components/marketing/WhyChooseSection.tsx",
+    "frontend/src/config/ceilingPro.ts",
+    "frontend/src/domain/services.ts",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useBookings.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useRevealOnScroll.ts",
+    "frontend/src/hooks/useServiceRates.ts",
+    "frontend/src/hooks/useTimeSlotAvailability.ts",
+    "frontend/src/index.css",
+    "frontend/src/main.tsx",
+    "frontend/src/pages/AdminPage.tsx",
+    "frontend/src/pages/HomePage.tsx",
+    "frontend/src/state/bookingPrefill.ts",
+    "frontend/tailwind.config.js",
+    "project_state.json"
+  ]
+}

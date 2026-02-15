@@ -1,0 +1,258 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-build-a-mobile-first-premium-marketing-website-for-the-interior-services-brand-ceiling-pro-with-a-clean-white-natural-look-fresh-white-background-soft-light-grey-sections-light-beige-soft-natural-green-accents-elegant-modern-sans-serif-typography-spacious-layout-with-lots-of-white-space-smooth-scroll-section-reveal-animations-and-fast-loading-responsive-layout-optimized-for-smartphones",
+      "featureTitle": "Build a mobile-first, premium marketing website for the interior services brand “Ceiling Pro” with a clean white/natural look: fresh white background, soft light-grey sections, light beige + soft natural green accents, elegant modern sans-serif typography, spacious layout with lots of white space, smooth scroll/section reveal animations, and fast-loading responsive layout optimized for smartphones.",
+      "files": [
+        "frontend/src/components/marketing/Section.tsx",
+        "frontend/src/hooks/useRevealOnScroll.ts",
+        "frontend/src/index.css",
+        "frontend/src/pages/HomePage.tsx",
+        "frontend/tailwind.config.js"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-the-homepage-hero-section-with-a-bright-modern-ceiling-interior-background-image-headline-affordable-premium-false-ceiling-services-subheadline-starting-at-65-per-sq-ft-book-expert-consultation-online-and-two-cta-buttons-book-consultation-opens-scrolls-to-booking-form-and-call-now-click-to-call",
+      "featureTitle": "Implement the homepage hero section with a bright modern ceiling interior background image, headline “Affordable & Premium False Ceiling Services”, subheadline “Starting at ₹65 per sq.ft – Book Expert Consultation Online”, and two CTA buttons: “Book Consultation” (opens/scrolls to booking form) and “Call Now” (click-to-call).",
+      "files": [
+        "frontend/src/components/marketing/HeroSection.tsx",
+        "frontend/src/config/ceilingPro.ts",
+        "frontend/src/pages/HomePage.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-a-services-section-that-displays-exactly-4-service-cards-with-soft-shadow-each-containing-an-icon-short-description-starting-price-or-inspection-based-text-and-a-book-now-button-that-leads-to-the-booking-form-with-that-service-preselected",
+      "featureTitle": "Add a services section that displays exactly 4 service cards with soft shadow, each containing an icon, short description, starting price (or inspection-based text), and a “Book Now” button that leads to the booking form with that service preselected.",
+      "files": [
+        "frontend/src/components/marketing/ServicesSection.tsx",
+        "frontend/src/domain/services.ts",
+        "frontend/src/pages/HomePage.tsx",
+        "frontend/src/state/bookingPrefill.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-a-how-it-works-section-showing-a-simple-3-step-process-with-icons-1-book-your-slot-online-2-site-visit-final-estimate-3-professional-installation-clean-finish",
+      "featureTitle": "Add a “How it works” section showing a simple 3-step process with icons: (1) Book Your Slot Online, (2) Site Visit & Final Estimate, (3) Professional Installation & Clean Finish.",
+      "files": [
+        "frontend/src/components/marketing/HowItWorksSection.tsx",
+        "frontend/src/pages/HomePage.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-a-booking-system-ui-section-with-a-booking-form-containing-fields-full-name-mobile-number-location-property-type-flat-office-shop-select-service-4-services-select-date-calendar-select-time-slot-restricted-to-10-00-am-1-00-pm-4-00-pm-7-00-pm-and-only-those-enabled-enter-area-in-square-feet-and-submit-after-submission-show-an-on-page-confirmation-message",
+      "featureTitle": "Implement a booking system UI section with a booking form containing fields: Full Name, Mobile Number, Location, Property Type (Flat/Office/Shop), Select Service (4 services), Select Date (calendar), Select Time Slot (restricted to 10:00 AM, 1:00 PM, 4:00 PM, 7:00 PM and only those enabled), Enter Area in Square Feet, and Submit. After submission, show an on-page confirmation message.",
+      "files": [
+        "frontend/src/components/booking/BookingSection.tsx",
+        "frontend/src/components/booking/bookingValidation.ts",
+        "frontend/src/hooks/useTimeSlotAvailability.ts",
+        "frontend/src/pages/HomePage.tsx",
+        "frontend/src/state/bookingPrefill.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-build-an-admin-panel-ui-that-allows-viewing-all-bookings-in-a-table-with-sorting-by-created-date-editing-the-4-service-rates-enabling-disabling-each-of-the-4-fixed-time-slots-and-exporting-the-booking-list-to-a-downloadable-csv-file",
+      "featureTitle": "Build an admin panel UI that allows: viewing all bookings in a table (with sorting by created date), editing the 4 service rates, enabling/disabling each of the 4 fixed time slots, and exporting the booking list to a downloadable CSV file.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/admin/BookingsTable.tsx",
+        "frontend/src/components/admin/ServiceRatesEditor.tsx",
+        "frontend/src/components/admin/TimeSlotsEditor.tsx",
+        "frontend/src/components/layout/SiteHeader.tsx",
+        "frontend/src/hooks/useBookings.ts",
+        "frontend/src/hooks/useServiceRates.ts",
+        "frontend/src/pages/AdminPage.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-a-live-estimate-calculator-section-with-inputs-area-in-square-feet-and-select-service-compute-estimated-cost-as-area-service-rate-for-pop-gypsum-65-default-pvc-110-default-wall-molding-100-default-for-gypsum-repair-show-the-message-final-estimate-after-inspection-update-the-result-instantly-without-page-reload",
+      "featureTitle": "Add a live estimate calculator section with inputs: Area in Square Feet and Select Service. Compute estimated cost as Area × Service Rate for POP & Gypsum (₹65 default), PVC (₹110 default), Wall Molding (₹100 default); for Gypsum Repair show the message “Final estimate after inspection”. Update the result instantly without page reload.",
+      "files": [
+        "frontend/src/components/estimate/EstimateCalculatorSection.tsx",
+        "frontend/src/domain/services.ts",
+        "frontend/src/pages/HomePage.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-8"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-trust-content-sections-why-choose-ceiling-pro-affordable-skilled-experts-on-time-delivery-a-before-after-gallery-a-customer-reviews-section-a-contact-section-and-a-clean-footer-containing-phone-number-email-and-a-gst-placeholder",
+      "featureTitle": "Add trust/content sections: “Why Choose Ceiling Pro” (Affordable, Skilled Experts, On-Time Delivery), a Before & After gallery, a Customer Reviews section, a Contact section, and a clean footer containing phone number, email, and a GST placeholder.",
+      "files": [
+        "frontend/src/components/layout/SiteFooter.tsx",
+        "frontend/src/components/marketing/ContactSection.tsx",
+        "frontend/src/components/marketing/GallerySection.tsx",
+        "frontend/src/components/marketing/ReviewsSection.tsx",
+        "frontend/src/components/marketing/WhyChooseSection.tsx",
+        "frontend/src/pages/HomePage.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-9"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-mobile-conversion-ui-elements-a-sticky-bottom-book-consultation-button-on-mobile-a-floating-whatsapp-button-and-a-header-click-to-call-button",
+      "featureTitle": "Implement mobile conversion UI elements: a sticky bottom “Book Consultation” button on mobile, a floating WhatsApp button, and a header click-to-call button.",
+      "files": [
+        "frontend/src/components/conversion/FloatingWhatsAppButton.tsx",
+        "frontend/src/components/conversion/StickyBookCta.tsx",
+        "frontend/src/components/layout/SiteHeader.tsx",
+        "frontend/src/pages/HomePage.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-10"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-apply-on-page-seo-basics-for-the-homepage-sections-descriptive-title-description-meta-tags-semantic-headings-and-content-targeting-the-keywords-pop-false-ceiling-pvc-ceiling-installation-wall-molding-services-gypsum-ceiling-repair",
+      "featureTitle": "Apply on-page SEO basics for the homepage/sections: descriptive title/description meta tags, semantic headings, and content targeting the keywords: “POP false ceiling”, “PVC ceiling installation”, “Wall molding services”, “Gypsum ceiling repair”.",
+      "files": [
+        "frontend/index.html",
+        "frontend/src/components/marketing/HeroSection.tsx",
+        "frontend/src/components/marketing/ServicesSection.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-11"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-remove-omit-the-send-booking-details-to-admin-email-requirement-entirely-and-ensure-no-email-sending-code-paths-ui-or-configuration-are-included-in-the-build",
+      "featureTitle": "Remove/omit the ‘send booking details to admin email’ requirement entirely and ensure no email-sending code paths, UI, or configuration are included in the build.",
+      "files": [
+        "frontend/src/components/booking/BookingSection.tsx",
+        "frontend/src/components/marketing/ContactSection.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-12"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-generated-static-images-to-the-project-and-render-them-in-the-ui-from-frontend-public-assets-generated-do-not-serve-images-via-the-backend",
+      "featureTitle": "Add generated static images to the project and render them in the UI from frontend/public/assets/generated (do not serve images via the backend).",
+      "files": [
+        "frontend/src/components/marketing/GallerySection.tsx",
+        "frontend/src/components/marketing/HeroSection.tsx",
+        "frontend/src/components/marketing/HowItWorksSection.tsx",
+        "frontend/src/components/marketing/ServicesSection.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-13"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

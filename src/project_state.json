@@ -1,0 +1,160 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "Build a premium, ultra mobile-friendly service booking website for the interior services brand \"Ceiling Pro\" with mobile-first design, fixed daily time slots booking system, live estimate calculator, trust/content sections, and an admin panel (email notifications removed).",
+  "architectural_notes": [
+    "Email notifications for bookings were explicitly removed; backend should not attempt to send admin emails (placeholder optional).",
+    "Booking time slots are limited to 4 fixed options per day, with admin ability to enable/disable slots."
+  ],
+  "known_issues": [],
+  "isFixRequest": false,
+  "imageRequirements": "## Required Images\n- Bright modern ceiling interior hero background photo (ceilingpro-hero-bg.dim_1920x1080.png)\n- Minimal line icon for POP & Gypsum ceiling (icon-pop-gypsum.dim_256x256.png)\n- Minimal line icon for PVC ceiling installation (icon-pvc.dim_256x256.png)\n- Minimal line icon for wall molding & decorative panels (icon-wall-molding.dim_256x256.png)\n- Minimal line icon for gypsum ceiling repairing (icon-gypsum-repair.dim_256x256.png)\n- Minimal line icon for step 1 (book online) (icon-step-book.dim_256x256.png)\n- Minimal line icon for step 2 (site visit & estimate) (icon-step-visit.dim_256x256.png)\n- Minimal line icon for step 3 (installation & clean finish) (icon-step-install.dim_256x256.png)\n- Before image of a simple room ceiling interior (gallery-before-1.dim_1200x900.png)\n- After image of the same room with upgraded false ceiling (gallery-after-1.dim_1200x900.png)",
+  "existing_features": [
+    {
+      "id": "feature-build-a-mobile-first-premium-marketing-website-for-the-interior-services-brand-ceiling-pro-with-a-clean-white-natural-look-fresh-white-background-soft-light-grey-sections-light-beige-soft-natural-green-accents-elegant-modern-sans-serif-typography-spacious-layout-with-lots-of-white-space-smooth-scroll-section-reveal-animations-and-fast-loading-responsive-layout-optimized-for-smartphones",
+      "title": "Build a mobile-first, premium marketing website for the interior services brand “Ceiling Pro” with a clean white/natural look: fresh white background, soft light-grey sections, light beige + soft natural green accents, elegant modern sans-serif typography, spacious layout with lots of white space, smooth scroll/section reveal animations, and fast-loading responsive layout optimized for smartphones.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-the-homepage-hero-section-with-a-bright-modern-ceiling-interior-background-image-headline-affordable-premium-false-ceiling-services-subheadline-starting-at-65-per-sq-ft-book-expert-consultation-online-and-two-cta-buttons-book-consultation-opens-scrolls-to-booking-form-and-call-now-click-to-call",
+      "title": "Implement the homepage hero section with a bright modern ceiling interior background image, headline “Affordable & Premium False Ceiling Services”, subheadline “Starting at ₹65 per sq.ft – Book Expert Consultation Online”, and two CTA buttons: “Book Consultation” (opens/scrolls to booking form) and “Call Now” (click-to-call).",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-services-section-that-displays-exactly-4-service-cards-with-soft-shadow-each-containing-an-icon-short-description-starting-price-or-inspection-based-text-and-a-book-now-button-that-leads-to-the-booking-form-with-that-service-preselected",
+      "title": "Add a services section that displays exactly 4 service cards with soft shadow, each containing an icon, short description, starting price (or inspection-based text), and a “Book Now” button that leads to the booking form with that service preselected.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-how-it-works-section-showing-a-simple-3-step-process-with-icons-1-book-your-slot-online-2-site-visit-final-estimate-3-professional-installation-clean-finish",
+      "title": "Add a “How it works” section showing a simple 3-step process with icons: (1) Book Your Slot Online, (2) Site Visit & Final Estimate, (3) Professional Installation & Clean Finish.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-booking-system-ui-section-with-a-booking-form-containing-fields-full-name-mobile-number-location-property-type-flat-office-shop-select-service-4-services-select-date-calendar-select-time-slot-restricted-to-10-00-am-1-00-pm-4-00-pm-7-00-pm-and-only-those-enabled-enter-area-in-square-feet-and-submit-after-submission-show-an-on-page-confirmation-message",
+      "title": "Implement a booking system UI section with a booking form containing fields: Full Name, Mobile Number, Location, Property Type (Flat/Office/Shop), Select Service (4 services), Select Date (calendar), Select Time Slot (restricted to 10:00 AM, 1:00 PM, 4:00 PM, 7:00 PM and only those enabled), Enter Area in Square Feet, and Submit. After submission, show an on-page confirmation message.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-an-admin-panel-ui-that-allows-viewing-all-bookings-in-a-table-with-sorting-by-created-date-editing-the-4-service-rates-enabling-disabling-each-of-the-4-fixed-time-slots-and-exporting-the-booking-list-to-a-downloadable-csv-file",
+      "title": "Build an admin panel UI that allows: viewing all bookings in a table (with sorting by created date), editing the 4 service rates, enabling/disabling each of the 4 fixed time slots, and exporting the booking list to a downloadable CSV file.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-live-estimate-calculator-section-with-inputs-area-in-square-feet-and-select-service-compute-estimated-cost-as-area-service-rate-for-pop-gypsum-65-default-pvc-110-default-wall-molding-100-default-for-gypsum-repair-show-the-message-final-estimate-after-inspection-update-the-result-instantly-without-page-reload",
+      "title": "Add a live estimate calculator section with inputs: Area in Square Feet and Select Service. Compute estimated cost as Area × Service Rate for POP & Gypsum (₹65 default), PVC (₹110 default), Wall Molding (₹100 default); for Gypsum Repair show the message “Final estimate after inspection”. Update the result instantly without page reload.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-trust-content-sections-why-choose-ceiling-pro-affordable-skilled-experts-on-time-delivery-a-before-after-gallery-a-customer-reviews-section-a-contact-section-and-a-clean-footer-containing-phone-number-email-and-a-gst-placeholder",
+      "title": "Add trust/content sections: “Why Choose Ceiling Pro” (Affordable, Skilled Experts, On-Time Delivery), a Before & After gallery, a Customer Reviews section, a Contact section, and a clean footer containing phone number, email, and a GST placeholder.",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-mobile-conversion-ui-elements-a-sticky-bottom-book-consultation-button-on-mobile-a-floating-whatsapp-button-and-a-header-click-to-call-button",
+      "title": "Implement mobile conversion UI elements: a sticky bottom “Book Consultation” button on mobile, a floating WhatsApp button, and a header click-to-call button.",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-on-page-seo-basics-for-the-homepage-sections-descriptive-title-description-meta-tags-semantic-headings-and-content-targeting-the-keywords-pop-false-ceiling-pvc-ceiling-installation-wall-molding-services-gypsum-ceiling-repair",
+      "title": "Apply on-page SEO basics for the homepage/sections: descriptive title/description meta tags, semantic headings, and content targeting the keywords: “POP false ceiling”, “PVC ceiling installation”, “Wall molding services”, “Gypsum ceiling repair”.",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-omit-the-send-booking-details-to-admin-email-requirement-entirely-and-ensure-no-email-sending-code-paths-ui-or-configuration-are-included-in-the-build",
+      "title": "Remove/omit the ‘send booking details to admin email’ requirement entirely and ensure no email-sending code paths, UI, or configuration are included in the build.",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-generated-static-images-to-the-project-and-render-them-in-the-ui-from-frontend-public-assets-generated-do-not-serve-images-via-the-backend",
+      "title": "Add generated static images to the project and render them in the UI from frontend/public/assets/generated (do not serve images via the backend).",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Mobile-first premium marketing website UI for Ceiling Pro (hero, services, how-it-works, trust sections, contact, footer) with sticky mobile CTA + WhatsApp floating button + click-to-call header",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Booking system with 4 fixed daily time slots, booking form fields, confirmation message, and booking storage for admin dashboard (no email notifications)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Admin panel to view bookings, edit service pricing, enable/disable time slots, and export booking list",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Live estimate calculator (area x service rate; gypsum repair shows inspection message) with instant update without page reload",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "SEO optimization targeting specified keywords for services pages/sections",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Before & After gallery and customer reviews sections",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-12",
+      "summary": "Create backend persistence and APIs for: (a) creating a booking record, (b) listing all bookings for the admin dashboard, (c) editing service pricing, and (d) enabling/disabling each of the 4 daily time slots (global setting).",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Ceiling Pro",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

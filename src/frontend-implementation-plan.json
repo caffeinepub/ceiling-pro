@@ -1,0 +1,443 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Ceiling Pro mobile-first marketing + booking + admin (frontend-only)",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Implement a mobile-first, premium white/natural visual design system with subtle scroll reveal animations and fast responsive layout.",
+      "acceptanceCriteria": [
+        "All primary pages/sections render correctly on common mobile widths (e.g., 360px) with a mobile-first layout.",
+        "Site uses white/natural palette and maintains consistent typography/spacing across sections.",
+        "Scroll/section animations are subtle and do not block interaction or significantly impact performance."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "create",
+          "description": "Create global styles and theme tokens (white background, light-grey sections, beige/soft green accents, modern sans-serif defaults, spacing), aligning Tailwind + shadcn-ui theming. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Extend Tailwind theme with brand-friendly semantic colors (accent/secondary/muted) and any required utility defaults for spacious mobile-first layout; keep animations lightweight. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useRevealOnScroll.ts",
+          "operation": "create",
+          "description": "Add an IntersectionObserver-based hook to apply subtle section reveal on scroll without blocking interaction (prefers-reduced-motion friendly)."
+        },
+        {
+          "path": "frontend/src/components/marketing/Section.tsx",
+          "operation": "create",
+          "description": "Create a reusable Section wrapper for consistent padding, max-width, background variants (white vs light-grey), and optional reveal-on-scroll behavior using the new hook."
+        },
+        {
+          "path": "frontend/src/pages/HomePage.tsx",
+          "operation": "create",
+          "description": "Create the mobile-first homepage composition using the shared Section wrapper and spacing/typography rules."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Build the homepage hero with generated background image, specified headline/subheadline, and CTAs for booking scroll and click-to-call.",
+      "acceptanceCriteria": [
+        "Hero renders background image with readable overlay text on mobile.",
+        "Book Consultation button brings user to booking section/form.",
+        "Call Now button triggers a tel: link configured in one place (constant/config)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/public/assets/generated/ceilingpro-hero-bg.dim_1920x1080.png",
+          "operation": "create",
+          "description": "Add the generated hero background image as a static asset (served directly from frontend/public)."
+        },
+        {
+          "path": "frontend/src/config/ceilingPro.ts",
+          "operation": "create",
+          "description": "Add centralized brand constants (phone number for tel:, WhatsApp number for wa.me, email, GST placeholder) so CTAs reference a single source of truth."
+        },
+        {
+          "path": "frontend/src/components/marketing/HeroSection.tsx",
+          "operation": "create",
+          "description": "Implement hero UI with background image from frontend/public/assets/generated/ceilingpro-hero-bg.dim_1920x1080.png, overlay text, and two CTAs using shadcn-ui Button for consistent styling. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/HomePage.tsx",
+          "operation": "modify",
+          "description": "Wire HeroSection into the homepage and connect the Book Consultation CTA to scroll/focus the booking form section."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Add a services section with exactly 4 service cards (icons, descriptions, pricing text) and Book Now preselect behavior for the booking form.",
+      "acceptanceCriteria": [
+        "Exactly 4 service cards are shown with the specified titles/descriptions/pricing text.",
+        "Each card shows an icon and a Book Now button.",
+        "Clicking Book Now preselects the chosen service in the booking form."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/public/assets/generated/icon-pop-gypsum.dim_256x256.png",
+          "operation": "create",
+          "description": "Add generated service icon asset for POP & Gypsum as a static image."
+        },
+        {
+          "path": "frontend/public/assets/generated/icon-pvc.dim_256x256.png",
+          "operation": "create",
+          "description": "Add generated service icon asset for PVC as a static image."
+        },
+        {
+          "path": "frontend/public/assets/generated/icon-wall-molding.dim_256x256.png",
+          "operation": "create",
+          "description": "Add generated service icon asset for Wall Molding as a static image."
+        },
+        {
+          "path": "frontend/public/assets/generated/icon-gypsum-repair.dim_256x256.png",
+          "operation": "create",
+          "description": "Add generated service icon asset for Gypsum Repair as a static image."
+        },
+        {
+          "path": "frontend/src/domain/services.ts",
+          "operation": "create",
+          "description": "Define the canonical list of the 4 services (labels, default pricing text/rate mapping keys, icon paths, and identifiers) used consistently across services, booking, and estimate."
+        },
+        {
+          "path": "frontend/src/components/marketing/ServicesSection.tsx",
+          "operation": "create",
+          "description": "Render exactly 4 service cards with soft shadow and Book Now buttons using shadcn-ui Card + Button for consistent UI. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/state/bookingPrefill.ts",
+          "operation": "create",
+          "description": "Implement lightweight prefill state (e.g., via URL hash/query or in-memory context) so ServicesSection can preselect a service in the booking form."
+        },
+        {
+          "path": "frontend/src/pages/HomePage.tsx",
+          "operation": "modify",
+          "description": "Wire ServicesSection into the homepage and connect Book Now actions to set preselected service + scroll to booking form."
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "Add a 3-step “How it works” section with icons and mobile-friendly layout.",
+      "acceptanceCriteria": [
+        "The 3 steps are displayed in order with icons and readable labels on mobile."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/public/assets/generated/icon-step-book.dim_256x256.png",
+          "operation": "create",
+          "description": "Add generated icon for step 1 (book online) as a static image."
+        },
+        {
+          "path": "frontend/public/assets/generated/icon-step-visit.dim_256x256.png",
+          "operation": "create",
+          "description": "Add generated icon for step 2 (site visit & estimate) as a static image."
+        },
+        {
+          "path": "frontend/public/assets/generated/icon-step-install.dim_256x256.png",
+          "operation": "create",
+          "description": "Add generated icon for step 3 (installation & clean finish) as a static image."
+        },
+        {
+          "path": "frontend/src/components/marketing/HowItWorksSection.tsx",
+          "operation": "create",
+          "description": "Implement the 3-step process section with icons from frontend/public/assets/generated and clean mobile-first spacing."
+        },
+        {
+          "path": "frontend/src/pages/HomePage.tsx",
+          "operation": "modify",
+          "description": "Wire HowItWorksSection into the homepage section order."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Implement the booking form UI with required fields, fixed time slots with enabled/disabled state from backend, submission via backend call, and on-page confirmation.",
+      "acceptanceCriteria": [
+        "Booking form enforces required fields and only allows the 4 fixed time slots (subject to enabled/disabled state).",
+        "Submitting a valid booking persists it in the backend and shows a confirmation message without a full page reload.",
+        "Admin dashboard reflects the newly created booking."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useCeilingProBackend.ts",
+          "operation": "create",
+          "description": "Create a small wrapper hook around useActor to expose typed backend calls (createBooking, getTimeSlotAvailability, getServiceRates) for the booking experience."
+        },
+        {
+          "path": "frontend/src/hooks/useTimeSlotAvailability.ts",
+          "operation": "create",
+          "description": "Add React Query hook to load time slot availability and provide a stable loading/error API for the booking form."
+        },
+        {
+          "path": "frontend/src/components/booking/BookingSection.tsx",
+          "operation": "create",
+          "description": "Build the booking section and form UI (fields, validation, fixed slots 10:00 AM / 1:00 PM / 4:00 PM / 7:00 PM, disable unavailable slots) using shadcn-ui Form-related inputs (Input/Select/Button) where available. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/booking/bookingValidation.ts",
+          "operation": "create",
+          "description": "Add client-side validation utilities (required fields, mobile number format, numeric area > 0) and map to user-friendly English error messages."
+        },
+        {
+          "path": "frontend/src/pages/HomePage.tsx",
+          "operation": "modify",
+          "description": "Wire BookingSection into the homepage and ensure it can receive a preselected service from ServicesSection and CTA scroll targets."
+        },
+        {
+          "path": "frontend/src/state/bookingPrefill.ts",
+          "operation": "modify",
+          "description": "Extend prefill state to include service preselection and optional focus behavior for better mobile conversion."
+        }
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "summary": "Create an admin panel page to view bookings (sortable by created date), edit service rates, toggle time slot availability, and export CSV.",
+      "acceptanceCriteria": [
+        "Admin page shows a bookings table including at least: name, phone, location, property type, service, date, time slot, area, created-at.",
+        "Admin can edit and save the 4 service rates and see the estimate calculator and booking UI reflect updated rates.",
+        "Admin can enable/disable each slot and the booking form updates accordingly.",
+        "Export produces a valid CSV download containing all bookings."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useBookings.ts",
+          "operation": "create",
+          "description": "Add React Query hooks for loading bookings for the admin table and for invalidating/refetching after booking creation."
+        },
+        {
+          "path": "frontend/src/hooks/useServiceRates.ts",
+          "operation": "create",
+          "description": "Add React Query hooks for reading/updating service rates and sharing cached values with the estimate calculator and booking UI."
+        },
+        {
+          "path": "frontend/src/hooks/useUpdateTimeSlots.ts",
+          "operation": "create",
+          "description": "Add mutation hook for updating time slot availability and invalidating availability queries used by the booking form."
+        },
+        {
+          "path": "frontend/src/components/admin/BookingsTable.tsx",
+          "operation": "create",
+          "description": "Implement bookings table UI with sorting by created-at date and a CSV export action using shadcn-ui Table/Button components where available. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/admin/ServiceRatesEditor.tsx",
+          "operation": "create",
+          "description": "Implement UI for editing the 3 numeric service rates (POP & Gypsum, PVC, Wall Molding) and saving via backend; show current values pulled from backend using shadcn-ui inputs/buttons. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/admin/TimeSlotsEditor.tsx",
+          "operation": "create",
+          "description": "Implement toggles for the 4 fixed slots (10am/1pm/4pm/7pm) with enabled/disabled state and save action; use shadcn-ui Switch/Button if present. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/AdminPage.tsx",
+          "operation": "create",
+          "description": "Create the admin dashboard page composing bookings table, service rates editor, and time slots editor with clear sections and mobile responsiveness."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "create",
+          "description": "Create the app shell and routing to include routes for the homepage and /admin, plus shared header/footer placement (no authentication added)."
+        },
+        {
+          "path": "frontend/src/components/layout/SiteHeader.tsx",
+          "operation": "create",
+          "description": "Add a header with brand name and a click-to-call button linked via config (accessible aria-label), and optional admin link."
+        }
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "summary": "Add a live estimate calculator (Area × Service Rate) that updates instantly, uses backend-provided rates when available, and shows inspection message for gypsum repair.",
+      "acceptanceCriteria": [
+        "Changing area or service updates the estimate immediately.",
+        "Gypsum Repair selection shows the inspection message instead of a numeric estimate.",
+        "Default rates match the specified values and can be overridden by admin-edited pricing."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/estimate/EstimateCalculatorSection.tsx",
+          "operation": "create",
+          "description": "Implement estimate calculator UI with Area + Service inputs and instantaneous result rendering; use backend rates via useServiceRates hook with correct defaults and inspection message for repair. Use shadcn-ui inputs/buttons where appropriate. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/domain/services.ts",
+          "operation": "modify",
+          "description": "Add mapping from service identifiers to rate keys and default rates (₹65/₹110/₹100) and mark gypsum repair as inspection-based."
+        },
+        {
+          "path": "frontend/src/pages/HomePage.tsx",
+          "operation": "modify",
+          "description": "Wire EstimateCalculatorSection into the homepage near services/booking to support conversion."
+        }
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "summary": "Add trust/content sections (Why Choose, Gallery, Reviews, Contact) and footer with phone/email/GST placeholder.",
+      "acceptanceCriteria": [
+        "All listed trust/content sections exist on the site and are styled consistently with the premium mobile-first design.",
+        "Footer displays phone, email, and a GST placeholder string."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/public/assets/generated/gallery-before-1.dim_1200x900.png",
+          "operation": "create",
+          "description": "Add generated 'before' gallery image as a static asset."
+        },
+        {
+          "path": "frontend/public/assets/generated/gallery-after-1.dim_1200x900.png",
+          "operation": "create",
+          "description": "Add generated 'after' gallery image as a static asset."
+        },
+        {
+          "path": "frontend/src/components/marketing/WhyChooseSection.tsx",
+          "operation": "create",
+          "description": "Implement 'Why Choose Ceiling Pro' section with the three bullets (Affordable, Skilled Experts, On-Time Delivery) and premium mobile-friendly styling."
+        },
+        {
+          "path": "frontend/src/components/marketing/GallerySection.tsx",
+          "operation": "create",
+          "description": "Implement Before & After gallery using the generated images from frontend/public/assets/generated/gallery-before-1.dim_1200x900.png and frontend/public/assets/generated/gallery-after-1.dim_1200x900.png."
+        },
+        {
+          "path": "frontend/src/components/marketing/ReviewsSection.tsx",
+          "operation": "create",
+          "description": "Implement a customer reviews section with consistent typography and spacing (static content as no data source was requested)."
+        },
+        {
+          "path": "frontend/src/components/marketing/ContactSection.tsx",
+          "operation": "create",
+          "description": "Implement a contact section with phone/email from config and optional location text; keep user-facing text in English."
+        },
+        {
+          "path": "frontend/src/components/layout/SiteFooter.tsx",
+          "operation": "create",
+          "description": "Create a clean footer that displays phone number, email, and a GST placeholder string using centralized config."
+        },
+        {
+          "path": "frontend/src/pages/HomePage.tsx",
+          "operation": "modify",
+          "description": "Wire trust/content sections and footer into the homepage in a cohesive order."
+        }
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "summary": "Add mobile conversion UI: sticky bottom Book Consultation button, floating WhatsApp button, and header click-to-call button.",
+      "acceptanceCriteria": [
+        "On mobile viewports, a sticky bottom Book Consultation CTA remains visible and opens/scrolls to the booking form.",
+        "Floating WhatsApp button opens a wa.me link (phone number configurable in one place).",
+        "Header call button triggers a tel: link and is accessible (proper aria-label)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/conversion/StickyBookCta.tsx",
+          "operation": "create",
+          "description": "Implement a mobile-only sticky bottom 'Book Consultation' button that scrolls to/focuses the booking form using shadcn-ui Button styling. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/conversion/FloatingWhatsAppButton.tsx",
+          "operation": "create",
+          "description": "Implement a floating WhatsApp button that opens wa.me using the configurable WhatsApp number from config."
+        },
+        {
+          "path": "frontend/src/components/layout/SiteHeader.tsx",
+          "operation": "modify",
+          "description": "Add/ensure the header click-to-call button uses config-provided tel: link and has an aria-label for accessibility."
+        },
+        {
+          "path": "frontend/src/pages/HomePage.tsx",
+          "operation": "modify",
+          "description": "Wire sticky and floating conversion components so they are present on the homepage and target the booking section."
+        }
+      ]
+    },
+    {
+      "id": "REQ-11",
+      "summary": "Add on-page SEO basics: title/meta description, semantic headings, and keyword-targeted content in relevant sections.",
+      "acceptanceCriteria": [
+        "Page includes a meaningful <title> and meta description.",
+        "H1/H2 structure is semantic and includes the target keyword phrases naturally in section headings or body text.",
+        "Lighthouse SEO checks show no critical SEO errors (where applicable in a SPA context)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/index.html",
+          "operation": "modify",
+          "description": "Update <title> and add a meta description aligned to Ceiling Pro services and booking intent (no email claims)."
+        },
+        {
+          "path": "frontend/src/components/marketing/HeroSection.tsx",
+          "operation": "modify",
+          "description": "Ensure semantic H1/H2 usage and incorporate relevant keywords naturally within headings/body text (e.g., POP false ceiling, PVC ceiling installation)."
+        },
+        {
+          "path": "frontend/src/components/marketing/ServicesSection.tsx",
+          "operation": "modify",
+          "description": "Include keyword phrases naturally in service titles/descriptions where appropriate (e.g., Wall molding services, Gypsum ceiling repair)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-12",
+      "summary": "Ensure no UI implies email notifications; confirmation messaging should only acknowledge booking submission/received.",
+      "acceptanceCriteria": [
+        "No backend methods attempt to send email.",
+        "UI does not claim that an email is sent; confirmation only indicates booking submission/received.",
+        "No email API keys, SMTP settings, or third-party email integrations exist in the codebase."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/booking/BookingSection.tsx",
+          "operation": "modify",
+          "description": "Use confirmation copy that only confirms booking was submitted/received and does not mention email notifications or sending details via email."
+        },
+        {
+          "path": "frontend/src/components/marketing/ContactSection.tsx",
+          "operation": "modify",
+          "description": "Ensure contact section copy does not promise email confirmations/notifications; keep wording strictly informational."
+        }
+      ]
+    },
+    {
+      "id": "REQ-13",
+      "summary": "Add the required generated static images under frontend/public/assets/generated and reference them directly in the UI (no backend image serving).",
+      "acceptanceCriteria": [
+        "Generated images are placed under frontend/public/assets/generated and referenced directly by the frontend.",
+        "Hero uses the generated background image.",
+        "Service cards and How-it-works steps use the generated icon assets.",
+        "Gallery uses the generated before/after images."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/marketing/HeroSection.tsx",
+          "operation": "modify",
+          "description": "Reference frontend/public/assets/generated/ceilingpro-hero-bg.dim_1920x1080.png for the hero background (static asset usage)."
+        },
+        {
+          "path": "frontend/src/components/marketing/ServicesSection.tsx",
+          "operation": "modify",
+          "description": "Reference the service icon assets from frontend/public/assets/generated/icon-pop-gypsum.dim_256x256.png, frontend/public/assets/generated/icon-pvc.dim_256x256.png, frontend/public/assets/generated/icon-wall-molding.dim_256x256.png, frontend/public/assets/generated/icon-gypsum-repair.dim_256x256.png."
+        },
+        {
+          "path": "frontend/src/components/marketing/HowItWorksSection.tsx",
+          "operation": "modify",
+          "description": "Reference the step icon assets from frontend/public/assets/generated/icon-step-book.dim_256x256.png, frontend/public/assets/generated/icon-step-visit.dim_256x256.png, frontend/public/assets/generated/icon-step-install.dim_256x256.png."
+        },
+        {
+          "path": "frontend/src/components/marketing/GallerySection.tsx",
+          "operation": "modify",
+          "description": "Reference the gallery images from frontend/public/assets/generated/gallery-before-1.dim_1200x900.png and frontend/public/assets/generated/gallery-after-1.dim_1200x900.png."
+        }
+      ]
+    }
+  ]
+}
