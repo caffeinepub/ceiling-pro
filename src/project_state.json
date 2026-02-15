@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 11,
+  "projectStateVersion": 13,
   "summary": "Build a premium, ultra mobile-friendly service booking website for the interior services brand \"Ceiling Pro\" with mobile-first design, fixed daily time slots booking system, live estimate calculator, trust/content sections, updated contact numbers (phone + WhatsApp: 9834587806), an owner-only admin panel (not visible to customers; email notifications removed) using a password-based login system (not Internet Identity), ability for admin to edit website images, removal of GST column/placeholder, and a customer account area where customers can view their own bookings via a service menu bar.",
   "architectural_notes": [
     "Email notifications for bookings were explicitly removed; backend should not attempt to send admin emails (placeholder optional).",
@@ -11,8 +11,10 @@
     "Replace Internet Identity authentication for /admin with a password-based owner login (username/password), while still keeping admin routes hidden from the public site and protected behind authentication.",
     "Admin username/password defaults need to be updated to the owner-provided credentials (Sirajahmad / S1i2r3)."
   ],
-  "known_issues": [],
-  "isFixRequest": false,
+  "known_issues": [
+    "Admin panel login is failing to grant access even when using the correct username/password (Sirajahmad / S1i2r3); user requests a fix."
+  ],
+  "isFixRequest": true,
   "existing_features": [
     {
       "id": "feature-build-a-mobile-first-premium-marketing-website-for-the-interior-services-brand-ceiling-pro-with-a-clean-white-natural-look-fresh-white-background-soft-light-grey-sections-light-beige-soft-natural-green-accents-elegant-modern-sans-serif-typography-spacious-layout-with-lots-of-white-space-smooth-scroll-section-reveal-animations-and-fast-loading-responsive-layout-optimized-for-smartphones",
@@ -197,6 +199,14 @@
         "REQ-28"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-adjust-the-frontend-admin-auth-flow-to-verify-backend-session-state-after-login-and-to-handle-session-validation-consistently-so-the-ui-does-not-show-a-logged-in-admin-state-unless-isadminuser-confirms-it",
+      "title": "Adjust the frontend admin auth flow to verify backend session state after login and to handle session validation consistently (so the UI does not show a logged-in admin state unless `isAdminUser()` confirms it).",
+      "reqIds": [
+        "REQ-31"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -333,6 +343,22 @@
       "summary": "Update the backend’s admin login credentials to username \"Sirajahmad\" and password \"S1i2r3\" so that logging into /admin only succeeds with these new values (replacing the current defaults). Ensure the change applies to upgraded canisters as well (i.e., existing persisted credential state should be updated to the new username/password during upgrade).",
       "reqIds": [
         "REQ-26"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-34",
+      "summary": "Fix backend admin authentication so that a successful `adminLogin(username, password)` reliably grants admin access for the same caller on subsequent calls (including page refresh), and so that `isAdminUser()` returns `true` immediately after a successful login for that caller.",
+      "reqIds": [
+        "REQ-29"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-35",
+      "summary": "Update backend authorization checks for all admin-only endpoints (at minimum: `getAllBookings`, `updateServiceRates`, `updateTimeSlotAvailability`, `updateImagePaths`) to use the same admin-auth mechanism as `isAdminUser()` so that the admin dashboard can load and perform all admin actions after login.",
+      "reqIds": [
+        "REQ-30"
       ],
       "status": "pending"
     }

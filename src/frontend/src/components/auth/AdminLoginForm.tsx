@@ -5,12 +5,12 @@ import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Lock, AlertCircle } from 'lucide-react';
-import { useAdminAuth } from '../../hooks/useAdminAuth';
+import { useAdminAuthContext } from '../../context/AdminAuthContext';
 
 export default function AdminLoginForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const { login, isLoading, error, clearError } = useAdminAuth();
+  const { login, isLoading, error, clearError } = useAdminAuthContext();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();

@@ -7,6 +7,7 @@ import SiteHeader from './components/layout/SiteHeader';
 import SiteFooter from './components/layout/SiteFooter';
 import { Outlet } from '@tanstack/react-router';
 import { Toaster } from '@/components/ui/sonner';
+import { AdminAuthProvider } from './context/AdminAuthContext';
 
 // Layout component that wraps all routes
 function Layout() {
@@ -57,5 +58,9 @@ declare module '@tanstack/react-router' {
 }
 
 export default function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <AdminAuthProvider>
+      <RouterProvider router={router} />
+    </AdminAuthProvider>
+  );
 }

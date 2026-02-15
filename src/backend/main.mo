@@ -54,11 +54,6 @@ actor {
     name : Text;
   };
 
-  type AdminCredentials = {
-    username : Text;
-    password : Text; // In production, this would be a hashed password.
-  };
-
   let bookings = Map.empty<Text, Booking>();
   let userProfiles = Map.empty<Principal, UserProfile>();
   var nextId = 1;
@@ -85,20 +80,14 @@ actor {
     beforeAfterGallery = [];
   };
 
-  var adminCredentials : AdminCredentials = {
-    username = "Sirajahmad";
-    password = "S1i2r3";
-  };
-
-  // Admin authentication endpoint - validates credentials and assigns admin role
+  // Admin credential verification with role assignment
   public shared ({ caller }) func adminLogin(username : Text, password : Text) : async Bool {
-    if (username == adminCredentials.username and password == adminCredentials.password) {
-      // Assign admin role to the caller
+    let isValid = username == "Sirajahmad" and password == "S1i2r3";
+    if (isValid) {
+      // Grant admin role to the caller upon successful login
       AccessControl.assignRole(accessControlState, caller, caller, #admin);
-      true;
-    } else {
-      false;
     };
+    isValid;
   };
 
   // Check if caller has admin privileges
@@ -130,7 +119,7 @@ actor {
 
   // Booking management - Admin only
   public query ({ caller }) func getAllBookings() : async [Booking] {
-    if (not (AccessControl.hasPermission(accessControlState, caller, #admin))) {
+    if (not (AccessControl.isAdmin(accessControlState, caller))) {
       Runtime.trap("Unauthorized: Only admins can view all bookings");
     };
     bookings.values().toArray();
@@ -179,7 +168,7 @@ actor {
     pvc : Nat,
     wallMolding : Nat,
   ) : async () {
-    if (not (AccessControl.hasPermission(accessControlState, caller, #admin))) {
+    if (not (AccessControl.isAdmin(accessControlState, caller))) {
       Runtime.trap("Unauthorized: Only admins can update service rates");
     };
     serviceRates := {
@@ -200,7 +189,7 @@ actor {
     slot4pm : Bool,
     slot7pm : Bool,
   ) : async () {
-    if (not (AccessControl.hasPermission(accessControlState, caller, #admin))) {
+    if (not (AccessControl.isAdmin(accessControlState, caller))) {
       Runtime.trap("Unauthorized: Only admins can update time slot availability");
     };
     timeSlotAvailability := {
@@ -235,7 +224,7 @@ actor {
     serviceCard4 : Text,
     beforeAfterGallery : [Text],
   ) : async () {
-    if (not (AccessControl.hasPermission(accessControlState, caller, #admin))) {
+    if (not (AccessControl.isAdmin(accessControlState, caller))) {
       Runtime.trap("Unauthorized: Only admins can update image paths");
     };
     imagePaths := {

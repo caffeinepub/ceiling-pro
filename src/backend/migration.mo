@@ -1,23 +1,18 @@
 module {
-  // Only need to update the adminCredentials.
-  type AdminCredentials = {
+  // Explicit migration to drop removed adminCredentials field.
+  type OldAdminCredentials = {
     username : Text;
     password : Text;
   };
 
   type OldActor = {
-    adminCredentials : AdminCredentials;
+    adminCredentials : OldAdminCredentials;
   };
 
-  type NewActor = {
-    adminCredentials : AdminCredentials;
-  };
+  // Remove adminCredentials field.
+  type NewActor = {};
 
   public func run(old : OldActor) : NewActor {
-    let newCredentials : AdminCredentials = {
-      username = "Sirajahmad";
-      password = "S1i2r3";
-    };
-    { old with adminCredentials = newCredentials };
+    {};
   };
 };

@@ -1,77 +1,46 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Update public contact email and restore prior default service-card images",
+  "title": "Fix frontend admin auth flow and session validation for /admin",
   "requirements": [
     {
-      "id": "REQ-27",
-      "summary": "Update shared contact config so all UI displays the new public email ceilingpro9@gmail.com (at minimum Contact section and Footer).",
+      "id": "REQ-31",
+      "summary": "Make /admin UI reflect backend-confirmed admin status by sharing auth state, validating session after login, and re-validating on refresh.",
       "acceptanceCriteria": [
-        "The Contact section email link uses mailto:ceilingpro9@gmail.com and displays \"ceilingpro9@gmail.com\"",
-        "The Footer displays \"ceilingpro9@gmail.com\"",
-        "No customer-facing UI still shows the old email value"
+        "After clicking “Login” with correct credentials, the admin dashboard content renders (not stuck on login form).",
+        "After a page refresh, if the browser has the stored admin session marker, the app re-validates via `isAdminUser()` and shows the dashboard when the backend confirms admin status.",
+        "If credentials are wrong, the login form shows an error and the dashboard content does not render."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/config/ceilingPro.ts",
-          "operation": "modify",
-          "description": "Update CEILING_PRO_CONFIG.email to \"ceilingpro9@gmail.com\" so all components using shared contact config render the new email."
-        },
-        {
-          "path": "frontend/src/components/marketing/ContactSection.tsx",
-          "operation": "modify",
-          "description": "Confirm the Contact section renders the email exclusively from CEILING_PRO_CONFIG.email (no hardcoded fallback), ensuring the mailto: link and visible text reflect the new value."
-        },
-        {
-          "path": "frontend/src/components/layout/SiteFooter.tsx",
-          "operation": "modify",
-          "description": "Confirm the footer renders the email exclusively from CEILING_PRO_CONFIG.email (no hardcoded fallback), ensuring it reflects the new value everywhere it appears."
-        }
-      ]
-    },
-    {
-      "id": "REQ-28",
-      "summary": "Restore prior default images for the 4 \"Our Services\" service cards using the previous /images/service*.jpg-style paths while keeping admin-configured image paths as overrides.",
-      "acceptanceCriteria": [
-        "The \"Our Services\" section service-card images render using the restored previous image paths (not the newer generated defaults)",
-        "All 4 service cards show non-broken images on a hard refresh",
-        "The service card images remain individually controllable via the existing image-paths mechanism (admin image paths), with the restored images acting as defaults where appropriate"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/hooks/useImagePaths.ts",
-          "operation": "modify",
-          "description": "Switch the default/fallback serviceCard1-4 image paths from the newer generated assets to the prior /images/service*.jpg-style defaults, while preserving the existing override behavior when backend-provided image paths are non-empty."
-        },
-        {
-          "path": "frontend/src/domain/services.ts",
-          "operation": "modify",
-          "description": "Update the SERVICES[].imagePath defaults for the four services to match the restored prior /images/service*.jpg-style paths so ServicesSection defaults align with the restored images when no overrides are provided."
-        },
-        {
-          "path": "frontend/src/components/admin/ImagesEditor.tsx",
-          "operation": "modify",
-          "description": "Update helper/placeholder text for the service-card image path inputs to reflect the restored prior /images/service*.jpg-style default paths (without changing the admin override mechanism)."
-        },
-        {
-          "path": "frontend/public/images/service1.jpg",
+          "path": "frontend/src/context/AdminAuthContext.tsx",
           "operation": "create",
-          "description": "Add/restore the prior default Service Card 1 image file so /images/service1.jpg loads reliably on hard refresh (ensure filename matches the chosen default path)."
+          "description": "Create an AdminAuthProvider + useAdminAuthContext hook to ensure AdminAccessGate, AdminLoginForm, and AdminPage share a single admin-auth state instance (avoids per-component hook state divergence)."
         },
         {
-          "path": "frontend/public/images/service2.jpg",
-          "operation": "create",
-          "description": "Add/restore the prior default Service Card 2 image file so /images/service2.jpg loads reliably on hard refresh (ensure filename matches the chosen default path)."
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wrap the routed application layout with AdminAuthProvider so /admin gating and login use a single shared admin-auth state across the route tree."
         },
         {
-          "path": "frontend/public/images/service3.jpg",
-          "operation": "create",
-          "description": "Add/restore the prior default Service Card 3 image file so /images/service3.jpg loads reliably on hard refresh (ensure filename matches the chosen default path)."
+          "path": "frontend/src/hooks/useAdminAuth.ts",
+          "operation": "modify",
+          "description": "Adjust admin login/session logic to only mark the UI as logged-in after backend-confirmed admin status (call `isAdminUser()` after a successful `adminLogin`), keep localStorage as a marker only, and invalidate/refresh relevant cached queries after login/logout so the dashboard reliably renders the protected content."
         },
         {
-          "path": "frontend/public/images/service4.jpg",
-          "operation": "create",
-          "description": "Add/restore the prior default Service Card 4 image file so /images/service4.jpg loads reliably on hard refresh (ensure filename matches the chosen default path)."
+          "path": "frontend/src/components/auth/AdminAccessGate.tsx",
+          "operation": "modify",
+          "description": "Switch from calling useAdminAuth directly to using the shared AdminAuthContext; ensure session validation runs when the gate mounts and that the gate never renders protected children unless the shared state isAdmin is confirmed by `isAdminUser()`."
+        },
+        {
+          "path": "frontend/src/components/auth/AdminLoginForm.tsx",
+          "operation": "modify",
+          "description": "Use the shared AdminAuthContext for login/loading/error; on submit, rely on the updated login flow that verifies backend admin state, and keep showing an English error message when backend confirmation fails."
+        },
+        {
+          "path": "frontend/src/pages/AdminPage.tsx",
+          "operation": "modify",
+          "description": "Use the shared AdminAuthContext for logout so logout consistently clears the shared admin state and prevents the dashboard from rendering after logout or failed session validation."
         }
       ]
     }

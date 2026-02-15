@@ -6,10 +6,10 @@ import ImagesEditor from '../components/admin/ImagesEditor';
 import AdminAccessGate from '../components/auth/AdminAccessGate';
 import { Button } from '@/components/ui/button';
 import { LogOut } from 'lucide-react';
-import { useAdminAuth } from '../hooks/useAdminAuth';
+import { useAdminAuthContext } from '../context/AdminAuthContext';
 
 export default function AdminPage() {
-  const { logout } = useAdminAuth();
+  const { logout } = useAdminAuthContext();
 
   return (
     <AdminAccessGate>

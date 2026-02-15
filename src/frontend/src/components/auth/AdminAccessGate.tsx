@@ -1,5 +1,5 @@
 import { ReactNode, useEffect } from 'react';
-import { useAdminAuth } from '../../hooks/useAdminAuth';
+import { useAdminAuthContext } from '../../context/AdminAuthContext';
 import AdminLoginForm from './AdminLoginForm';
 import { Card, CardContent } from '@/components/ui/card';
 
@@ -8,7 +8,7 @@ interface AdminAccessGateProps {
 }
 
 export default function AdminAccessGate({ children }: AdminAccessGateProps) {
-  const { isLoggedIn, isLoading, validateSession } = useAdminAuth();
+  const { isLoggedIn, isLoading, validateSession } = useAdminAuthContext();
 
   // Revalidate session when component mounts
   useEffect(() => {

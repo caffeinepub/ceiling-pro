@@ -1,85 +1,74 @@
 {
   "kind": "build_request",
-  "title": "Update admin credentials, restore prior service images, and change public contact email",
-  "priority": "normal",
+  "title": "Fix admin login so correct username/password grants access to /admin",
+  "priority": "high",
   "requirements": [
     {
-      "id": "REQ-26",
-      "text": "Update the backend’s admin login credentials to username \"Sirajahmad\" and password \"S1i2r3\" so that logging into /admin only succeeds with these new values (replacing the current defaults). Ensure the change applies to upgraded canisters as well (i.e., existing persisted credential state should be updated to the new username/password during upgrade).",
+      "id": "REQ-29",
+      "text": "Fix backend admin authentication so that a successful `adminLogin(username, password)` reliably grants admin access for the same caller on subsequent calls (including page refresh), and so that `isAdminUser()` returns `true` immediately after a successful login for that caller.",
       "target": "backend",
       "source": {
         "messageIds": [
-          "recent-messages"
+          "recent-messages-5"
         ],
         "quotes": [
-          "Make username.  Sirajahmad \nPassword.  S1i2r3"
+          "They can't give me access admin panel even if put right username and password fix it"
         ]
       },
       "acceptanceCriteria": [
-        "Attempting admin login with username \"Sirajahmad\" and password \"S1i2r3\" returns success (true)",
-        "Attempting admin login with the previous default credentials (\"admin\" / \"1234\") returns failure (false)",
-        "After deploying an upgrade (not a fresh install), the admin login still uses the new credentials (not the old persisted defaults)"
+        "Calling `adminLogin(\"Sirajahmad\",\"S1i2r3\")` returns `true`.",
+        "After a successful `adminLogin`, calling `isAdminUser()` from the same browser/session returns `true` (no incognito window required).",
+        "Calling `adminLogin` with an incorrect username or password returns `false` and does not grant admin access (subsequent `isAdminUser()` remains `false`)."
       ]
     },
     {
-      "id": "REQ-27",
-      "text": "Change the public contact email displayed across the website to \"ceilingpro9@gmail.com\" by updating the shared contact configuration and ensuring all UI that renders email (at minimum: Contact section and Footer) reflects the new value.",
-      "target": "frontend",
+      "id": "REQ-30",
+      "text": "Update backend authorization checks for all admin-only endpoints (at minimum: `getAllBookings`, `updateServiceRates`, `updateTimeSlotAvailability`, `updateImagePaths`) to use the same admin-auth mechanism as `isAdminUser()` so that the admin dashboard can load and perform all admin actions after login.",
+      "target": "backend",
       "source": {
         "messageIds": [
-          "recent-messages"
+          "recent-messages-5"
         ],
         "quotes": [
-          "Change email . ceilingpro9@gmail.com"
+          "They can't give me access admin panel even if put right username and password fix it"
         ]
       },
       "acceptanceCriteria": [
-        "The Contact section email link uses mailto:ceilingpro9@gmail.com and displays \"ceilingpro9@gmail.com\"",
-        "The Footer displays \"ceilingpro9@gmail.com\"",
-        "No customer-facing UI still shows the old email value"
+        "After successful admin login, the admin dashboard can load: bookings table, service rates editor, time slot editor, and images editor without unauthorized traps.",
+        "If not logged in as admin, each admin-only endpoint traps/denies access and the frontend remains behind the login screen."
       ]
     },
     {
-      "id": "REQ-28",
-      "text": "Restore/insert the previous images for the 4 service cards in the \"Our Services\" section by switching the service card image paths back to the prior set used by the project (e.g., the /images/service*.jpg style paths) so that the Services section shows those previous images again.",
+      "id": "REQ-31",
+      "text": "Adjust the frontend admin auth flow to verify backend session state after login and to handle session validation consistently (so the UI does not show a logged-in admin state unless `isAdminUser()` confirms it).",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "recent-messages"
+          "recent-messages-5"
         ],
         "quotes": [
-          "Or inser previous images in our service section"
+          "They can't give me access admin panel even if put right username and password fix it"
         ]
       },
       "acceptanceCriteria": [
-        "The \"Our Services\" section service-card images render using the restored previous image paths (not the newer generated defaults)",
-        "All 4 service cards show non-broken images on a hard refresh",
-        "The service card images remain individually controllable via the existing image-paths mechanism (admin image paths), with the restored images acting as defaults where appropriate"
+        "After clicking “Login” with correct credentials, the admin dashboard content renders (not stuck on login form).",
+        "After a page refresh, if the browser has the stored admin session marker, the app re-validates via `isAdminUser()` and shows the dashboard when the backend confirms admin status.",
+        "If credentials are wrong, the login form shows an error and the dashboard content does not render."
       ]
     }
   ],
   "constraints": [
-    "Backend must remain a single Motoko actor in backend/main.mo; only add/adjust migration code if required for an upgrade.",
-    "Do not edit any files under frontend/src/components/ui or other frontend immutable paths listed in SYSTEM_CONTEXT.",
+    "Backend must remain a single Motoko actor in backend/main.mo.",
+    "Do not edit files in frontend immutablePaths (notably frontend/src/hooks/useActor.ts).",
     "Use English for any user-facing text."
   ],
   "nonGoals": [
-    "Do not change phone/WhatsApp numbers (they must remain 9834587806 as already specified).",
-    "Do not add new authentication providers or third-party login systems.",
-    "Do not add email-sending functionality."
+    "Adding Internet Identity as a requirement for admin access.",
+    "Adding third-party authentication providers.",
+    "Implementing email notifications or any email sending."
   ],
   "imageRequirements": {
     "required": [],
     "edits": []
-  },
-  "userProfileUpdate": {
-    "goalsToAdd": [],
-    "goalsToRemove": [],
-    "preferencesToAdd": [],
-    "preferencesToRemove": [],
-    "miscToAdd": [],
-    "miscToRemove": [],
-    "fieldsToSet": {},
-    "fieldsToDelete": []
   }
 }

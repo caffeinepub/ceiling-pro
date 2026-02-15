@@ -1,35 +1,38 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-15T20:48:41.996Z",
-  "summary": "REQ-26 appears implemented by changing default admin credentials in backend/main.mo and adding a migration (backend/migration.mo) wired via `(with migration = Migration.run)` to force persisted credentials to the new values on upgrade. REQ-27 appears implemented by updating the shared config email to ceilingpro9@gmail.com. REQ-28 appears implemented by restoring default service-card image paths to /images/service1.jpg..service4.jpg in both backend defaults and frontend service definitions, plus frontend hook defaults.",
-  "missing_requirements": [],
-  "hallucinated_features": [
+  "generatedAt": "2026-02-15T21:07:13.950Z",
+  "summary": "Backend now assigns an admin role on successful `adminLogin` and uses `isAdminUser()`/AccessControl checks for at least `getAllBookings`. Frontend introduces an `AdminAuthContext` + access gate that validates admin status via `isAdminUser()` after login and on refresh using a localStorage marker.",
+  "missing_requirements": [
     {
-      "description": "Introduced/modified hero image default handling (backend sets heroImage to /images/hero.jpg; frontend hook defaults heroImage to a generated asset path) which is not requested by REQ-26/27/28.",
-      "reason": "BuildRequest only asks to update admin credentials, change public contact email, and restore prior service-card images; no requirement mentions changing hero image defaults.",
+      "id": "REQ-30",
+      "requirement": "Update backend authorization checks for all admin-only endpoints (at minimum: `getAllBookings`, `updateServiceRates`, `updateTimeSlotAvailability`, `updateImagePaths`) to use the same admin-auth mechanism as `isAdminUser()` so the admin dashboard can load and perform all admin actions after login.",
+      "reason": "The diff shows `getAllBookings` updated to use `AccessControl.isAdmin(...)`, but the diff excerpt is truncated before showing whether `updateServiceRates`, `updateTimeSlotAvailability`, and `updateImagePaths` were updated similarly. Based on provided evidence, these endpoint updates are not confirmed.",
       "evidence": [
-        "backend/main.mo",
-        "frontend/src/hooks/useImagePaths.ts"
-      ]
-    },
-    {
-      "description": "Changed admin ImagesEditor helper text to suggest using generated asset paths (e.g., /assets/generated/image.png), which is not explicitly requested.",
-      "reason": "REQ-28 is about restoring prior service card images; it does not request changing admin UI guidance text.",
-      "evidence": [
-        "frontend/src/components/admin/ImagesEditor.tsx"
+        "backend/main.mo (truncated; shows getAllBookings check but not the other endpoints)"
       ]
     }
   ],
-  "confidence": 0.72,
+  "hallucinated_features": [
+    {
+      "description": "Added a Motoko migration module intended to drop a removed `adminCredentials` field.",
+      "reason": "The BuildRequest does not mention data migration or removing an `adminCredentials` field; it only requests fixing admin login/session behavior and frontend auth flow.",
+      "evidence": [
+        "backend/migration.mo",
+        "backend/main.mo (imports Migration and uses `(with migration = Migration.run)`)"
+      ]
+    }
+  ],
+  "confidence": 0.62,
   "changed_files": [
     "backend/main.mo",
     "backend/migration.mo",
     "frontend-file-summaries.txt",
-    "frontend/src/components/admin/ImagesEditor.tsx",
-    "frontend/src/config/ceilingPro.ts",
-    "frontend/src/domain/services.ts",
-    "frontend/src/hooks/useImagePaths.ts",
+    "frontend/src/App.tsx",
+    "frontend/src/components/auth/AdminAccessGate.tsx",
+    "frontend/src/components/auth/AdminLoginForm.tsx",
+    "frontend/src/context/AdminAuthContext.tsx",
+    "frontend/src/pages/AdminPage.tsx",
     "project_state.json"
   ]
 }

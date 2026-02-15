@@ -1,52 +1,47 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-15T20:48:42.000Z",
+  "generatedAt": "2026-02-15T21:07:13.953Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
     "total": 3,
-    "implemented": 2,
+    "implemented": 1,
     "items": [
       {
-        "id": "REQ-26",
-        "summary": "Update the backend’s admin login credentials to username \"Sirajahmad\" and password \"S1i2r3\" so that logging into /admin only succeeds with these new values (replacing the current defaults). Ensure the change applies to upgraded canisters as well (i.e., existing persisted credential state should be updated to the new username/password during upgrade).",
+        "id": "REQ-29",
+        "summary": "Fix backend admin authentication so that a successful `adminLogin(username, password)` reliably grants admin access for the same caller on subsequent calls (including page refresh), and so that `isAdminUser()` returns `true` immediately after a successful login for that caller.",
         "status": "unknown",
         "plannedFiles": [],
         "matchedFiles": []
       },
       {
-        "id": "REQ-27",
-        "summary": "Change the public contact email displayed across the website to \"ceilingpro9@gmail.com\" by updating the shared contact configuration and ensuring all UI that renders email (at minimum: Contact section and Footer) reflects the new value.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/config/ceilingPro.ts",
-          "frontend/src/components/marketing/ContactSection.tsx",
-          "frontend/src/components/layout/SiteFooter.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/config/ceilingPro.ts"
-        ]
+        "id": "REQ-30",
+        "summary": "Update backend authorization checks for all admin-only endpoints (at minimum: `getAllBookings`, `updateServiceRates`, `updateTimeSlotAvailability`, `updateImagePaths`) to use the same admin-auth mechanism as `isAdminUser()` so that the admin dashboard can load and perform all admin actions after login.",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
       },
       {
-        "id": "REQ-28",
-        "summary": "Restore/insert the previous images for the 4 service cards in the \"Our Services\" section by switching the service card image paths back to the prior set used by the project (e.g., the /images/service*.jpg style paths) so that the Services section shows those previous images again.",
+        "id": "REQ-31",
+        "summary": "Adjust the frontend admin auth flow to verify backend session state after login and to handle session validation consistently (so the UI does not show a logged-in admin state unless `isAdminUser()` confirms it).",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/hooks/useImagePaths.ts",
-          "frontend/src/domain/services.ts",
-          "frontend/src/components/admin/ImagesEditor.tsx",
-          "frontend/public/images/service1.jpg",
-          "frontend/public/images/service2.jpg",
-          "frontend/public/images/service3.jpg",
-          "frontend/public/images/service4.jpg"
+          "frontend/src/context/AdminAuthContext.tsx",
+          "frontend/src/App.tsx",
+          "frontend/src/hooks/useAdminAuth.ts",
+          "frontend/src/components/auth/AdminAccessGate.tsx",
+          "frontend/src/components/auth/AdminLoginForm.tsx",
+          "frontend/src/pages/AdminPage.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/hooks/useImagePaths.ts",
-          "frontend/src/domain/services.ts",
-          "frontend/src/components/admin/ImagesEditor.tsx"
+          "frontend/src/context/AdminAuthContext.tsx",
+          "frontend/src/App.tsx",
+          "frontend/src/components/auth/AdminAccessGate.tsx",
+          "frontend/src/components/auth/AdminLoginForm.tsx",
+          "frontend/src/pages/AdminPage.tsx"
         ]
       }
     ]
@@ -58,10 +53,11 @@
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/src/components/admin/ImagesEditor.tsx",
-    "frontend/src/config/ceilingPro.ts",
-    "frontend/src/domain/services.ts",
-    "frontend/src/hooks/useImagePaths.ts",
+    "frontend/src/App.tsx",
+    "frontend/src/components/auth/AdminAccessGate.tsx",
+    "frontend/src/components/auth/AdminLoginForm.tsx",
+    "frontend/src/context/AdminAuthContext.tsx",
+    "frontend/src/pages/AdminPage.tsx",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",
