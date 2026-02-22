@@ -1,35 +1,38 @@
 {
   "kind": "build_request",
-  "title": "Add Google Ads tracking tag to website",
+  "title": "Update Google Ads tracking tag to new conversion ID",
+  "projectName": "Ceiling Pro",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-58",
-      "text": "Add the Google Ads tracking tag (gtag.js) to the website's HTML <head> section in frontend/index.html by inserting the following script block before the closing </head> tag:\n\n```html\n<!-- Google tag (gtag.js) -->\n<script async src=\"https://www.googletagmanager.com/gtag/js?id=AW-17968689708\"></script>\n<script>\n  window.dataLayer = window.dataLayer || [];\n  function gtag(){dataLayer.push(arguments);}\n  gtag('js', new Date());\n  gtag('config', 'AW-17968689708');\n</script>\n```\n\nEnsure the script loads asynchronously and initializes the Google Ads conversion tracking with ID AW-17968689708.",
+      "id": "REQ-59",
+      "text": "Replace the existing Google Ads tracking tag in frontend/index.html with the new tracking code. Update the gtag.js script src from 'https://www.googletagmanager.com/gtag/js?id=AW-17968689708' to 'https://www.googletagmanager.com/gtag/js?id=AW-17969512168', and update the gtag('config', 'AW-17968689708') call to gtag('config', 'AW-17969512168'). The complete replacement script block is:\n\n<!-- Google tag (gtag.js) -->\n<script async src=\"https://www.googletagmanager.com/gtag/js?id=AW-17969512168\"></script>\n<script>\n  window.dataLayer = window.dataLayer || [];\n  function gtag(){dataLayer.push(arguments);}\n  gtag('js', new Date());\n  gtag('config', 'AW-17969512168');\n</script>\n\nKeep the script placement in the <head> section before the closing </head> tag, maintaining async loading.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-user-latest"
+          "msg-6"
+        ],
+        "quotes": [
+          "<!-- Google tag (gtag.js) -->\n<script async src=\"https://www.googletagmanager.com/gtag/js?id=AW-17969512168\">\n</script>\n<script>\n  window.dataLayer = window.dataLayer || [];\n  function gtag(){dataLayer.push(arguments);}\n  gtag('js', new Date());\n\n  gtag('config', 'AW-17969512168');\n</script>",
+          "This is Google ad tag ad this where needed"
         ]
       },
       "acceptanceCriteria": [
-        "The Google Ads tracking script is present in frontend/index.html within the <head> section",
-        "The script includes the async gtag.js loader with ID AW-17968689708",
-        "The dataLayer initialization and gtag config code is included",
-        "The tracking code loads on all pages of the website",
-        "The script is placed before the closing </head> tag to ensure proper initialization timing"
+        "The Google Ads tracking tag in frontend/index.html uses conversion ID AW-17969512168",
+        "The gtag.js script loads asynchronously from the updated URL",
+        "The gtag config call references AW-17969512168",
+        "The script remains in the <head> section before </head>",
+        "No other Google Ads tracking codes remain in the HTML"
       ]
     }
   ],
   "constraints": [
-    "Do not modify the existing Google Search Console verification meta tag already present in frontend/index.html",
-    "Preserve all existing meta tags and scripts in the <head> section",
-    "The tracking script must use the exact Google Ads ID provided: AW-17968689708"
+    "Do not modify frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, or frontend/src/components/ui"
   ],
   "nonGoals": [
-    "Setting up Google Ads conversion events or custom tracking beyond the base installation",
-    "Implementing Google Tag Manager instead of direct gtag.js integration",
-    "Adding privacy consent management for the tracking script"
+    "Adding additional tracking or analytics code beyond the specified Google Ads tag",
+    "Modifying conversion tracking events or custom parameters",
+    "Adding Google Tag Manager or other Google marketing tools"
   ],
   "imageRequirements": {
     "required": [],

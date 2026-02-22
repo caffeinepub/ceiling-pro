@@ -1,23 +1,23 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Add Google Ads tracking tag to website",
+  "title": "Update Google Ads tracking tag to new conversion ID",
   "requirements": [
     {
-      "id": "REQ-58",
-      "summary": "Add Google Ads tracking tag (gtag.js) to the website's HTML <head> section for conversion tracking with ID AW-17968689708",
+      "id": "REQ-59",
+      "summary": "Replace existing Google Ads tracking tag with new conversion ID AW-17969512168",
       "acceptanceCriteria": [
-        "The Google Ads tracking script is present in frontend/index.html within the <head> section",
-        "The script includes the async gtag.js loader with ID AW-17968689708",
-        "The dataLayer initialization and gtag config code is included",
-        "The tracking code loads on all pages of the website",
-        "The script is placed before the closing </head> tag to ensure proper initialization timing"
+        "The Google Ads tracking tag in frontend/index.html uses conversion ID AW-17969512168",
+        "The gtag.js script loads asynchronously from the updated URL",
+        "The gtag config call references AW-17969512168",
+        "The script remains in the <head> section before </head>",
+        "No other Google Ads tracking codes remain in the HTML"
       ],
       "file_operations": [
         {
           "path": "frontend/index.html",
           "operation": "modify",
-          "description": "Insert the Google Ads tracking tag script block in the <head> section before the closing </head> tag. Add the async gtag.js loader script (https://www.googletagmanager.com/gtag/js?id=AW-17968689708) followed by the inline initialization script that sets up dataLayer, defines the gtag function, and configures tracking with the conversion ID AW-17968689708. Preserve all existing meta tags including the Google Search Console verification tag, SEO meta tags, and font preloading links."
+          "description": "Update the Google Ads tracking tag in the <head> section. Replace the existing gtag.js script src URL from 'https://www.googletagmanager.com/gtag/js?id=AW-17968689708' to 'https://www.googletagmanager.com/gtag/js?id=AW-17969512168'. Update the gtag('config', 'AW-17968689708') call to gtag('config', 'AW-17969512168'). Ensure the script block remains in the <head> section before the closing </head> tag and maintains async loading. Remove any other Google Ads tracking code that may reference the old conversion ID."
         }
       ]
     }

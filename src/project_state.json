@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 33,
+  "projectStateVersion": 35,
   "summary": "Build a premium, ultra mobile-friendly service booking website for the interior services brand \"Ceiling Pro\" with mobile-first design, fixed daily time slots booking system, live estimate calculator, trust/content sections, updated contact numbers (phone + WhatsApp: 9834587806), an admin panel that is accessed directly via a custom hidden URL (/riyaz) without a password login, ability for admin to edit website images, removal of GST column/placeholder, and a customer account area where customers can view their own bookings via a service menu bar.",
   "architectural_notes": [
     "Email notifications for bookings were explicitly removed; backend should not attempt to send admin emails (placeholder optional).",
@@ -11,7 +11,7 @@
     "Current admin Images section only supports editing image URLs/paths; add true file upload capability in the admin panel so uploaded images can be stored and then referenced by the public site.",
     "Support Google Search Console verification by hosting a static verification HTML file at the exact root path provided by Google (e.g., /googlea0b8f9f5757853f9.html).",
     "Support Google Search Console verification via a homepage <head> meta tag when provided (in addition to or instead of serving a static root HTML verification file).",
-    "Google Ads tracking via gtag.js should be added to the website's <head> section with ID AW-17968689708."
+    "Google Ads tracking via gtag.js should use ID AW-17969512168 (updated from AW-17968689708)."
   ],
   "known_issues": [
     "Customer bookings are not appearing in the admin dashboard (booking records not received/listed).",
@@ -380,6 +380,14 @@
         "REQ-58"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-replace-the-existing-google-ads-tracking-tag-in-frontend-index-html-with-the-new-tracking-code-update-the-gtag-js-script-src-from-https-www-googletagmanager-com-gtag-js-id-aw-17968689708-to-https-www-googletagmanager-com-gtag-js-id-aw-17969512168-and-update-the-gtag-config-aw-17968689708-call-to-gtag-config-aw-17969512168-the-complete-replacement-script-block-is-google-tag-gtag-js-script-async-src-https-www-googletagmanager-com-gtag-js-id-aw-17969512168-script-script-window-datalayer-window-datalayer-function-gtag-datalayer-push-arguments-gtag-js-new-date-gtag-config-aw-17969512168-script-keep-the-script-placement-in-the-head-section-before-the-closing-head-tag-maintaining-async-loading",
+      "title": "Replace the existing Google Ads tracking tag in frontend/index.html with the new tracking code. Update the gtag.js script src from 'https://www.googletagmanager.com/gtag/js?id=AW-17968689708' to 'https://www.googletagmanager.com/gtag/js?id=AW-17969512168', and update the gtag('config', 'AW-17968689708') call to gtag('config', 'AW-17969512168'). The complete replacement script block is:\n\n<!-- Google tag (gtag.js) -->\n<script async src=\"https://www.googletagmanager.com/gtag/js?id=AW-17969512168\"></script>\n<script>\n  window.dataLayer = window.dataLayer || [];\n  function gtag(){dataLayer.push(arguments);}\n  gtag('js', new Date());\n  gtag('config', 'AW-17969512168');\n</script>\n\nKeep the script placement in the <head> section before the closing </head> tag, maintaining async loading.",
+      "reqIds": [
+        "REQ-59"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -552,6 +560,12 @@
     {
       "id": "AR-52",
       "summary": "Add Google Ads tracking tag (gtag.js with ID AW-17968689708) to the website's <head> section",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-53",
+      "summary": "Update the Google Ads tracking tag in the website's <head> section from ID AW-17968689708 to ID AW-17969512168",
       "reqIds": [],
       "status": "pending"
     }

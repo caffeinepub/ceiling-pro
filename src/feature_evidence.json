@@ -2,8 +2,8 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-add-the-google-ads-tracking-tag-gtag-js-to-the-website-s-html-head-section-in-frontend-index-html-by-inserting-the-following-script-block-before-the-closing-head-tag-html-google-tag-gtag-js-script-async-src-https-www-googletagmanager-com-gtag-js-id-aw-17968689708-script-script-window-datalayer-window-datalayer-function-gtag-datalayer-push-arguments-gtag-js-new-date-gtag-config-aw-17968689708-script-ensure-the-script-loads-asynchronously-and-initializes-the-google-ads-conversion-tracking-with-id-aw-17968689708",
-      "featureTitle": "Add the Google Ads tracking tag (gtag.js) to the website's HTML <head> section in frontend/index.html by inserting the following script block before the closing </head> tag:\n\n```html\n<!-- Google tag (gtag.js) -->\n<script async src=\"https://www.googletagmanager.com/gtag/js?id=AW-17968689708\"></script>\n<script>\n  window.dataLayer = window.dataLayer || [];\n  function gtag(){dataLayer.push(arguments);}\n  gtag('js', new Date());\n  gtag('config', 'AW-17968689708');\n</script>\n```\n\nEnsure the script loads asynchronously and initializes the Google Ads conversion tracking with ID AW-17968689708.",
+      "featureId": "feature-replace-the-existing-google-ads-tracking-tag-in-frontend-index-html-with-the-new-tracking-code-update-the-gtag-js-script-src-from-https-www-googletagmanager-com-gtag-js-id-aw-17968689708-to-https-www-googletagmanager-com-gtag-js-id-aw-17969512168-and-update-the-gtag-config-aw-17968689708-call-to-gtag-config-aw-17969512168-the-complete-replacement-script-block-is-google-tag-gtag-js-script-async-src-https-www-googletagmanager-com-gtag-js-id-aw-17969512168-script-script-window-datalayer-window-datalayer-function-gtag-datalayer-push-arguments-gtag-js-new-date-gtag-config-aw-17969512168-script-keep-the-script-placement-in-the-head-section-before-the-closing-head-tag-maintaining-async-loading",
+      "featureTitle": "Replace the existing Google Ads tracking tag in frontend/index.html with the new tracking code. Update the gtag.js script src from 'https://www.googletagmanager.com/gtag/js?id=AW-17968689708' to 'https://www.googletagmanager.com/gtag/js?id=AW-17969512168', and update the gtag('config', 'AW-17968689708') call to gtag('config', 'AW-17969512168'). The complete replacement script block is:\n\n<!-- Google tag (gtag.js) -->\n<script async src=\"https://www.googletagmanager.com/gtag/js?id=AW-17969512168\"></script>\n<script>\n  window.dataLayer = window.dataLayer || [];\n  function gtag(){dataLayer.push(arguments);}\n  gtag('js', new Date());\n  gtag('config', 'AW-17969512168');\n</script>\n\nKeep the script placement in the <head> section before the closing </head> tag, maintaining async loading.",
       "files": [
         "frontend/index.html"
       ],
@@ -17,7 +17,7 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-58"
+        "REQ-59"
       ],
       "confidence": "high"
     }

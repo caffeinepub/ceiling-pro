@@ -28,7 +28,7 @@
   "frontend/src/domain/services.ts": "Service domain model defining the 4 services with metadata including pricing, icons, fallback service images using generated assets, and rate calculation utilities.",
   "frontend/src/config/ceilingPro.ts": "Centralized configuration for contact details (phone 9834587806, WhatsApp 9834587806, email ceilingpro9@gmail.com).",
   "frontend/src/index.css": "Global styles with OKLCH color system defining white/natural theme with soft green primary, light beige accents, and Inter font family.",
-  "frontend/index.html": "HTML entry point with SEO-optimized title, meta description, Google Search Console verification, Inter font preload, and Google Ads tracking tag (AW-17968689708) for conversion tracking.",
+  "frontend/index.html": "HTML entry point with SEO-optimized title, meta description, Google Search Console verification, Inter font preload, and Google Ads tracking tag (AW-17969512168) for conversion tracking.",
   "frontend/tailwind.config.js": "Tailwind configuration extending theme with Inter font family and maintaining existing color/spacing tokens.",
   "frontend/src/hooks/useIsCallerAdmin.ts": "React Query hook that checks if the current authenticated caller has admin permissions via the backend's isCallerAdmin method.",
   "frontend/src/components/auth/AdminAccessGate.tsx": "Access control component using shared AdminAuthContext that gates admin content behind authentication, showing login form when not authenticated and validating sessions on mount.",
