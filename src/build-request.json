@@ -1,85 +1,38 @@
 {
   "kind": "build_request",
-  "title": "Enable real image uploads for Service section images",
+  "title": "Add Google Ads tracking tag to website",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-39",
-      "text": "Implement a real backend image upload API backed by the existing blob-storage mixin so that uploaded service-card images can be stored in the canister and referenced by a stable URL/path usable as an <img src> value.",
-      "target": "backend",
-      "source": {
-        "messageIds": [
-          "msg-4"
-        ],
-        "quotes": [
-          "Upload images in our service section"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Backend exposes a public method to upload an image file (bytes + content type/filename or equivalent) and returns a stable, directly usable image URL/path string.",
-        "Uploaded image data is persisted in canister storage (not returned only as a base64 data URL).",
-        "Returned URL/path can be used by anonymous/public users to view the image in the marketing site <img> tags (i.e., it is retrievable over HTTP from the canister)."
-      ]
-    },
-    {
-      "id": "REQ-40",
-      "text": "Update the frontend image upload hooks used by the /riyaz Images editor so that uploading a service-card image calls the backend upload API and uses the returned URL/path (instead of generating a base64 data URL in the browser).",
+      "id": "REQ-58",
+      "text": "Add the Google Ads tracking tag (gtag.js) to the website's HTML <head> section in frontend/index.html by inserting the following script block before the closing </head> tag:\n\n```html\n<!-- Google tag (gtag.js) -->\n<script async src=\"https://www.googletagmanager.com/gtag/js?id=AW-17968689708\"></script>\n<script>\n  window.dataLayer = window.dataLayer || [];\n  function gtag(){dataLayer.push(arguments);}\n  gtag('js', new Date());\n  gtag('config', 'AW-17968689708');\n</script>\n```\n\nEnsure the script loads asynchronously and initializes the Google Ads conversion tracking with ID AW-17968689708.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-4"
-        ],
-        "quotes": [
-          "Upload images in our service section"
+          "msg-user-latest"
         ]
       },
       "acceptanceCriteria": [
-        "In /riyaz → Website Images → Service Card Images, selecting a file uploads it to the backend and populates the corresponding Service Card path field with the returned URL/path.",
-        "The upload flow no longer stores base64 data URLs as the primary result for service-card uploads.",
-        "Uploading a file and then clicking “Save Image Paths” causes the public Services section to render the newly uploaded service images after refresh (or after the next imagePaths refetch)."
-      ]
-    },
-    {
-      "id": "REQ-41",
-      "text": "Ensure the public “Our Services” section reliably renders the uploaded service-card images from saved image paths and provides a graceful fallback if an uploaded image fails to load.",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-4"
-        ],
-        "quotes": [
-          "Upload images in our service section"
-        ]
-      },
-      "acceptanceCriteria": [
-        "When imagePaths.serviceCard1–serviceCard4 are set to uploaded-image URLs/paths, the Services section displays those images.",
-        "If an uploaded image URL/path is broken/unavailable, the service card falls back to its default imagePath from the service definition (or a safe placeholder) without breaking layout."
+        "The Google Ads tracking script is present in frontend/index.html within the <head> section",
+        "The script includes the async gtag.js loader with ID AW-17968689708",
+        "The dataLayer initialization and gtag config code is included",
+        "The tracking code loads on all pages of the website",
+        "The script is placed before the closing </head> tag to ensure proper initialization timing"
       ]
     }
   ],
   "constraints": [
-    "Respect the single-actor backend architecture; keep all Motoko logic in backend/main.mo (only add backend/migration.mo if an actual stable-state upgrade is required).",
-    "Do not edit any frontend files under frontend/src/components/ui or any paths listed in frontend.immutablePaths.",
-    "Use English for any user-facing text.",
-    "Do not introduce external databases or third-party storage/services; store images in the canister using the existing blob-storage capability."
+    "Do not modify the existing Google Search Console verification meta tag already present in frontend/index.html",
+    "Preserve all existing meta tags and scripts in the <head> section",
+    "The tracking script must use the exact Google Ads ID provided: AW-17968689708"
   ],
   "nonGoals": [
-    "Do not change the number of services (must remain exactly 4 service cards).",
-    "Do not add any new admin authentication flow (the /riyaz route remains direct access as currently designed).",
-    "Do not add email, push notifications, or real-time features."
+    "Setting up Google Ads conversion events or custom tracking beyond the base installation",
+    "Implementing Google Tag Manager instead of direct gtag.js integration",
+    "Adding privacy consent management for the tracking script"
   ],
   "imageRequirements": {
     "required": [],
     "edits": []
-  },
-  "userProfileUpdate": {
-    "goalsToAdd": [],
-    "goalsToRemove": [],
-    "preferencesToAdd": [],
-    "preferencesToRemove": [],
-    "miscToAdd": [],
-    "miscToRemove": [],
-    "fieldsToSet": {},
-    "fieldsToDelete": []
   }
 }

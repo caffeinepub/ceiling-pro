@@ -83,7 +83,7 @@ export interface _SERVICE {
     [string, string, string, string, string, string, string, bigint],
     Booking
   >,
-  'getAllBookings' : ActorMethod<[], Array<Booking>>,
+  'getAllBookings' : ActorMethod<[[] | [string]], Array<Booking>>,
   'getCallerUserProfile' : ActorMethod<[], [] | [UserProfile]>,
   'getCallerUserRole' : ActorMethod<[], UserRole>,
   'getImagePaths' : ActorMethod<[], ImagePaths>,
@@ -103,15 +103,22 @@ export interface _SERVICE {
         'serviceCard3' : [] | [StoredImage],
         'serviceCard4' : [] | [StoredImage],
       },
+      [] | [string],
     ],
     undefined
   >,
-  'updateServiceRates' : ActorMethod<[bigint, bigint, bigint], undefined>,
-  'updateTimeSlotAvailability' : ActorMethod<
-    [boolean, boolean, boolean, boolean],
+  'updateServiceRates' : ActorMethod<
+    [bigint, bigint, bigint, [] | [string]],
     undefined
   >,
-  'uploadImage' : ActorMethod<[ExternalBlob, string], StoredImage>,
+  'updateTimeSlotAvailability' : ActorMethod<
+    [boolean, boolean, boolean, boolean, [] | [string]],
+    undefined
+  >,
+  'uploadImage' : ActorMethod<
+    [ExternalBlob, string, [] | [string]],
+    StoredImage
+  >,
 }
 export declare const idlService: IDL.ServiceClass;
 export declare const idlInitArgs: IDL.Type[];

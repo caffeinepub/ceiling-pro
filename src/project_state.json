@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 19,
+  "projectStateVersion": 33,
   "summary": "Build a premium, ultra mobile-friendly service booking website for the interior services brand \"Ceiling Pro\" with mobile-first design, fixed daily time slots booking system, live estimate calculator, trust/content sections, updated contact numbers (phone + WhatsApp: 9834587806), an admin panel that is accessed directly via a custom hidden URL (/riyaz) without a password login, ability for admin to edit website images, removal of GST column/placeholder, and a customer account area where customers can view their own bookings via a service menu bar.",
   "architectural_notes": [
     "Email notifications for bookings were explicitly removed; backend should not attempt to send admin emails (placeholder optional).",
@@ -8,9 +8,17 @@
     "Use phone number 9834587806 for click-to-call and WhatsApp CTAs across the site.",
     "Remove GST field/column/placeholder from all customer-facing UI sections.",
     "Admin panel should be accessible directly via the custom route /riyaz with no password-based login; keep the route unlinked/hidden from public pages (security by obscurity).",
-    "Current admin Images section only supports editing image URLs/paths; add true file upload capability in the admin panel so uploaded images can be stored and then referenced by the public site."
+    "Current admin Images section only supports editing image URLs/paths; add true file upload capability in the admin panel so uploaded images can be stored and then referenced by the public site.",
+    "Support Google Search Console verification by hosting a static verification HTML file at the exact root path provided by Google (e.g., /googlea0b8f9f5757853f9.html).",
+    "Support Google Search Console verification via a homepage <head> meta tag when provided (in addition to or instead of serving a static root HTML verification file).",
+    "Google Ads tracking via gtag.js should be added to the website's <head> section with ID AW-17968689708."
   ],
-  "known_issues": [],
+  "known_issues": [
+    "Customer bookings are not appearing in the admin dashboard (booking records not received/listed).",
+    "Admin panel access at /riyaz is showing “denied/unauthorized”; user requests full direct access with no access-denied screen.",
+    "Google Search Console verification file (googlea0b8f9f5757853f9.html) is not currently served at the site root, preventing Search Console registration/verification.",
+    "Service image system is not working properly (user reported issue with the Our Services section images or admin image upload/rendering for service cards)."
+  ],
   "isFixRequest": false,
   "existing_features": [
     {
@@ -252,6 +260,126 @@
         "REQ-41"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-fix-the-admin-bookings-list-so-that-customer-bookings-reliably-appear-in-the-riyaz-admin-dashboard-when-a-booking-is-submitted-from-the-public-booking-form",
+      "title": "Fix the admin bookings list so that customer bookings reliably appear in the /riyaz admin dashboard when a booking is submitted from the public booking form.",
+      "reqIds": [
+        "REQ-42"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-riyaz-admin-dashboard-can-successfully-call-the-backend-method-that-lists-all-bookings-under-the-current-project-s-direct-access-no-login-admin-model-by-making-access-control-initialization-work-for-anonymous-sessions-as-well-e-g-via-the-existing-secret-parameter-flow",
+      "title": "Ensure the /riyaz admin dashboard can successfully call the backend method that lists all bookings under the current project’s “direct access / no login” admin model by making access control initialization work for anonymous sessions as well (e.g., via the existing secret parameter flow).",
+      "reqIds": [
+        "REQ-43"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-improve-admin-bookings-fetching-ux-add-explicit-loading-empty-and-error-states-for-the-bookings-query-used-by-the-admin-bookingstable-so-failures-are-visible-and-debuggable-in-production",
+      "title": "Improve admin bookings fetching UX: add explicit loading, empty, and error states for the bookings query used by the admin BookingsTable so failures are visible and debuggable in production.",
+      "reqIds": [
+        "REQ-44"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-the-riyaz-admin-dashboard-so-it-can-list-all-customer-bookings-without-showing-an-unauthorized-error-when-accessed-via-the-project-s-direct-access-token-model-caffeineadmintoken",
+      "title": "Fix the /riyaz Admin Dashboard so it can list all customer bookings without showing an unauthorized error when accessed via the project’s direct-access token model (caffeineAdminToken).",
+      "reqIds": [
+        "REQ-45"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-frontend-actor-initialization-so-that-access-control-secret-initialization-runs-for-anonymous-sessions-as-well-not-only-internet-identity-sessions-using-the-existing-secret-parameter-flow-caffeineadmintoken",
+      "title": "Update frontend actor initialization so that access control secret initialization runs for anonymous sessions as well (not only Internet Identity sessions), using the existing secret parameter flow (`caffeineAdminToken`).",
+      "reqIds": [
+        "REQ-46"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-admin-bookings-list-ux-clearly-distinguishes-between-a-truly-empty-bookings-and-b-authorization-configuration-failures-and-keeps-the-existing-explicit-loading-empty-error-states-visible-on-mobile",
+      "title": "Ensure the admin bookings list UX clearly distinguishes between (a) truly empty bookings and (b) authorization/configuration failures, and keeps the existing explicit loading/empty/error states visible on mobile.",
+      "reqIds": [
+        "REQ-47"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-the-token-based-access-gate-ui-from-the-riyaz-admin-dashboard-so-visiting-riyaz-never-shows-an-admin-access-denied-screen-and-the-admin-dashboard-content-always-renders",
+      "title": "Remove the token-based access gate UI from the /riyaz admin dashboard so visiting /riyaz never shows an “Admin access denied” screen and the admin dashboard content always renders.",
+      "reqIds": [
+        "REQ-48"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-frontend-initializes-admin-access-control-for-anonymous-sessions-when-visiting-riyaz-so-admin-api-calls-list-bookings-update-service-rates-update-time-slots-update-image-paths-upload-images-succeed-without-requiring-internet-identity-login-or-any-url-token-parameter",
+      "title": "Ensure the frontend initializes admin access control for anonymous sessions when visiting /riyaz, so admin API calls (list bookings, update service rates, update time slots, update image paths, upload images) succeed without requiring Internet Identity login or any URL token parameter.",
+      "reqIds": [
+        "REQ-49"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-serve-the-google-search-console-verification-file-at-the-website-root-path-by-adding-a-static-file-named-exactly-googlea0b8f9f5757853f9-html-to-the-frontend-s-public-root-so-it-is-accessible-at-https-ceiling-pro-fzq-caffeine-xyz-googlea0b8f9f5757853f9-html",
+      "title": "Serve the Google Search Console verification file at the website root path by adding a static file named exactly `googlea0b8f9f5757853f9.html` to the frontend’s public root so it is accessible at `https://ceiling-pro-fzq.caffeine.xyz/googlea0b8f9f5757853f9.html`.",
+      "reqIds": [
+        "REQ-51"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-the-google-search-console-verification-meta-tag-meta-name-google-site-verification-content-15j7ob7hhlw85xvsyyizgennbdtihowsxzec6klqtse-to-the-homepage-html-head-in-frontend-index-html-placed-before-the-opening-body-tag",
+      "title": "Add the Google Search Console verification meta tag `<meta name=\"google-site-verification\" content=\"15J7ob7hHLW85xVSYyIZGEnNbDTIHOwSxzEC6kLqtsE\" />` to the homepage HTML `<head>` (in `frontend/index.html`), placed before the opening `<body>` tag.",
+      "reqIds": [
+        "REQ-52"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-debug-and-fix-the-service-card-image-rendering-in-the-public-our-services-section-so-that-uploaded-service-images-reliably-display-without-broken-image-links-or-fallback-placeholders-when-valid-image-paths-are-saved-in-backend-storage",
+      "title": "Debug and fix the service card image rendering in the public 'Our Services' section so that uploaded service images reliably display without broken image links or fallback placeholders when valid image paths are saved in backend storage.",
+      "reqIds": [
+        "REQ-53"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-the-riyaz-admin-images-editor-upload-flow-for-service-card-images-so-that-a-file-uploads-successfully-call-the-backend-upload-api-b-the-returned-url-path-is-stored-in-the-service-image-paths-configuration-and-c-uploaded-images-are-immediately-usable-by-the-public-site-after-clicking-save",
+      "title": "Fix the /riyaz admin Images editor upload flow for service card images so that: (a) file uploads successfully call the backend upload API, (b) the returned URL/path is stored in the service image paths configuration, and (c) uploaded images are immediately usable by the public site after clicking Save.",
+      "reqIds": [
+        "REQ-54"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-error-handling-and-user-feedback-to-the-riyaz-admin-images-editor-service-card-upload-flow-so-that-upload-failures-network-errors-or-invalid-image-files-display-clear-error-messages-to-the-admin-instead-of-silently-failing-or-showing-broken-images",
+      "title": "Add error handling and user feedback to the /riyaz admin Images editor service card upload flow so that upload failures, network errors, or invalid image files display clear error messages to the admin (instead of silently failing or showing broken images).",
+      "reqIds": [
+        "REQ-56"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-public-our-services-section-has-a-robust-fallback-mechanism-that-displays-a-placeholder-or-default-image-when-a-service-card-image-path-is-empty-invalid-or-fails-to-load-instead-of-showing-broken-image-icons",
+      "title": "Ensure the public 'Our Services' section has a robust fallback mechanism that displays a placeholder or default image when a service card image path is empty, invalid, or fails to load (instead of showing broken image icons).",
+      "reqIds": [
+        "REQ-57"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-the-google-ads-tracking-tag-gtag-js-to-the-website-s-html-head-section-in-frontend-index-html-by-inserting-the-following-script-block-before-the-closing-head-tag-html-google-tag-gtag-js-script-async-src-https-www-googletagmanager-com-gtag-js-id-aw-17968689708-script-script-window-datalayer-window-datalayer-function-gtag-datalayer-push-arguments-gtag-js-new-date-gtag-config-aw-17968689708-script-ensure-the-script-loads-asynchronously-and-initializes-the-google-ads-conversion-tracking-with-id-aw-17968689708",
+      "title": "Add the Google Ads tracking tag (gtag.js) to the website's HTML <head> section in frontend/index.html by inserting the following script block before the closing </head> tag:\n\n```html\n<!-- Google tag (gtag.js) -->\n<script async src=\"https://www.googletagmanager.com/gtag/js?id=AW-17968689708\"></script>\n<script>\n  window.dataLayer = window.dataLayer || [];\n  function gtag(){dataLayer.push(arguments);}\n  gtag('js', new Date());\n  gtag('config', 'AW-17968689708');\n</script>\n```\n\nEnsure the script loads asynchronously and initializes the Google Ads conversion tracking with ID AW-17968689708.",
+      "reqIds": [
+        "REQ-58"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -391,6 +519,40 @@
       "reqIds": [
         "REQ-39"
       ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-46",
+      "summary": "Update backend authorization behavior (if needed) so that admin-only backend methods used by the /riyaz dashboard can be called successfully after secret-based initialization even when the caller is an anonymous session (no Internet Identity).",
+      "reqIds": [
+        "REQ-50"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-47",
+      "summary": "Add Google Search Console verification support by serving the provided verification HTML file at site root (google-site-verification: googlea0b8f9f5757853f9.html) so Search Console ownership verification succeeds",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-48",
+      "summary": "Add Google Search Console verification meta tag to the homepage <head>: <meta name=\"google-site-verification\" content=\"15J7ob7hHLW85xVSYyIZGEnNbDTIHOwSxzEC6kLqtsE\" />",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-51",
+      "summary": "Verify that the backend image upload API (used by the service card upload flow) correctly stores uploaded image files as blobs in canister storage and returns stable, directly usable HTTP URLs/paths that can be used as <img src> values by the frontend.",
+      "reqIds": [
+        "REQ-55"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-52",
+      "summary": "Add Google Ads tracking tag (gtag.js with ID AW-17968689708) to the website's <head> section",
+      "reqIds": [],
       "status": "pending"
     }
   ],

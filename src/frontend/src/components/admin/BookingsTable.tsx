@@ -1,11 +1,12 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
-import { Download } from 'lucide-react';
+import { Download, AlertCircle } from 'lucide-react';
 import { useBookings } from '../../hooks/useBookings';
 import { useMemo } from 'react';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 
 export default function BookingsTable() {
-  const { data: bookings, isLoading } = useBookings();
+  const { data: bookings, isLoading, isError, error } = useBookings();
 
   const sortedBookings = useMemo(() => {
     if (!bookings) return [];
@@ -55,7 +56,21 @@ export default function BookingsTable() {
   };
 
   if (isLoading) {
-    return <div className="text-center text-muted-foreground">Loading bookings...</div>;
+    return <div className="text-center text-muted-foreground py-8">Loading bookings...</div>;
+  }
+
+  if (isError) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+    return (
+      <Alert variant="destructive" className="block">
+        <AlertCircle className="h-4 w-4" />
+        <AlertDescription className="mt-2">
+          <strong>Failed to load bookings.</strong>
+          <br />
+          {errorMessage}
+        </AlertDescription>
+      </Alert>
+    );
   }
 
   return (
@@ -101,7 +116,7 @@ export default function BookingsTable() {
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={9} className="text-center text-muted-foreground">
+                <TableCell colSpan={9} className="text-center text-muted-foreground py-8">
                   No bookings yet
                 </TableCell>
               </TableRow>

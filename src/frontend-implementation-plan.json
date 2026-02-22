@@ -1,56 +1,23 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Enable real (non-base64) service-card image uploads and resilient rendering",
+  "title": "Add Google Ads tracking tag to website",
   "requirements": [
     {
-      "id": "REQ-40",
-      "summary": "Switch /riyaz Service Card image uploads from base64 data URLs to canister-backed uploads via the backend uploadImage capability and persist returned paths.",
+      "id": "REQ-58",
+      "summary": "Add Google Ads tracking tag (gtag.js) to the website's HTML <head> section for conversion tracking with ID AW-17968689708",
       "acceptanceCriteria": [
-        "In /riyaz → Website Images → Service Card Images, selecting a file uploads it to the backend and populates the corresponding Service Card path field with the returned URL/path.",
-        "The upload flow no longer stores base64 data URLs as the primary result for service-card uploads.",
-        "Uploading a file and then clicking “Save Image Paths” causes the public Services section to render the newly uploaded service images after refresh (or after the next imagePaths refetch)."
+        "The Google Ads tracking script is present in frontend/index.html within the <head> section",
+        "The script includes the async gtag.js loader with ID AW-17968689708",
+        "The dataLayer initialization and gtag config code is included",
+        "The tracking code loads on all pages of the website",
+        "The script is placed before the closing </head> tag to ensure proper initialization timing"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/hooks/useImageUpload.ts",
+          "path": "frontend/index.html",
           "operation": "modify",
-          "description": "Replace the current FileReader/base64 implementation with a real upload that uses the backend actor uploadImage capability. Use the blob-storage component’s ExternalBlob (e.g., ExternalBlob.fromBytes(...) with optional withUploadProgress) to upload, and return the resulting StoredImage (or at minimum its stable path) so callers can persist it. Verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/components/admin/ImagesEditor.tsx",
-          "operation": "modify",
-          "description": "Update the Service Card upload handlers to call the updated upload hook and set the Service Card field value to the returned stable URL/path. Track StoredImage objects (path + ExternalBlob reference) for service cards so that “Save Image Paths” can persist uploaded images without converting to base64. Verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/hooks/useImagePaths.ts",
-          "operation": "modify",
-          "description": "Align the image paths hooks with the backend ImagePaths/StoredImage types: map getImagePaths results into a UI-friendly shape (strings for rendering/inputs) while keeping enough data to call updateImagePaths with StoredImage objects (using blob-storage ExternalBlob.fromURL(...) for manually entered paths and preserving StoredImage from successful uploads). Also update the updateImagePaths call shape to match the backend.d.ts signature (single object argument). Verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/pages/HomePage.tsx",
-          "operation": "modify",
-          "description": "Adjust HomePage wiring to pass the correct service-card image src strings derived from the updated useImagePaths mapping (serviceCard1–serviceCard4 as stable URL/path strings) so the marketing Services section uses the uploaded paths after the next refetch/refresh."
-        }
-      ]
-    },
-    {
-      "id": "REQ-41",
-      "summary": "Render uploaded service-card images reliably in the public Services section with graceful fallback when an image fails to load.",
-      "acceptanceCriteria": [
-        "When imagePaths.serviceCard1–serviceCard4 are set to uploaded-image URLs/paths, the Services section displays those images.",
-        "If an uploaded image URL/path is broken/unavailable, the service card falls back to its default imagePath from the service definition (or a safe placeholder) without breaking layout."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/marketing/ServicesSection.tsx",
-          "operation": "modify",
-          "description": "Add robust image rendering for service cards: use the saved uploaded URL/path as primary src and implement an onError fallback that swaps the broken uploaded src to the service definition’s default imagePath (or a safe placeholder) while preserving the card layout/aspect ratio."
-        },
-        {
-          "path": "frontend/src/hooks/useImagePaths.ts",
-          "operation": "modify",
-          "description": "Ensure the hook consistently returns serviceCard1–serviceCard4 as directly usable <img src> strings (uploaded stable URL/path when present; otherwise default), so public rendering remains reliable even when optional StoredImage fields are absent."
+          "description": "Insert the Google Ads tracking tag script block in the <head> section before the closing </head> tag. Add the async gtag.js loader script (https://www.googletagmanager.com/gtag/js?id=AW-17968689708) followed by the inline initialization script that sets up dataLayer, defines the gtag function, and configures tracking with the conversion ID AW-17968689708. Preserve all existing meta tags including the Google Search Console verification tag, SEO meta tags, and font preloading links."
         }
       ]
     }

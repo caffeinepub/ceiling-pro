@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useActor } from './useActor';
+import { useAdminActor } from './useAdminActor';
 import { ExternalBlob } from '../backend';
 import type { ImagePaths, StoredImage } from '../backend';
 
@@ -47,7 +48,7 @@ export function useImagePaths() {
 }
 
 export function useUpdateImagePaths() {
-  const { actor } = useActor();
+  const { actor } = useAdminActor();
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -62,6 +63,7 @@ export function useUpdateImagePaths() {
       if (!actor) throw new Error('Actor not initialized');
       
       // Call backend with single object argument matching the backend signature
+      // Pass null for tokenOpt - admin access is already initialized via useAdminActor
       return await actor.updateImagePaths({
         heroImage: data.heroImage,
         serviceCard1: data.serviceCard1,
@@ -69,7 +71,7 @@ export function useUpdateImagePaths() {
         serviceCard3: data.serviceCard3,
         serviceCard4: data.serviceCard4,
         beforeAfterGallery: data.beforeAfterGallery,
-      });
+      }, null);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['imagePaths'] });

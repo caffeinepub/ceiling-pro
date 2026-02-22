@@ -28,10 +28,14 @@ export default function ServicesSection({ serviceImagePaths }: ServicesSectionPr
     
     if (!serviceImagePaths) return defaultPath;
     const key = `serviceCard${index + 1}` as keyof typeof serviceImagePaths;
-    return serviceImagePaths[key] || defaultPath;
+    const uploadedPath = serviceImagePaths[key];
+    
+    // Use uploaded path if available and valid, otherwise use default
+    return uploadedPath && uploadedPath.trim() !== '' ? uploadedPath : defaultPath;
   };
 
-  const handleImageError = (index: number) => {
+  const handleImageError = (index: number, defaultPath: string) => {
+    console.error(`Failed to load service image ${index + 1}, falling back to default`);
     setImageErrors(prev => ({ ...prev, [index]: true }));
   };
 
@@ -45,33 +49,38 @@ export default function ServicesSection({ serviceImagePaths }: ServicesSectionPr
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-        {SERVICES.map((service, index) => (
-          <Card key={service.id} className="flex flex-col overflow-hidden shadow-sm transition-shadow hover:shadow-md">
-            <div className="aspect-[4/3] w-full overflow-hidden bg-muted">
-              <img 
-                src={getServiceImage(index, service.imagePath)} 
-                alt={service.imageAlt} 
-                className="h-full w-full object-cover transition-transform hover:scale-105"
-                onError={() => handleImageError(index)}
-              />
-            </div>
-            <CardHeader>
-              <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-lg bg-accent/20">
-                <img src={service.iconPath} alt="" className="h-8 w-8 object-contain" />
+        {SERVICES.map((service, index) => {
+          const imageSrc = getServiceImage(index, service.imagePath);
+          
+          return (
+            <Card key={service.id} className="flex flex-col overflow-hidden shadow-sm transition-shadow hover:shadow-md">
+              <div className="aspect-[4/3] w-full overflow-hidden bg-muted">
+                <img 
+                  src={imageSrc} 
+                  alt={service.imageAlt} 
+                  className="h-full w-full object-cover transition-transform hover:scale-105"
+                  onError={() => handleImageError(index, service.imagePath)}
+                  loading="lazy"
+                />
               </div>
-              <CardTitle className="text-xl">{service.name}</CardTitle>
-              <CardDescription className="text-base font-semibold text-primary">{service.priceText}</CardDescription>
-            </CardHeader>
-            <CardContent className="flex-1">
-              <p className="text-sm text-muted-foreground">{service.description}</p>
-            </CardContent>
-            <CardFooter>
-              <Button onClick={() => handleBookNow(service.id)} className="w-full">
-                Book Now
-              </Button>
-            </CardFooter>
-          </Card>
-        ))}
+              <CardHeader>
+                <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-lg bg-accent/20">
+                  <img src={service.iconPath} alt="" className="h-8 w-8 object-contain" />
+                </div>
+                <CardTitle className="text-xl">{service.name}</CardTitle>
+                <CardDescription className="text-base font-semibold text-primary">{service.priceText}</CardDescription>
+              </CardHeader>
+              <CardContent className="flex-1">
+                <p className="text-sm text-muted-foreground">{service.description}</p>
+              </CardContent>
+              <CardFooter>
+                <Button onClick={() => handleBookNow(service.id)} className="w-full">
+                  Book Now
+                </Button>
+              </CardFooter>
+            </Card>
+          );
+        })}
       </div>
     </Section>
   );

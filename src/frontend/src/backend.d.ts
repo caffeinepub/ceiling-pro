@@ -63,7 +63,7 @@ export interface backendInterface {
     assignCallerUserRole(user: Principal, role: UserRole): Promise<void>;
     calculateEstimate(service: string, area: bigint): Promise<bigint | null>;
     createBooking(fullName: string, mobileNumber: string, location: string, propertyType: string, service: string, date: string, timeSlot: string, area: bigint): Promise<Booking>;
-    getAllBookings(): Promise<Array<Booking>>;
+    getAllBookings(tokenOpt: string | null): Promise<Array<Booking>>;
     getCallerUserProfile(): Promise<UserProfile | null>;
     getCallerUserRole(): Promise<UserRole>;
     getImagePaths(): Promise<ImagePaths>;
@@ -80,8 +80,8 @@ export interface backendInterface {
         serviceCard2?: StoredImage;
         serviceCard3?: StoredImage;
         serviceCard4?: StoredImage;
-    }): Promise<void>;
-    updateServiceRates(popGypsum: bigint, pvc: bigint, wallMolding: bigint): Promise<void>;
-    updateTimeSlotAvailability(slot10am: boolean, slot1pm: boolean, slot4pm: boolean, slot7pm: boolean): Promise<void>;
-    uploadImage(image: ExternalBlob, path: string): Promise<StoredImage>;
+    }, tokenOpt: string | null): Promise<void>;
+    updateServiceRates(popGypsum: bigint, pvc: bigint, wallMolding: bigint, tokenOpt: string | null): Promise<void>;
+    updateTimeSlotAvailability(slot10am: boolean, slot1pm: boolean, slot4pm: boolean, slot7pm: boolean, tokenOpt: string | null): Promise<void>;
+    uploadImage(image: ExternalBlob, path: string, tokenOpt: string | null): Promise<StoredImage>;
 }

@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useActor } from './useActor';
+import { useAdminActor } from './useAdminActor';
 import type { ServiceRate } from '../backend';
 
 export function useServiceRates() {
@@ -22,13 +23,14 @@ export function useServiceRates() {
 }
 
 export function useUpdateServiceRates() {
-  const { actor } = useActor();
+  const { actor } = useAdminActor();
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async (rates: { popGypsum: bigint; pvc: bigint; wallMolding: bigint }) => {
       if (!actor) throw new Error('Actor not initialized');
-      return await actor.updateServiceRates(rates.popGypsum, rates.pvc, rates.wallMolding);
+      // Pass null for tokenOpt - admin access is already initialized via useAdminActor
+      return await actor.updateServiceRates(rates.popGypsum, rates.pvc, rates.wallMolding, null);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['serviceRates'] });

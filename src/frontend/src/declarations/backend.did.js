@@ -112,7 +112,11 @@ export const idlService = IDL.Service({
       [Booking],
       [],
     ),
-  'getAllBookings' : IDL.Func([], [IDL.Vec(Booking)], ['query']),
+  'getAllBookings' : IDL.Func(
+      [IDL.Opt(IDL.Text)],
+      [IDL.Vec(Booking)],
+      ['query'],
+    ),
   'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
   'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
   'getImagePaths' : IDL.Func([], [ImagePaths], ['query']),
@@ -136,17 +140,26 @@ export const idlService = IDL.Service({
           'serviceCard3' : IDL.Opt(StoredImage),
           'serviceCard4' : IDL.Opt(StoredImage),
         }),
+        IDL.Opt(IDL.Text),
       ],
       [],
       [],
     ),
-  'updateServiceRates' : IDL.Func([IDL.Nat, IDL.Nat, IDL.Nat], [], []),
-  'updateTimeSlotAvailability' : IDL.Func(
-      [IDL.Bool, IDL.Bool, IDL.Bool, IDL.Bool],
+  'updateServiceRates' : IDL.Func(
+      [IDL.Nat, IDL.Nat, IDL.Nat, IDL.Opt(IDL.Text)],
       [],
       [],
     ),
-  'uploadImage' : IDL.Func([ExternalBlob, IDL.Text], [StoredImage], []),
+  'updateTimeSlotAvailability' : IDL.Func(
+      [IDL.Bool, IDL.Bool, IDL.Bool, IDL.Bool, IDL.Opt(IDL.Text)],
+      [],
+      [],
+    ),
+  'uploadImage' : IDL.Func(
+      [ExternalBlob, IDL.Text, IDL.Opt(IDL.Text)],
+      [StoredImage],
+      [],
+    ),
 });
 
 export const idlInitArgs = [];
@@ -253,7 +266,11 @@ export const idlFactory = ({ IDL }) => {
         [Booking],
         [],
       ),
-    'getAllBookings' : IDL.Func([], [IDL.Vec(Booking)], ['query']),
+    'getAllBookings' : IDL.Func(
+        [IDL.Opt(IDL.Text)],
+        [IDL.Vec(Booking)],
+        ['query'],
+      ),
     'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
     'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
     'getImagePaths' : IDL.Func([], [ImagePaths], ['query']),
@@ -277,17 +294,26 @@ export const idlFactory = ({ IDL }) => {
             'serviceCard3' : IDL.Opt(StoredImage),
             'serviceCard4' : IDL.Opt(StoredImage),
           }),
+          IDL.Opt(IDL.Text),
         ],
         [],
         [],
       ),
-    'updateServiceRates' : IDL.Func([IDL.Nat, IDL.Nat, IDL.Nat], [], []),
-    'updateTimeSlotAvailability' : IDL.Func(
-        [IDL.Bool, IDL.Bool, IDL.Bool, IDL.Bool],
+    'updateServiceRates' : IDL.Func(
+        [IDL.Nat, IDL.Nat, IDL.Nat, IDL.Opt(IDL.Text)],
         [],
         [],
       ),
-    'uploadImage' : IDL.Func([ExternalBlob, IDL.Text], [StoredImage], []),
+    'updateTimeSlotAvailability' : IDL.Func(
+        [IDL.Bool, IDL.Bool, IDL.Bool, IDL.Bool, IDL.Opt(IDL.Text)],
+        [],
+        [],
+      ),
+    'uploadImage' : IDL.Func(
+        [ExternalBlob, IDL.Text, IDL.Opt(IDL.Text)],
+        [StoredImage],
+        [],
+      ),
   });
 };
 

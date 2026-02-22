@@ -2,12 +2,10 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-update-the-frontend-image-upload-hooks-used-by-the-riyaz-images-editor-so-that-uploading-a-service-card-image-calls-the-backend-upload-api-and-uses-the-returned-url-path-instead-of-generating-a-base64-data-url-in-the-browser",
-      "featureTitle": "Update the frontend image upload hooks used by the /riyaz Images editor so that uploading a service-card image calls the backend upload API and uses the returned URL/path (instead of generating a base64 data URL in the browser).",
+      "featureId": "feature-add-the-google-ads-tracking-tag-gtag-js-to-the-website-s-html-head-section-in-frontend-index-html-by-inserting-the-following-script-block-before-the-closing-head-tag-html-google-tag-gtag-js-script-async-src-https-www-googletagmanager-com-gtag-js-id-aw-17968689708-script-script-window-datalayer-window-datalayer-function-gtag-datalayer-push-arguments-gtag-js-new-date-gtag-config-aw-17968689708-script-ensure-the-script-loads-asynchronously-and-initializes-the-google-ads-conversion-tracking-with-id-aw-17968689708",
+      "featureTitle": "Add the Google Ads tracking tag (gtag.js) to the website's HTML <head> section in frontend/index.html by inserting the following script block before the closing </head> tag:\n\n```html\n<!-- Google tag (gtag.js) -->\n<script async src=\"https://www.googletagmanager.com/gtag/js?id=AW-17968689708\"></script>\n<script>\n  window.dataLayer = window.dataLayer || [];\n  function gtag(){dataLayer.push(arguments);}\n  gtag('js', new Date());\n  gtag('config', 'AW-17968689708');\n</script>\n```\n\nEnsure the script loads asynchronously and initializes the Google Ads conversion tracking with ID AW-17968689708.",
       "files": [
-        "frontend/src/components/admin/ImagesEditor.tsx",
-        "frontend/src/hooks/useImagePaths.ts",
-        "frontend/src/hooks/useImageUpload.ts"
+        "frontend/index.html"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -19,28 +17,7 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-40"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-ensure-the-public-our-services-section-reliably-renders-the-uploaded-service-card-images-from-saved-image-paths-and-provides-a-graceful-fallback-if-an-uploaded-image-fails-to-load",
-      "featureTitle": "Ensure the public “Our Services” section reliably renders the uploaded service-card images from saved image paths and provides a graceful fallback if an uploaded image fails to load.",
-      "files": [
-        "frontend/src/components/marketing/ServicesSection.tsx",
-        "frontend/src/hooks/useImagePaths.ts"
-      ],
-      "components": [
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0",
-        "authorization@4.0.0",
-        "blob-storage@4.0.0"
-      ],
-      "testIds": [
-        "REQ-41"
+        "REQ-58"
       ],
       "confidence": "high"
     }

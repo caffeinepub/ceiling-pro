@@ -1,15 +1,18 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useActor } from './useActor';
+import { useAdminActor } from './useAdminActor';
 import type { Booking } from '../backend';
 
 export function useBookings() {
-  const { actor, isFetching } = useActor();
+  const { actor, isFetching } = useAdminActor();
 
   return useQuery<Booking[]>({
     queryKey: ['bookings'],
     queryFn: async () => {
-      if (!actor) return [];
-      return await actor.getAllBookings();
+      if (!actor) throw new Error('Actor not initialized');
+      
+      // Pass null for tokenOpt - admin access is already initialized via useAdminActor
+      return await actor.getAllBookings(null);
     },
     enabled: !!actor && !isFetching,
     retry: false,
@@ -22,7 +25,7 @@ export function useMyBookings() {
   return useQuery<Booking[]>({
     queryKey: ['myBookings'],
     queryFn: async () => {
-      if (!actor) return [];
+      if (!actor) throw new Error('Actor not initialized');
       return actor.getMyBookings();
     },
     enabled: !!actor && !isFetching,
