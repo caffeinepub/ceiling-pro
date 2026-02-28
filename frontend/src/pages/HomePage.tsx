@@ -1,4 +1,6 @@
 import { useEffect, useRef } from 'react';
+import SiteHeader from '../components/layout/SiteHeader';
+import SiteFooter from '../components/layout/SiteFooter';
 import HeroSection from '../components/marketing/HeroSection';
 import ServicesSection from '../components/marketing/ServicesSection';
 import HowItWorksSection from '../components/marketing/HowItWorksSection';
@@ -53,17 +55,21 @@ export default function HomePage() {
 
   return (
     <>
-      <HeroSection onBookClick={scrollToBooking} heroImagePath={imagePaths?.heroImage} />
-      <ServicesSection serviceImagePaths={serviceImagePaths} />
-      <HowItWorksSection />
-      <EstimateCalculatorSection />
-      <div ref={bookingSectionRef}>
-        <BookingSection />
-      </div>
-      <WhyChooseSection />
-      <GallerySection galleryImages={galleryImageUrls} />
-      <ReviewsSection />
-      <ContactSection />
+      <SiteHeader />
+      <main>
+        <HeroSection onBookClick={scrollToBooking} heroImagePath={imagePaths?.heroImage} />
+        <ServicesSection serviceImagePaths={serviceImagePaths} />
+        <HowItWorksSection />
+        <EstimateCalculatorSection />
+        <div ref={bookingSectionRef}>
+          <BookingSection />
+        </div>
+        <WhyChooseSection />
+        <GallerySection galleryImages={galleryImageUrls} />
+        <ReviewsSection />
+        <ContactSection />
+      </main>
+      <SiteFooter />
       <StickyBookCta onClick={scrollToBooking} />
       <FloatingWhatsAppButton />
     </>

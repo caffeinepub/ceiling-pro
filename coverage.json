@@ -1,91 +1,51 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-28T01:04:21.526Z",
+  "generatedAt": "2026-02-28T04:50:29.872Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 3,
+    "total": 2,
     "implemented": 2,
     "items": [
       {
-        "id": "REQ-65",
-        "summary": "Remove any remaining access gate, access-denied screen, or authorization check on the /riyaz route so that visiting /riyaz in the browser always renders the full admin dashboard immediately — no login prompt, no 'access denied' message, no token required.",
+        "id": "REQ-68",
+        "summary": "Restore the site header (SiteHeader component) so it renders correctly on all public-facing pages (homepage, account page), including the sticky top navigation with logo, Account menu entry, and the click-to-call phone button using the configured phone number (9834587806).",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/pages/AdminPage.tsx",
-          "frontend/src/components/auth/AdminAccessGate.tsx",
-          "frontend/src/components/auth/AdminLoginForm.tsx",
-          "frontend/src/context/AdminAuthContext.tsx",
-          "frontend/src/hooks/useAdminAuth.ts"
+          "frontend/src/pages/HomePage.tsx",
+          "frontend/src/pages/AccountPage.tsx",
+          "frontend/src/components/layout/SiteHeader.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/pages/AdminPage.tsx"
+          "frontend/src/pages/HomePage.tsx",
+          "frontend/src/pages/AccountPage.tsx"
         ]
       },
       {
-        "id": "REQ-66",
-        "summary": "Ensure the frontend admin actor (useAdminActor hook) initializes correctly for anonymous sessions visiting /riyaz so that all admin API calls — list bookings, update service rates, update time slots, update image paths, upload images — succeed without requiring Internet Identity login or any URL token parameter.",
+        "id": "REQ-69",
+        "summary": "Restore the site footer (SiteFooter component) so it renders correctly at the bottom of all public-facing pages (homepage, account page), displaying company info, phone number (9834587806), email (ceilingpro9@gmail.com), services list, and copyright.",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/hooks/useAdminActor.ts",
-          "frontend/src/components/admin/BookingsTable.tsx",
-          "frontend/src/components/admin/ImagesEditor.tsx",
-          "frontend/src/components/admin/ServiceRatesEditor.tsx",
-          "frontend/src/components/admin/TimeSlotsEditor.tsx",
-          "frontend/src/hooks/useBookings.ts",
-          "frontend/src/hooks/useImagePaths.ts",
-          "frontend/src/hooks/useImageUpload.ts",
-          "frontend/src/hooks/useServiceRates.ts",
-          "frontend/src/hooks/useTimeSlotAvailability.ts"
+          "frontend/src/pages/HomePage.tsx",
+          "frontend/src/pages/AccountPage.tsx",
+          "frontend/src/components/layout/SiteFooter.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/hooks/useAdminActor.ts",
-          "frontend/src/components/admin/BookingsTable.tsx",
-          "frontend/src/components/admin/ImagesEditor.tsx",
-          "frontend/src/components/admin/ServiceRatesEditor.tsx",
-          "frontend/src/components/admin/TimeSlotsEditor.tsx",
-          "frontend/src/hooks/useBookings.ts",
-          "frontend/src/hooks/useImagePaths.ts",
-          "frontend/src/hooks/useImageUpload.ts",
-          "frontend/src/hooks/useServiceRates.ts",
-          "frontend/src/hooks/useTimeSlotAvailability.ts"
+          "frontend/src/pages/HomePage.tsx",
+          "frontend/src/pages/AccountPage.tsx"
         ]
-      },
-      {
-        "id": "REQ-67",
-        "summary": "Update the backend Motoko actor so that admin-only methods (listAllBookings, updateServiceRates, setTimeSlotAvailability, setImagePaths, uploadImage) are callable by anonymous sessions when the hardcoded caffeineAdminToken secret has been initialized — or, if this is not sufficient, remove the authorization check on these methods entirely so the /riyaz dashboard has unconditional access.",
-        "status": "unknown",
-        "plannedFiles": [],
-        "matchedFiles": []
       }
     ]
   },
   "changedFiles": [
-    "backend/main.mo",
-    "backend/migration.mo",
     "build-request.json",
     "feature_evidence.json",
     "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/src/App.tsx",
-    "frontend/src/backend.d.ts",
-    "frontend/src/backend.ts",
-    "frontend/src/components/admin/BookingsTable.tsx",
-    "frontend/src/components/admin/ImagesEditor.tsx",
-    "frontend/src/components/admin/ServiceRatesEditor.tsx",
-    "frontend/src/components/admin/TimeSlotsEditor.tsx",
-    "frontend/src/declarations/backend.did.d.ts",
-    "frontend/src/declarations/backend.did.js",
-    "frontend/src/hooks/useAdminActor.ts",
-    "frontend/src/hooks/useBookings.ts",
-    "frontend/src/hooks/useImagePaths.ts",
-    "frontend/src/hooks/useImageUpload.ts",
-    "frontend/src/hooks/useServiceRates.ts",
-    "frontend/src/hooks/useTimeSlotAvailability.ts",
-    "frontend/src/pages/AdminPage.tsx",
+    "frontend/src/pages/AccountPage.tsx",
     "frontend/src/pages/HomePage.tsx",
     "project_state.json",
     "scratch/component-selection.json",

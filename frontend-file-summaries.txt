@@ -1,6 +1,6 @@
 {
   "frontend/src/App.tsx": "Main application component with TanStack Router (home, /riyaz admin, /account routes) and QueryClientProvider; no admin authentication context.",
-  "frontend/src/pages/HomePage.tsx": "Homepage component that fetches raw ImagePaths from the backend, converts StoredImage objects to direct URL strings via a helper, and passes plain string URLs to ServicesSection and GallerySection.",
+  "frontend/src/pages/HomePage.tsx": "Homepage component that renders SiteHeader at the top and SiteFooter at the bottom, with all marketing sections (hero, services, how-it-works, estimate, booking, gallery, reviews, contact) in between, plus floating conversion elements.",
   "frontend/src/pages/AdminPage.tsx": "Admin dashboard page that unconditionally renders all four admin sections (ImagesEditor, ServiceRatesEditor, TimeSlotsEditor, BookingsTable) with no authentication gates, access checks, or login prompts.",
   "frontend/src/components/layout/SiteHeader.tsx": "Sticky header with brand logo, customer-facing Account navigation link, and click-to-call button displaying phone number 9834587806 (admin link removed from public navigation).",
   "frontend/src/components/layout/SiteFooter.tsx": "Footer displaying contact information (phone 9834587806, email), service list, copyright, and Caffeine.ai attribution with GST line removed.",
@@ -35,7 +35,7 @@
   "frontend/src/hooks/useImagePaths.ts": "React Query hooks for fetching image paths (public) and updating them via the standard actor; exports both canonical name (useGetImagePaths) and backward-compatible alias (useImagePaths).",
   "frontend/src/components/admin/ImagesEditor.tsx": "Admin interface for managing hero image URL and service card images with file upload, validation, progress tracking, and previews using the standard actor with no authentication gates.",
   "frontend/src/hooks/useUserProfile.ts": "React Query hooks for fetching and saving caller's user profile with proper loading state handling to prevent profile setup UI flashing.",
-  "frontend/src/pages/AccountPage.tsx": "Customer account page with Internet Identity sign-in, first-time profile setup, and \"My Bookings\" table — the Area column has been removed from the bookings table to match the updated booking form.",
+  "frontend/src/pages/AccountPage.tsx": "Customer account page with SiteHeader and SiteFooter present in all render states (login prompt, profile setup, loading, and main account view), with Internet Identity sign-in, first-time profile setup, and \"My Bookings\" table.",
   "frontend/src/hooks/useAdminAuth.ts": "Custom hook managing username/password admin authentication with localStorage session persistence, login/logout functionality, and session validation via backend isAdminUser check.",
   "frontend/src/components/auth/AdminLoginForm.tsx": "Username/password login form component using shared AdminAuthContext with validation, error display, and loading states for admin authentication.",
   "frontend/src/context/AdminAuthContext.tsx": "React context provider that manages shared admin authentication state across all components, handling login with backend verification via isAdminUser(), session validation, and logout with query cache invalidation.",

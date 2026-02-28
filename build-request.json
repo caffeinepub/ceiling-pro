@@ -1,74 +1,61 @@
 {
   "kind": "build_request",
-  "title": "Fix /riyaz admin full access — remove all access denied screens and ensure all admin API calls work without authentication",
+  "title": "Restore site header and footer on all public pages",
   "projectName": "Ceiling Pro",
   "priority": "high",
   "requirements": [
     {
-      "id": "REQ-65",
-      "text": "Remove any remaining access gate, access-denied screen, or authorization check on the /riyaz route so that visiting /riyaz in the browser always renders the full admin dashboard immediately — no login prompt, no 'access denied' message, no token required.",
+      "id": "REQ-68",
+      "text": "Restore the site header (SiteHeader component) so it renders correctly on all public-facing pages (homepage, account page), including the sticky top navigation with logo, Account menu entry, and the click-to-call phone button using the configured phone number (9834587806).",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-1"
+          "msg-recent"
         ],
         "quotes": [
-          "Problem in admin access give me a full access Without any denied access Using/ riyaz"
+          "You remove the header and footer area",
+          "Please ad header and footer"
         ]
       },
       "acceptanceCriteria": [
-        "Navigating to /riyaz in any browser renders the admin dashboard content (Images Editor, Service Rates, Time Slots, Bookings Table) without any gate screen.",
-        "No 'access denied', 'unauthorized', or login UI is displayed at /riyaz under any session state (anonymous, authenticated, or otherwise).",
-        "AdminPage.tsx renders all four admin sections unconditionally when the route is /riyaz."
+        "The SiteHeader component is visible at the top of the homepage (/) on both mobile and desktop screen sizes.",
+        "The SiteHeader component is visible at the top of the account page (/account) on both mobile and desktop screen sizes.",
+        "The header contains the Ceiling Pro logo/brand link, an Account button, and the click-to-call phone button.",
+        "The Admin entry is NOT visible in the header for public users.",
+        "The header is sticky (remains at top on scroll)."
       ]
     },
     {
-      "id": "REQ-66",
-      "text": "Ensure the frontend admin actor (useAdminActor hook) initializes correctly for anonymous sessions visiting /riyaz so that all admin API calls — list bookings, update service rates, update time slots, update image paths, upload images — succeed without requiring Internet Identity login or any URL token parameter.",
+      "id": "REQ-69",
+      "text": "Restore the site footer (SiteFooter component) so it renders correctly at the bottom of all public-facing pages (homepage, account page), displaying company info, phone number (9834587806), email (ceilingpro9@gmail.com), services list, and copyright.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-1"
+          "msg-recent"
         ],
         "quotes": [
-          "give me a full access Without any denied access"
+          "You remove the header and footer area",
+          "Please ad header and footer"
         ]
       },
       "acceptanceCriteria": [
-        "The useAdminActor hook creates a working actor for anonymous callers on /riyaz.",
-        "Calling listAllBookings, updateServiceRates, updateTimeSlots, updateImagePaths, and uploadImage from the admin dashboard returns data/success without an authorization error.",
-        "The admin bookings table loads and displays customer bookings when accessed directly at /riyaz."
-      ]
-    },
-    {
-      "id": "REQ-67",
-      "text": "Update the backend Motoko actor so that admin-only methods (listAllBookings, updateServiceRates, setTimeSlotAvailability, setImagePaths, uploadImage) are callable by anonymous sessions when the hardcoded caffeineAdminToken secret has been initialized — or, if this is not sufficient, remove the authorization check on these methods entirely so the /riyaz dashboard has unconditional access.",
-      "target": "backend",
-      "source": {
-        "messageIds": [
-          "msg-1"
-        ],
-        "quotes": [
-          "give me a full access Without any denied access"
-        ]
-      },
-      "acceptanceCriteria": [
-        "An anonymous caller can invoke listAllBookings and receive all stored booking records.",
-        "An anonymous caller can invoke updateServiceRates, setTimeSlotAvailability, setImagePaths, and uploadImage without receiving an #unauthorized or #accessDenied error.",
-        "Public customer-facing methods remain unaffected."
+        "The SiteFooter component is visible at the bottom of the homepage (/) on both mobile and desktop screen sizes.",
+        "The SiteFooter component is visible at the bottom of the account page (/account) on both mobile and desktop screen sizes.",
+        "The footer displays the phone number 9834587806, email ceilingpro9@gmail.com, and a services list.",
+        "No GST label or placeholder is displayed in the footer.",
+        "The footer renders without layout breakage on mobile viewports."
       ]
     }
   ],
   "constraints": [
-    "Do not add any login screen, password prompt, or Internet Identity gate to the /riyaz route.",
-    "Do not break public customer-facing routes (/, /account) or their functionality.",
-    "Immutable frontend paths (useInternetIdentity.ts, useActor.ts, main.tsx, src/components/ui) must not be modified."
+    "Do not modify files listed under frontend.immutablePaths.",
+    "The Admin entry must remain hidden from the public header.",
+    "Do not alter the /riyaz admin dashboard layout or access model."
   ],
   "nonGoals": [
-    "Adding new admin features beyond access fix.",
-    "Changing the /riyaz URL or route name.",
-    "Modifying customer-facing booking form or services sections.",
-    "Any email or notification integrations."
+    "Redesigning or restyling the header or footer beyond restoring them to their prior working state.",
+    "Adding new navigation links or sections to the header/footer.",
+    "Changing contact phone number or email values."
   ],
   "imageRequirements": {
     "required": [],

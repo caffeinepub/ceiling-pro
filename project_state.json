@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 41,
+  "projectStateVersion": 43,
   "summary": "Build a premium, ultra mobile-friendly service booking website for the interior services brand \"Ceiling Pro\" with mobile-first design, fixed daily time slots booking system, live estimate calculator, trust/content sections, updated contact numbers (phone + WhatsApp: 9834587806), an admin panel that is accessed directly via a custom hidden URL (/riyaz) without a password login, ability for admin to edit website images, removal of GST column/placeholder, and a customer account area where customers can view their own bookings via a service menu bar.",
   "architectural_notes": [
     "Email notifications for bookings were explicitly removed; backend should not attempt to send admin emails (placeholder optional).",
@@ -18,7 +18,8 @@
     "Admin panel access at /riyaz is showing “denied/unauthorized”; user requests full direct access with no access-denied screen.",
     "Google Search Console verification file (googlea0b8f9f5757853f9.html) is not currently served at the site root, preventing Search Console registration/verification.",
     "Service image system is not working properly (user reported issue with the Our Services section images or admin image upload/rendering for service cards).",
-    "Time slot selection system has a reported bug (exact issue unspecified); user requested a fix."
+    "Time slot selection system has a reported bug (exact issue unspecified); user requested a fix.",
+    "Header and footer were removed/missing from the public site after Version 20 deploy; user requested they be restored."
   ],
   "isFixRequest": true,
   "existing_features": [
@@ -437,6 +438,22 @@
         "REQ-66"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-restore-the-site-header-siteheader-component-so-it-renders-correctly-on-all-public-facing-pages-homepage-account-page-including-the-sticky-top-navigation-with-logo-account-menu-entry-and-the-click-to-call-phone-button-using-the-configured-phone-number-9834587806",
+      "title": "Restore the site header (SiteHeader component) so it renders correctly on all public-facing pages (homepage, account page), including the sticky top navigation with logo, Account menu entry, and the click-to-call phone button using the configured phone number (9834587806).",
+      "reqIds": [
+        "REQ-68"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-restore-the-site-footer-sitefooter-component-so-it-renders-correctly-at-the-bottom-of-all-public-facing-pages-homepage-account-page-displaying-company-info-phone-number-9834587806-email-ceilingpro9-gmail-com-services-list-and-copyright",
+      "title": "Restore the site footer (SiteFooter component) so it renders correctly at the bottom of all public-facing pages (homepage, account page), displaying company info, phone number (9834587806), email (ceilingpro9@gmail.com), services list, and copyright.",
+      "reqIds": [
+        "REQ-69"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -644,6 +661,12 @@
       "reqIds": [
         "REQ-67"
       ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-62",
+      "summary": "Restore/add the site header and footer that were removed — ensure the public-facing header and footer render correctly on all pages",
+      "reqIds": [],
       "status": "pending"
     }
   ],

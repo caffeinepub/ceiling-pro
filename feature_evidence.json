@@ -2,10 +2,11 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-remove-any-remaining-access-gate-access-denied-screen-or-authorization-check-on-the-riyaz-route-so-that-visiting-riyaz-in-the-browser-always-renders-the-full-admin-dashboard-immediately-no-login-prompt-no-access-denied-message-no-token-required",
-      "featureTitle": "Remove any remaining access gate, access-denied screen, or authorization check on the /riyaz route so that visiting /riyaz in the browser always renders the full admin dashboard immediately — no login prompt, no 'access denied' message, no token required.",
+      "featureId": "feature-restore-the-site-header-siteheader-component-so-it-renders-correctly-on-all-public-facing-pages-homepage-account-page-including-the-sticky-top-navigation-with-logo-account-menu-entry-and-the-click-to-call-phone-button-using-the-configured-phone-number-9834587806",
+      "featureTitle": "Restore the site header (SiteHeader component) so it renders correctly on all public-facing pages (homepage, account page), including the sticky top navigation with logo, Account menu entry, and the click-to-call phone button using the configured phone number (9834587806).",
       "files": [
-        "frontend/src/pages/AdminPage.tsx"
+        "frontend/src/pages/AccountPage.tsx",
+        "frontend/src/pages/HomePage.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -17,24 +18,16 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-65"
+        "REQ-68"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-ensure-the-frontend-admin-actor-useadminactor-hook-initializes-correctly-for-anonymous-sessions-visiting-riyaz-so-that-all-admin-api-calls-list-bookings-update-service-rates-update-time-slots-update-image-paths-upload-images-succeed-without-requiring-internet-identity-login-or-any-url-token-parameter",
-      "featureTitle": "Ensure the frontend admin actor (useAdminActor hook) initializes correctly for anonymous sessions visiting /riyaz so that all admin API calls — list bookings, update service rates, update time slots, update image paths, upload images — succeed without requiring Internet Identity login or any URL token parameter.",
+      "featureId": "feature-restore-the-site-footer-sitefooter-component-so-it-renders-correctly-at-the-bottom-of-all-public-facing-pages-homepage-account-page-displaying-company-info-phone-number-9834587806-email-ceilingpro9-gmail-com-services-list-and-copyright",
+      "featureTitle": "Restore the site footer (SiteFooter component) so it renders correctly at the bottom of all public-facing pages (homepage, account page), displaying company info, phone number (9834587806), email (ceilingpro9@gmail.com), services list, and copyright.",
       "files": [
-        "frontend/src/components/admin/BookingsTable.tsx",
-        "frontend/src/components/admin/ImagesEditor.tsx",
-        "frontend/src/components/admin/ServiceRatesEditor.tsx",
-        "frontend/src/components/admin/TimeSlotsEditor.tsx",
-        "frontend/src/hooks/useAdminActor.ts",
-        "frontend/src/hooks/useBookings.ts",
-        "frontend/src/hooks/useImagePaths.ts",
-        "frontend/src/hooks/useImageUpload.ts",
-        "frontend/src/hooks/useServiceRates.ts",
-        "frontend/src/hooks/useTimeSlotAvailability.ts"
+        "frontend/src/pages/AccountPage.tsx",
+        "frontend/src/pages/HomePage.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -46,7 +39,7 @@
         "blob-storage@4.0.0"
       ],
       "testIds": [
-        "REQ-66"
+        "REQ-69"
       ],
       "confidence": "high"
     }

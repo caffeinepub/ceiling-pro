@@ -1,11 +1,10 @@
 # Specification
 
 ## Summary
-**Goal:** Remove all access restrictions from the `/riyaz` admin route so the full admin dashboard is always accessible without any login, token, or authorization check.
+**Goal:** Restore the site header and footer on all public-facing pages of the Ceiling Pro website.
 
 **Planned changes:**
-- Remove any access gate, access-denied screen, or authorization check on the `/riyaz` frontend route so `AdminPage.tsx` renders all four admin sections (Images Editor, Service Rates, Time Slots, Bookings Table) unconditionally.
-- Update the `useAdminActor` hook to initialize a working actor for anonymous sessions on `/riyaz`, enabling all admin API calls without Internet Identity login or URL token parameters.
-- Update the backend Motoko actor to allow anonymous callers to invoke admin-only methods (`listAllBookings`, `updateServiceRates`, `setTimeSlotAvailability`, `setImagePaths`, `uploadImage`) without authorization errors.
+- Re-add the SiteHeader component to the homepage (/) and account page (/account), displaying the logo/brand link, Account button, and click-to-call phone button (9834587806), sticky at the top, with the Admin entry hidden from public users.
+- Re-add the SiteFooter component to the homepage (/) and account page (/account), displaying company info, phone number (9834587806), email (ceilingpro9@gmail.com), services list, and copyright, without any GST label or placeholder.
 
-**User-visible outcome:** Visiting `/riyaz` in any browser immediately shows the full admin dashboard with all sections functional — no login prompt, no "access denied" message, and all admin operations (view bookings, update rates, manage time slots, edit images) work without authentication.
+**User-visible outcome:** Visitors to the homepage and account page will see the full header navigation at the top and the complete footer at the bottom on both mobile and desktop screen sizes.
