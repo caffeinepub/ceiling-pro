@@ -1,0 +1,77 @@
+{
+  "kind": "build_request",
+  "title": "Fix /riyaz admin full access — remove all access denied screens and ensure all admin API calls work without authentication",
+  "projectName": "Ceiling Pro",
+  "priority": "high",
+  "requirements": [
+    {
+      "id": "REQ-65",
+      "text": "Remove any remaining access gate, access-denied screen, or authorization check on the /riyaz route so that visiting /riyaz in the browser always renders the full admin dashboard immediately — no login prompt, no 'access denied' message, no token required.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Problem in admin access give me a full access Without any denied access Using/ riyaz"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Navigating to /riyaz in any browser renders the admin dashboard content (Images Editor, Service Rates, Time Slots, Bookings Table) without any gate screen.",
+        "No 'access denied', 'unauthorized', or login UI is displayed at /riyaz under any session state (anonymous, authenticated, or otherwise).",
+        "AdminPage.tsx renders all four admin sections unconditionally when the route is /riyaz."
+      ]
+    },
+    {
+      "id": "REQ-66",
+      "text": "Ensure the frontend admin actor (useAdminActor hook) initializes correctly for anonymous sessions visiting /riyaz so that all admin API calls — list bookings, update service rates, update time slots, update image paths, upload images — succeed without requiring Internet Identity login or any URL token parameter.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "give me a full access Without any denied access"
+        ]
+      },
+      "acceptanceCriteria": [
+        "The useAdminActor hook creates a working actor for anonymous callers on /riyaz.",
+        "Calling listAllBookings, updateServiceRates, updateTimeSlots, updateImagePaths, and uploadImage from the admin dashboard returns data/success without an authorization error.",
+        "The admin bookings table loads and displays customer bookings when accessed directly at /riyaz."
+      ]
+    },
+    {
+      "id": "REQ-67",
+      "text": "Update the backend Motoko actor so that admin-only methods (listAllBookings, updateServiceRates, setTimeSlotAvailability, setImagePaths, uploadImage) are callable by anonymous sessions when the hardcoded caffeineAdminToken secret has been initialized — or, if this is not sufficient, remove the authorization check on these methods entirely so the /riyaz dashboard has unconditional access.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "give me a full access Without any denied access"
+        ]
+      },
+      "acceptanceCriteria": [
+        "An anonymous caller can invoke listAllBookings and receive all stored booking records.",
+        "An anonymous caller can invoke updateServiceRates, setTimeSlotAvailability, setImagePaths, and uploadImage without receiving an #unauthorized or #accessDenied error.",
+        "Public customer-facing methods remain unaffected."
+      ]
+    }
+  ],
+  "constraints": [
+    "Do not add any login screen, password prompt, or Internet Identity gate to the /riyaz route.",
+    "Do not break public customer-facing routes (/, /account) or their functionality.",
+    "Immutable frontend paths (useInternetIdentity.ts, useActor.ts, main.tsx, src/components/ui) must not be modified."
+  ],
+  "nonGoals": [
+    "Adding new admin features beyond access fix.",
+    "Changing the /riyaz URL or route name.",
+    "Modifying customer-facing booking form or services sections.",
+    "Any email or notification integrations."
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}

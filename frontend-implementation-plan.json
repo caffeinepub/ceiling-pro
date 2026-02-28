@@ -1,0 +1,104 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Fix /riyaz admin full access — remove all access denied screens and ensure all admin API calls work without authentication",
+  "requirements": [
+    {
+      "id": "REQ-65",
+      "summary": "Remove any remaining access gate, access-denied screen, or authorization check on the /riyaz route so that visiting /riyaz renders the full admin dashboard immediately without any login prompt or access denied message",
+      "acceptanceCriteria": [
+        "Navigating to /riyaz in any browser renders the admin dashboard content (Images Editor, Service Rates, Time Slots, Bookings Table) without any gate screen.",
+        "No 'access denied', 'unauthorized', or login UI is displayed at /riyaz under any session state (anonymous, authenticated, or otherwise).",
+        "AdminPage.tsx renders all four admin sections unconditionally when the route is /riyaz."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/AdminPage.tsx",
+          "operation": "modify",
+          "description": "Remove any conditional rendering logic that might gate access to the admin dashboard. Ensure that all four admin sections (ImagesEditor, ServiceRatesEditor, TimeSlotsEditor, BookingsTable) render unconditionally without any authentication checks, role checks, or access gates. The component should render the full dashboard UI immediately when the /riyaz route is accessed."
+        },
+        {
+          "path": "frontend/src/components/auth/AdminAccessGate.tsx",
+          "operation": "delete",
+          "description": "Delete the empty AdminAccessGate component file to eliminate any potential access gating logic from the codebase."
+        },
+        {
+          "path": "frontend/src/components/auth/AdminLoginForm.tsx",
+          "operation": "delete",
+          "description": "Delete the empty AdminLoginForm component file to eliminate any potential login form UI from the codebase."
+        },
+        {
+          "path": "frontend/src/context/AdminAuthContext.tsx",
+          "operation": "delete",
+          "description": "Delete the empty AdminAuthContext file to eliminate any potential authentication context logic from the codebase."
+        },
+        {
+          "path": "frontend/src/hooks/useAdminAuth.ts",
+          "operation": "delete",
+          "description": "Delete the empty useAdminAuth hook file to eliminate any potential authentication hook logic from the codebase."
+        }
+      ]
+    },
+    {
+      "id": "REQ-66",
+      "summary": "Ensure the frontend admin actor (useAdminActor hook) initializes correctly for anonymous sessions visiting /riyaz so that all admin API calls succeed without requiring Internet Identity login or any URL token parameter",
+      "acceptanceCriteria": [
+        "The useAdminActor hook creates a working actor for anonymous callers on /riyaz.",
+        "Calling listAllBookings, updateServiceRates, updateTimeSlots, updateImagePaths, and uploadImage from the admin dashboard returns data/success without an authorization error.",
+        "The admin bookings table loads and displays customer bookings when accessed directly at /riyaz."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useAdminActor.ts",
+          "operation": "modify",
+          "description": "Review and ensure the useAdminActor hook creates an anonymous backend actor that is pre-initialized with the hardcoded 'caffeine' admin token. Verify that the actor initialization does not require Internet Identity authentication or any URL query parameters. Ensure the hook returns a working actor instance that can successfully call all admin backend methods (getAllBookings, updateServiceRates, updateTimeSlotAvailability, updateImagePaths, uploadImage) for anonymous sessions. If the current implementation has any authentication dependencies or token parameter requirements, remove them and ensure unconditional actor initialization for /riyaz access."
+        },
+        {
+          "path": "frontend/src/components/admin/BookingsTable.tsx",
+          "operation": "modify",
+          "description": "Review the BookingsTable component to ensure it uses the useAdminActor hook (or appropriate admin-enabled hook) to fetch all bookings via the getAllBookings backend method. Verify that the component does not have any authentication checks that would prevent loading bookings for anonymous sessions. Ensure the bookings data is fetched and displayed unconditionally when the component mounts on the /riyaz route, without requiring Internet Identity login or any special token parameters."
+        },
+        {
+          "path": "frontend/src/components/admin/ImagesEditor.tsx",
+          "operation": "modify",
+          "description": "Review the ImagesEditor component to ensure it uses the useAdminActor hook for all image management operations (fetching image paths, uploading images, updating image paths). Verify that the component does not have any authentication checks that would prevent image operations for anonymous sessions. Ensure all image operations work unconditionally when accessed on the /riyaz route, without requiring Internet Identity login or any special token parameters."
+        },
+        {
+          "path": "frontend/src/components/admin/ServiceRatesEditor.tsx",
+          "operation": "modify",
+          "description": "Review the ServiceRatesEditor component to ensure it uses the useAdminActor hook for fetching and updating service rates. Verify that the component does not have any authentication checks that would prevent service rate operations for anonymous sessions. Ensure all service rate operations work unconditionally when accessed on the /riyaz route, without requiring Internet Identity login or any special token parameters."
+        },
+        {
+          "path": "frontend/src/components/admin/TimeSlotsEditor.tsx",
+          "operation": "modify",
+          "description": "Review the TimeSlotsEditor component to ensure it uses the useAdminActor hook for fetching and updating time slot availability. Verify that the component does not have any authentication checks that would prevent time slot operations for anonymous sessions. Ensure all time slot operations work unconditionally when accessed on the /riyaz route, without requiring Internet Identity login or any special token parameters."
+        },
+        {
+          "path": "frontend/src/hooks/useBookings.ts",
+          "operation": "modify",
+          "description": "Review the useBookings hook to ensure the getAllBookings query function works correctly with the admin actor for anonymous sessions. Verify that there are no authentication checks or conditional logic that would prevent fetching all bookings when accessed from the /riyaz admin dashboard. Ensure the hook can successfully fetch and return all booking records for anonymous callers using the admin actor."
+        },
+        {
+          "path": "frontend/src/hooks/useImagePaths.ts",
+          "operation": "modify",
+          "description": "Review the useImagePaths hook to ensure both the fetch and update operations work correctly with the admin actor for anonymous sessions. Verify that there are no authentication checks or conditional logic that would prevent image path operations when accessed from the /riyaz admin dashboard. Ensure the hook can successfully fetch and update image paths for anonymous callers using the admin actor."
+        },
+        {
+          "path": "frontend/src/hooks/useImageUpload.ts",
+          "operation": "modify",
+          "description": "Review the useImageUpload hook to ensure the image upload mutation works correctly with the admin actor for anonymous sessions. Verify that there are no authentication checks or conditional logic that would prevent image uploads when accessed from the /riyaz admin dashboard. Ensure the hook can successfully upload images to backend blob storage for anonymous callers using the admin actor."
+        },
+        {
+          "path": "frontend/src/hooks/useServiceRates.ts",
+          "operation": "modify",
+          "description": "Review the useServiceRates hook to ensure both the fetch and update operations work correctly with the admin actor for anonymous sessions. Verify that there are no authentication checks or conditional logic that would prevent service rate operations when accessed from the /riyaz admin dashboard. Ensure the hook can successfully fetch and update service rates for anonymous callers using the admin actor."
+        },
+        {
+          "path": "frontend/src/hooks/useTimeSlotAvailability.ts",
+          "operation": "modify",
+          "description": "Review the useTimeSlotAvailability hook to ensure both the fetch and update operations work correctly with the admin actor for anonymous sessions. Verify that there are no authentication checks or conditional logic that would prevent time slot operations when accessed from the /riyaz admin dashboard. Ensure the hook can successfully fetch and update time slot availability for anonymous callers using the admin actor."
+        }
+      ]
+    }
+  ]
+}

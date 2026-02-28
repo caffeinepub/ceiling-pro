@@ -1,0 +1,654 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 41,
+  "summary": "Build a premium, ultra mobile-friendly service booking website for the interior services brand \"Ceiling Pro\" with mobile-first design, fixed daily time slots booking system, live estimate calculator, trust/content sections, updated contact numbers (phone + WhatsApp: 9834587806), an admin panel that is accessed directly via a custom hidden URL (/riyaz) without a password login, ability for admin to edit website images, removal of GST column/placeholder, and a customer account area where customers can view their own bookings via a service menu bar.",
+  "architectural_notes": [
+    "Email notifications for bookings were explicitly removed; backend should not attempt to send admin emails (placeholder optional).",
+    "Booking time slots are limited to 4 fixed options per day, with admin ability to enable/disable slots.",
+    "Use phone number 9834587806 for click-to-call and WhatsApp CTAs across the site.",
+    "Remove GST field/column/placeholder from all customer-facing UI sections.",
+    "Admin panel should be accessible directly via the custom route /riyaz with no password-based login; keep the route unlinked/hidden from public pages (security by obscurity).",
+    "Current admin Images section only supports editing image URLs/paths; add true file upload capability in the admin panel so uploaded images can be stored and then referenced by the public site.",
+    "Support Google Search Console verification by hosting a static verification HTML file at the exact root path provided by Google (e.g., /googlea0b8f9f5757853f9.html).",
+    "Support Google Search Console verification via a homepage <head> meta tag when provided (in addition to or instead of serving a static root HTML verification file).",
+    "Google Ads tracking via gtag.js should use ID AW-17969512168 (updated from AW-17968689708)."
+  ],
+  "known_issues": [
+    "Customer bookings are not appearing in the admin dashboard (booking records not received/listed).",
+    "Admin panel access at /riyaz is showing “denied/unauthorized”; user requests full direct access with no access-denied screen.",
+    "Google Search Console verification file (googlea0b8f9f5757853f9.html) is not currently served at the site root, preventing Search Console registration/verification.",
+    "Service image system is not working properly (user reported issue with the Our Services section images or admin image upload/rendering for service cards).",
+    "Time slot selection system has a reported bug (exact issue unspecified); user requested a fix."
+  ],
+  "isFixRequest": true,
+  "existing_features": [
+    {
+      "id": "feature-build-a-mobile-first-premium-marketing-website-for-the-interior-services-brand-ceiling-pro-with-a-clean-white-natural-look-fresh-white-background-soft-light-grey-sections-light-beige-soft-natural-green-accents-elegant-modern-sans-serif-typography-spacious-layout-with-lots-of-white-space-smooth-scroll-section-reveal-animations-and-fast-loading-responsive-layout-optimized-for-smartphones",
+      "title": "Build a mobile-first, premium marketing website for the interior services brand “Ceiling Pro” with a clean white/natural look: fresh white background, soft light-grey sections, light beige + soft natural green accents, elegant modern sans-serif typography, spacious layout with lots of white space, smooth scroll/section reveal animations, and fast-loading responsive layout optimized for smartphones.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-the-homepage-hero-section-with-a-bright-modern-ceiling-interior-background-image-headline-affordable-premium-false-ceiling-services-subheadline-starting-at-65-per-sq-ft-book-expert-consultation-online-and-two-cta-buttons-book-consultation-opens-scrolls-to-booking-form-and-call-now-click-to-call",
+      "title": "Implement the homepage hero section with a bright modern ceiling interior background image, headline “Affordable & Premium False Ceiling Services”, subheadline “Starting at ₹65 per sq.ft – Book Expert Consultation Online”, and two CTA buttons: “Book Consultation” (opens/scrolls to booking form) and “Call Now” (click-to-call).",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-services-section-that-displays-exactly-4-service-cards-with-soft-shadow-each-containing-an-icon-short-description-starting-price-or-inspection-based-text-and-a-book-now-button-that-leads-to-the-booking-form-with-that-service-preselected",
+      "title": "Add a services section that displays exactly 4 service cards with soft shadow, each containing an icon, short description, starting price (or inspection-based text), and a “Book Now” button that leads to the booking form with that service preselected.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-how-it-works-section-showing-a-simple-3-step-process-with-icons-1-book-your-slot-online-2-site-visit-final-estimate-3-professional-installation-clean-finish",
+      "title": "Add a “How it works” section showing a simple 3-step process with icons: (1) Book Your Slot Online, (2) Site Visit & Final Estimate, (3) Professional Installation & Clean Finish.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-booking-system-ui-section-with-a-booking-form-containing-fields-full-name-mobile-number-location-property-type-flat-office-shop-select-service-4-services-select-date-calendar-select-time-slot-restricted-to-10-00-am-1-00-pm-4-00-pm-7-00-pm-and-only-those-enabled-enter-area-in-square-feet-and-submit-after-submission-show-an-on-page-confirmation-message",
+      "title": "Implement a booking system UI section with a booking form containing fields: Full Name, Mobile Number, Location, Property Type (Flat/Office/Shop), Select Service (4 services), Select Date (calendar), Select Time Slot (restricted to 10:00 AM, 1:00 PM, 4:00 PM, 7:00 PM and only those enabled), Enter Area in Square Feet, and Submit. After submission, show an on-page confirmation message.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-an-admin-panel-ui-that-allows-viewing-all-bookings-in-a-table-with-sorting-by-created-date-editing-the-4-service-rates-enabling-disabling-each-of-the-4-fixed-time-slots-and-exporting-the-booking-list-to-a-downloadable-csv-file",
+      "title": "Build an admin panel UI that allows: viewing all bookings in a table (with sorting by created date), editing the 4 service rates, enabling/disabling each of the 4 fixed time slots, and exporting the booking list to a downloadable CSV file.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-live-estimate-calculator-section-with-inputs-area-in-square-feet-and-select-service-compute-estimated-cost-as-area-service-rate-for-pop-gypsum-65-default-pvc-110-default-wall-molding-100-default-for-gypsum-repair-show-the-message-final-estimate-after-inspection-update-the-result-instantly-without-page-reload",
+      "title": "Add a live estimate calculator section with inputs: Area in Square Feet and Select Service. Compute estimated cost as Area × Service Rate for POP & Gypsum (₹65 default), PVC (₹110 default), Wall Molding (₹100 default); for Gypsum Repair show the message “Final estimate after inspection”. Update the result instantly without page reload.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-trust-content-sections-why-choose-ceiling-pro-affordable-skilled-experts-on-time-delivery-a-before-after-gallery-a-customer-reviews-section-a-contact-section-and-a-clean-footer-containing-phone-number-email-and-a-gst-placeholder",
+      "title": "Add trust/content sections: “Why Choose Ceiling Pro” (Affordable, Skilled Experts, On-Time Delivery), a Before & After gallery, a Customer Reviews section, a Contact section, and a clean footer containing phone number, email, and a GST placeholder.",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-mobile-conversion-ui-elements-a-sticky-bottom-book-consultation-button-on-mobile-a-floating-whatsapp-button-and-a-header-click-to-call-button",
+      "title": "Implement mobile conversion UI elements: a sticky bottom “Book Consultation” button on mobile, a floating WhatsApp button, and a header click-to-call button.",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-on-page-seo-basics-for-the-homepage-sections-descriptive-title-description-meta-tags-semantic-headings-and-content-targeting-the-keywords-pop-false-ceiling-pvc-ceiling-installation-wall-molding-services-gypsum-ceiling-repair",
+      "title": "Apply on-page SEO basics for the homepage/sections: descriptive title/description meta tags, semantic headings, and content targeting the keywords: “POP false ceiling”, “PVC ceiling installation”, “Wall molding services”, “Gypsum ceiling repair”.",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-omit-the-send-booking-details-to-admin-email-requirement-entirely-and-ensure-no-email-sending-code-paths-ui-or-configuration-are-included-in-the-build",
+      "title": "Remove/omit the ‘send booking details to admin email’ requirement entirely and ensure no email-sending code paths, UI, or configuration are included in the build.",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-generated-static-images-to-the-project-and-render-them-in-the-ui-from-frontend-public-assets-generated-do-not-serve-images-via-the-backend",
+      "title": "Add generated static images to the project and render them in the UI from frontend/public/assets/generated (do not serve images via the backend).",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-hide-the-admin-ui-entry-points-from-public-customers-by-removing-the-visible-admin-navigation-link-button-from-the-site-header-on-all-screen-sizes",
+      "title": "Hide the Admin UI entry points from public customers by removing the visible “Admin” navigation link/button from the site header on all screen sizes.",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-require-internet-identity-authentication-owner-only-authorization-to-access-the-admin-route-and-show-a-clear-access-screen-when-unauthorized-login-prompt-if-not-logged-in-access-denied-if-logged-in-but-not-the-owner",
+      "title": "Require Internet Identity authentication + owner-only authorization to access the /admin route, and show a clear access screen when unauthorized (login prompt if not logged in; access denied if logged in but not the owner).",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-service-images-to-the-our-services-section-by-updating-the-service-data-model-to-include-an-image-path-per-service-and-rendering-each-service-card-with-its-corresponding-service-image-while-keeping-current-service-name-description-and-price-text",
+      "title": "Add service images to the “Our Services” section by updating the service data model to include an image path per service and rendering each service card with its corresponding service image (while keeping current service name, description, and price text).",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-all-public-contact-ctas-to-use-phone-number-9834587806-and-whatsapp-contact-9834587806-header-click-to-call-hero-call-button-contact-section-phone-link-footer-phone-text-and-floating-whatsapp-button",
+      "title": "Update all public contact CTAs to use phone number 9834587806 and WhatsApp contact 9834587806 (header click-to-call, hero call button, contact section phone link, footer phone text, and floating WhatsApp button).",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-gst-from-the-customer-facing-website-ui-and-configuration-so-no-gst-label-value-placeholder-is-displayed-anywhere",
+      "title": "Remove GST from the customer-facing website UI and configuration so no GST label/value/placeholder is displayed anywhere.",
+      "reqIds": [
+        "REQ-19"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-owner-only-admin-dashboard-feature-to-manage-website-image-paths-used-by-the-marketing-site-at-minimum-hero-background-image-the-4-service-card-images-and-the-before-after-gallery-images-admin-must-be-able-to-update-these-image-paths-from-the-dashboard-and-the-public-site-must-render-using-the-saved-values",
+      "title": "Add an owner-only Admin Dashboard feature to manage website image paths used by the marketing site (at minimum: hero background image, the 4 service card images, and the before/after gallery images). Admin must be able to update these image paths from the dashboard, and the public site must render using the saved values.",
+      "reqIds": [
+        "REQ-20"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-customer-account-area-where-customers-can-sign-in-and-view-only-their-own-bookings-and-add-a-service-menu-bar-in-the-site-header-that-includes-an-account-entry-for-this-area-keep-the-admin-entry-hidden-from-public-users-as-currently-required",
+      "title": "Implement a customer account area where customers can sign in and view only their own bookings, and add a service menu bar in the site header that includes an “Account” entry for this area (keep the Admin entry hidden from public users as currently required).",
+      "reqIds": [
+        "REQ-21"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-the-current-internet-identity-based-admin-access-control-with-a-username-password-login-flow-for-the-admin-route-because-the-admin-cannot-be-granted-internet-identity-owner-access",
+      "title": "Replace the current Internet Identity–based admin access control with a username/password login flow for the /admin route, because the admin cannot be granted Internet Identity owner access.",
+      "reqIds": [
+        "REQ-23"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-admin-frontend-access-gate-to-use-the-new-username-password-login-ui-instead-of-internet-identity-and-wire-it-to-the-backend-login-logout-session-check-endpoints-so-that-admin-pages-images-editor-service-rates-time-slots-bookings-table-render-only-when-logged-in",
+      "title": "Update the /admin frontend access gate to use the new username/password login UI instead of Internet Identity, and wire it to the backend login/logout/session-check endpoints so that admin pages (images editor, service rates, time slots, bookings table) render only when logged in.",
+      "reqIds": [
+        "REQ-25"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-change-the-public-contact-email-displayed-across-the-website-to-ceilingpro9-gmail-com-by-updating-the-shared-contact-configuration-and-ensuring-all-ui-that-renders-email-at-minimum-contact-section-and-footer-reflects-the-new-value",
+      "title": "Change the public contact email displayed across the website to \"ceilingpro9@gmail.com\" by updating the shared contact configuration and ensuring all UI that renders email (at minimum: Contact section and Footer) reflects the new value.",
+      "reqIds": [
+        "REQ-27"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-restore-insert-the-previous-images-for-the-4-service-cards-in-the-our-services-section-by-switching-the-service-card-image-paths-back-to-the-prior-set-used-by-the-project-e-g-the-images-service-jpg-style-paths-so-that-the-services-section-shows-those-previous-images-again",
+      "title": "Restore/insert the previous images for the 4 service cards in the \"Our Services\" section by switching the service card image paths back to the prior set used by the project (e.g., the /images/service*.jpg style paths) so that the Services section shows those previous images again.",
+      "reqIds": [
+        "REQ-28"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-adjust-the-frontend-admin-auth-flow-to-verify-backend-session-state-after-login-and-to-handle-session-validation-consistently-so-the-ui-does-not-show-a-logged-in-admin-state-unless-isadminuser-confirms-it",
+      "title": "Adjust the frontend admin auth flow to verify backend session state after login and to handle session validation consistently (so the UI does not show a logged-in admin state unless `isAdminUser()` confirms it).",
+      "reqIds": [
+        "REQ-31"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-change-the-admin-dashboard-route-from-admin-to-riyaz-so-the-admin-panel-is-accessible-by-directly-visiting-riyaz-in-the-browser",
+      "title": "Change the admin dashboard route from `/admin` to `/riyaz` so the admin panel is accessible by directly visiting `/riyaz` in the browser.",
+      "reqIds": [
+        "REQ-32"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-the-admin-username-password-login-gate-so-the-admin-dashboard-does-not-show-a-login-screen-and-does-not-require-any-credentials-direct-access",
+      "title": "Remove the admin username/password login gate so the admin dashboard does not show a login screen and does not require any credentials (direct access).",
+      "reqIds": [
+        "REQ-33"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-riyaz-admin-images-editor-ui-to-support-real-file-uploads-for-1-hero-background-image-2-each-of-the-4-service-card-images-and-3-adding-one-or-multiple-gallery-images-so-the-admin-can-upload-files-instead-of-manually-typing-image-paths",
+      "title": "Update the /riyaz admin Images editor UI to support real file uploads for: (1) Hero background image, (2) each of the 4 service card images, and (3) adding one or multiple gallery images, so the admin can upload files instead of manually typing image paths.",
+      "reqIds": [
+        "REQ-37"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-integrate-the-new-upload-flow-with-the-existing-image-path-saving-flow-so-that-uploaded-images-can-be-immediately-used-by-the-public-marketing-site-services-section-images-and-before-after-gallery-after-clicking-save-in-the-admin-panel",
+      "title": "Integrate the new upload flow with the existing image path saving flow so that uploaded images can be immediately used by the public marketing site (Services section images and Before & After gallery) after clicking Save in the admin panel.",
+      "reqIds": [
+        "REQ-38"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-frontend-image-upload-hooks-used-by-the-riyaz-images-editor-so-that-uploading-a-service-card-image-calls-the-backend-upload-api-and-uses-the-returned-url-path-instead-of-generating-a-base64-data-url-in-the-browser",
+      "title": "Update the frontend image upload hooks used by the /riyaz Images editor so that uploading a service-card image calls the backend upload API and uses the returned URL/path (instead of generating a base64 data URL in the browser).",
+      "reqIds": [
+        "REQ-40"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-public-our-services-section-reliably-renders-the-uploaded-service-card-images-from-saved-image-paths-and-provides-a-graceful-fallback-if-an-uploaded-image-fails-to-load",
+      "title": "Ensure the public “Our Services” section reliably renders the uploaded service-card images from saved image paths and provides a graceful fallback if an uploaded image fails to load.",
+      "reqIds": [
+        "REQ-41"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-the-admin-bookings-list-so-that-customer-bookings-reliably-appear-in-the-riyaz-admin-dashboard-when-a-booking-is-submitted-from-the-public-booking-form",
+      "title": "Fix the admin bookings list so that customer bookings reliably appear in the /riyaz admin dashboard when a booking is submitted from the public booking form.",
+      "reqIds": [
+        "REQ-42"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-riyaz-admin-dashboard-can-successfully-call-the-backend-method-that-lists-all-bookings-under-the-current-project-s-direct-access-no-login-admin-model-by-making-access-control-initialization-work-for-anonymous-sessions-as-well-e-g-via-the-existing-secret-parameter-flow",
+      "title": "Ensure the /riyaz admin dashboard can successfully call the backend method that lists all bookings under the current project’s “direct access / no login” admin model by making access control initialization work for anonymous sessions as well (e.g., via the existing secret parameter flow).",
+      "reqIds": [
+        "REQ-43"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-improve-admin-bookings-fetching-ux-add-explicit-loading-empty-and-error-states-for-the-bookings-query-used-by-the-admin-bookingstable-so-failures-are-visible-and-debuggable-in-production",
+      "title": "Improve admin bookings fetching UX: add explicit loading, empty, and error states for the bookings query used by the admin BookingsTable so failures are visible and debuggable in production.",
+      "reqIds": [
+        "REQ-44"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-the-riyaz-admin-dashboard-so-it-can-list-all-customer-bookings-without-showing-an-unauthorized-error-when-accessed-via-the-project-s-direct-access-token-model-caffeineadmintoken",
+      "title": "Fix the /riyaz Admin Dashboard so it can list all customer bookings without showing an unauthorized error when accessed via the project’s direct-access token model (caffeineAdminToken).",
+      "reqIds": [
+        "REQ-45"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-frontend-actor-initialization-so-that-access-control-secret-initialization-runs-for-anonymous-sessions-as-well-not-only-internet-identity-sessions-using-the-existing-secret-parameter-flow-caffeineadmintoken",
+      "title": "Update frontend actor initialization so that access control secret initialization runs for anonymous sessions as well (not only Internet Identity sessions), using the existing secret parameter flow (`caffeineAdminToken`).",
+      "reqIds": [
+        "REQ-46"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-admin-bookings-list-ux-clearly-distinguishes-between-a-truly-empty-bookings-and-b-authorization-configuration-failures-and-keeps-the-existing-explicit-loading-empty-error-states-visible-on-mobile",
+      "title": "Ensure the admin bookings list UX clearly distinguishes between (a) truly empty bookings and (b) authorization/configuration failures, and keeps the existing explicit loading/empty/error states visible on mobile.",
+      "reqIds": [
+        "REQ-47"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-the-token-based-access-gate-ui-from-the-riyaz-admin-dashboard-so-visiting-riyaz-never-shows-an-admin-access-denied-screen-and-the-admin-dashboard-content-always-renders",
+      "title": "Remove the token-based access gate UI from the /riyaz admin dashboard so visiting /riyaz never shows an “Admin access denied” screen and the admin dashboard content always renders.",
+      "reqIds": [
+        "REQ-48"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-frontend-initializes-admin-access-control-for-anonymous-sessions-when-visiting-riyaz-so-admin-api-calls-list-bookings-update-service-rates-update-time-slots-update-image-paths-upload-images-succeed-without-requiring-internet-identity-login-or-any-url-token-parameter",
+      "title": "Ensure the frontend initializes admin access control for anonymous sessions when visiting /riyaz, so admin API calls (list bookings, update service rates, update time slots, update image paths, upload images) succeed without requiring Internet Identity login or any URL token parameter.",
+      "reqIds": [
+        "REQ-49"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-serve-the-google-search-console-verification-file-at-the-website-root-path-by-adding-a-static-file-named-exactly-googlea0b8f9f5757853f9-html-to-the-frontend-s-public-root-so-it-is-accessible-at-https-ceiling-pro-fzq-caffeine-xyz-googlea0b8f9f5757853f9-html",
+      "title": "Serve the Google Search Console verification file at the website root path by adding a static file named exactly `googlea0b8f9f5757853f9.html` to the frontend’s public root so it is accessible at `https://ceiling-pro-fzq.caffeine.xyz/googlea0b8f9f5757853f9.html`.",
+      "reqIds": [
+        "REQ-51"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-the-google-search-console-verification-meta-tag-meta-name-google-site-verification-content-15j7ob7hhlw85xvsyyizgennbdtihowsxzec6klqtse-to-the-homepage-html-head-in-frontend-index-html-placed-before-the-opening-body-tag",
+      "title": "Add the Google Search Console verification meta tag `<meta name=\"google-site-verification\" content=\"15J7ob7hHLW85xVSYyIZGEnNbDTIHOwSxzEC6kLqtsE\" />` to the homepage HTML `<head>` (in `frontend/index.html`), placed before the opening `<body>` tag.",
+      "reqIds": [
+        "REQ-52"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-debug-and-fix-the-service-card-image-rendering-in-the-public-our-services-section-so-that-uploaded-service-images-reliably-display-without-broken-image-links-or-fallback-placeholders-when-valid-image-paths-are-saved-in-backend-storage",
+      "title": "Debug and fix the service card image rendering in the public 'Our Services' section so that uploaded service images reliably display without broken image links or fallback placeholders when valid image paths are saved in backend storage.",
+      "reqIds": [
+        "REQ-53"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-the-riyaz-admin-images-editor-upload-flow-for-service-card-images-so-that-a-file-uploads-successfully-call-the-backend-upload-api-b-the-returned-url-path-is-stored-in-the-service-image-paths-configuration-and-c-uploaded-images-are-immediately-usable-by-the-public-site-after-clicking-save",
+      "title": "Fix the /riyaz admin Images editor upload flow for service card images so that: (a) file uploads successfully call the backend upload API, (b) the returned URL/path is stored in the service image paths configuration, and (c) uploaded images are immediately usable by the public site after clicking Save.",
+      "reqIds": [
+        "REQ-54"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-error-handling-and-user-feedback-to-the-riyaz-admin-images-editor-service-card-upload-flow-so-that-upload-failures-network-errors-or-invalid-image-files-display-clear-error-messages-to-the-admin-instead-of-silently-failing-or-showing-broken-images",
+      "title": "Add error handling and user feedback to the /riyaz admin Images editor service card upload flow so that upload failures, network errors, or invalid image files display clear error messages to the admin (instead of silently failing or showing broken images).",
+      "reqIds": [
+        "REQ-56"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-public-our-services-section-has-a-robust-fallback-mechanism-that-displays-a-placeholder-or-default-image-when-a-service-card-image-path-is-empty-invalid-or-fails-to-load-instead-of-showing-broken-image-icons",
+      "title": "Ensure the public 'Our Services' section has a robust fallback mechanism that displays a placeholder or default image when a service card image path is empty, invalid, or fails to load (instead of showing broken image icons).",
+      "reqIds": [
+        "REQ-57"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-the-google-ads-tracking-tag-gtag-js-to-the-website-s-html-head-section-in-frontend-index-html-by-inserting-the-following-script-block-before-the-closing-head-tag-html-google-tag-gtag-js-script-async-src-https-www-googletagmanager-com-gtag-js-id-aw-17968689708-script-script-window-datalayer-window-datalayer-function-gtag-datalayer-push-arguments-gtag-js-new-date-gtag-config-aw-17968689708-script-ensure-the-script-loads-asynchronously-and-initializes-the-google-ads-conversion-tracking-with-id-aw-17968689708",
+      "title": "Add the Google Ads tracking tag (gtag.js) to the website's HTML <head> section in frontend/index.html by inserting the following script block before the closing </head> tag:\n\n```html\n<!-- Google tag (gtag.js) -->\n<script async src=\"https://www.googletagmanager.com/gtag/js?id=AW-17968689708\"></script>\n<script>\n  window.dataLayer = window.dataLayer || [];\n  function gtag(){dataLayer.push(arguments);}\n  gtag('js', new Date());\n  gtag('config', 'AW-17968689708');\n</script>\n```\n\nEnsure the script loads asynchronously and initializes the Google Ads conversion tracking with ID AW-17968689708.",
+      "reqIds": [
+        "REQ-58"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-the-existing-google-ads-tracking-tag-in-frontend-index-html-with-the-new-tracking-code-update-the-gtag-js-script-src-from-https-www-googletagmanager-com-gtag-js-id-aw-17968689708-to-https-www-googletagmanager-com-gtag-js-id-aw-17969512168-and-update-the-gtag-config-aw-17968689708-call-to-gtag-config-aw-17969512168-the-complete-replacement-script-block-is-google-tag-gtag-js-script-async-src-https-www-googletagmanager-com-gtag-js-id-aw-17969512168-script-script-window-datalayer-window-datalayer-function-gtag-datalayer-push-arguments-gtag-js-new-date-gtag-config-aw-17969512168-script-keep-the-script-placement-in-the-head-section-before-the-closing-head-tag-maintaining-async-loading",
+      "title": "Replace the existing Google Ads tracking tag in frontend/index.html with the new tracking code. Update the gtag.js script src from 'https://www.googletagmanager.com/gtag/js?id=AW-17968689708' to 'https://www.googletagmanager.com/gtag/js?id=AW-17969512168', and update the gtag('config', 'AW-17968689708') call to gtag('config', 'AW-17969512168'). The complete replacement script block is:\n\n<!-- Google tag (gtag.js) -->\n<script async src=\"https://www.googletagmanager.com/gtag/js?id=AW-17969512168\"></script>\n<script>\n  window.dataLayer = window.dataLayer || [];\n  function gtag(){dataLayer.push(arguments);}\n  gtag('js', new Date());\n  gtag('config', 'AW-17969512168');\n</script>\n\nKeep the script placement in the <head> section before the closing </head> tag, maintaining async loading.",
+      "reqIds": [
+        "REQ-59"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-after-a-customer-successfully-submits-the-booking-form-display-a-browser-native-toast-notification-using-the-web-notifications-api-if-permission-is-granted-that-says-booking-confirmed-we-will-contact-you-shortly-at-mobile-number-if-the-user-has-not-granted-notification-permission-request-permission-at-the-moment-of-booking-submission-if-permission-is-denied-or-unavailable-fall-back-to-the-existing-on-page-confirmation-message-only-no-error-shown-to-user",
+      "title": "After a customer successfully submits the booking form, display a browser-native toast/notification using the Web Notifications API (if permission is granted) that says 'Booking Confirmed! We will contact you shortly at [mobile number].' If the user has not granted notification permission, request permission at the moment of booking submission. If permission is denied or unavailable, fall back to the existing on-page confirmation message only (no error shown to user).",
+      "reqIds": [
+        "REQ-60"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-the-enter-area-in-square-feet-input-field-from-the-customer-facing-booking-form-in-bookingsection-tsx-the-field-should-no-longer-be-rendered-in-the-ui-and-form-submission-should-work-without-it",
+      "title": "Remove the 'Enter Area in Square Feet' input field from the customer-facing booking form in BookingSection.tsx. The field should no longer be rendered in the UI, and form submission should work without it.",
+      "reqIds": [
+        "REQ-61"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-the-area-field-validation-from-bookingvalidation-ts-so-that-missing-or-empty-area-no-longer-causes-a-validation-error-when-submitting-the-booking-form",
+      "title": "Remove the 'area' field validation from bookingValidation.ts so that missing or empty area no longer causes a validation error when submitting the booking form.",
+      "reqIds": [
+        "REQ-62"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-if-the-admin-bookingstable-in-bookingstable-tsx-displays-an-area-column-remove-or-hide-it-so-the-table-does-not-show-broken-or-always-empty-area-data-after-the-field-is-removed-from-the-booking-form",
+      "title": "If the admin BookingsTable in BookingsTable.tsx displays an 'Area' column, remove or hide it so the table does not show broken or always-empty area data after the field is removed from the booking form.",
+      "reqIds": [
+        "REQ-64"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-any-remaining-access-gate-access-denied-screen-or-authorization-check-on-the-riyaz-route-so-that-visiting-riyaz-in-the-browser-always-renders-the-full-admin-dashboard-immediately-no-login-prompt-no-access-denied-message-no-token-required",
+      "title": "Remove any remaining access gate, access-denied screen, or authorization check on the /riyaz route so that visiting /riyaz in the browser always renders the full admin dashboard immediately — no login prompt, no 'access denied' message, no token required.",
+      "reqIds": [
+        "REQ-65"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-the-frontend-admin-actor-useadminactor-hook-initializes-correctly-for-anonymous-sessions-visiting-riyaz-so-that-all-admin-api-calls-list-bookings-update-service-rates-update-time-slots-update-image-paths-upload-images-succeed-without-requiring-internet-identity-login-or-any-url-token-parameter",
+      "title": "Ensure the frontend admin actor (useAdminActor hook) initializes correctly for anonymous sessions visiting /riyaz so that all admin API calls — list bookings, update service rates, update time slots, update image paths, upload images — succeed without requiring Internet Identity login or any URL token parameter.",
+      "reqIds": [
+        "REQ-66"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Mobile-first premium marketing website UI for Ceiling Pro (hero, services, how-it-works, trust sections, contact, footer) with sticky mobile CTA + WhatsApp floating button + click-to-call header",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Booking system with 4 fixed daily time slots, booking form fields, confirmation message, and booking storage for admin dashboard (no email notifications)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Admin panel to view bookings, edit service pricing, enable/disable time slots, and export booking list",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Live estimate calculator (area x service rate; gypsum repair shows inspection message) with instant update without page reload",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "SEO optimization targeting specified keywords for services pages/sections",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Before & After gallery and customer reviews sections",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-12",
+      "summary": "Create backend persistence and APIs for: (a) creating a booking record, (b) listing all bookings for the admin dashboard, (c) editing service pricing, and (d) enabling/disabling each of the 4 daily time slots (global setting).",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-14",
+      "summary": "Update Services section to use service images (in addition to or replacing icons) for the 4 service cards",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-18",
+      "summary": "Admin dashboard feature to edit/manage website images (update service/website images from admin UI)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-19",
+      "summary": "Remove GST column/placeholder from the website UI (footer and any contact details sections)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-20",
+      "summary": "Update public contact CTAs to use phone number 9834587806 and WhatsApp contact 9834587806",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-21",
+      "summary": "Add a customer account area and service menu bar where customers can sign in and view their own booking(s)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-26",
+      "summary": "Associate bookings with an authenticated customer identity when available so that “My Bookings” can be computed reliably. If the booking is created by an authenticated user, persist the owner principal on the booking and use it for filtering in the customer account view.",
+      "reqIds": [
+        "REQ-22"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-31",
+      "summary": "Update public site contact email to ceilingpro9@gmail.com wherever email is displayed (contact section/footer/etc.)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-32",
+      "summary": "Restore/insert the previous images in the Services section (revert service card images to the prior set)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-36",
+      "summary": "Remove the admin password login system and move the admin panel route from /admin to a custom hidden URL (/riyaz) for direct access (no login screen)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-39",
+      "summary": "Remove the backend admin login/password mechanism and admin-session-based authorization checks that currently block admin APIs, so admin dashboard actions work without logging in.",
+      "reqIds": [
+        "REQ-34"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-40",
+      "summary": "Add real image file upload in the /riyaz admin panel (e.g., upload button for gallery and service images) so admins can upload files instead of only entering image URLs/paths",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-41",
+      "summary": "Add backend support for storing uploaded image files inside the existing Motoko canister and returning a stable, directly usable image URL/path that the frontend can place into `imagePaths` (hero image, 4 service card images, and before/after gallery images).",
+      "reqIds": [
+        "REQ-35"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-42",
+      "summary": "Expose uploaded images over HTTP so that paths/URLs returned by the backend upload method can be used as `<img src>` values by the React frontend (including anonymous/public users).",
+      "reqIds": [
+        "REQ-36"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-43",
+      "summary": "Implement a real backend image upload API backed by the existing blob-storage mixin so that uploaded service-card images can be stored in the canister and referenced by a stable URL/path usable as an <img src> value.",
+      "reqIds": [
+        "REQ-39"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-46",
+      "summary": "Update backend authorization behavior (if needed) so that admin-only backend methods used by the /riyaz dashboard can be called successfully after secret-based initialization even when the caller is an anonymous session (no Internet Identity).",
+      "reqIds": [
+        "REQ-50"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-47",
+      "summary": "Add Google Search Console verification support by serving the provided verification HTML file at site root (google-site-verification: googlea0b8f9f5757853f9.html) so Search Console ownership verification succeeds",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-48",
+      "summary": "Add Google Search Console verification meta tag to the homepage <head>: <meta name=\"google-site-verification\" content=\"15J7ob7hHLW85xVSYyIZGEnNbDTIHOwSxzEC6kLqtsE\" />",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-51",
+      "summary": "Verify that the backend image upload API (used by the service card upload flow) correctly stores uploaded image files as blobs in canister storage and returns stable, directly usable HTTP URLs/paths that can be used as <img src> values by the frontend.",
+      "reqIds": [
+        "REQ-55"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-52",
+      "summary": "Add Google Ads tracking tag (gtag.js with ID AW-17968689708) to the website's <head> section",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-53",
+      "summary": "Update the Google Ads tracking tag in the website's <head> section from ID AW-17968689708 to ID AW-17969512168",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-54",
+      "summary": "Add a free notification mechanism when a customer submits a booking (e.g., browser push notification, WhatsApp message via free tier, or Telegram bot notification to admin)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-55",
+      "summary": "Remove the 'Area in Square Feet' input field from the customer-facing booking form",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-58",
+      "summary": "Update the backend Motoko booking data model and createBooking method to make the area field optional (or remove it entirely) so that bookings submitted without an area value are accepted and stored correctly.",
+      "reqIds": [
+        "REQ-63"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-61",
+      "summary": "Update the backend Motoko actor so that admin-only methods (listAllBookings, updateServiceRates, setTimeSlotAvailability, setImagePaths, uploadImage) are callable by anonymous sessions when the hardcoded caffeineAdminToken secret has been initialized — or, if this is not sufficient, remove the authorization check on these methods entirely so the /riyaz dashboard has unconditional access.",
+      "reqIds": [
+        "REQ-67"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Ceiling Pro",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}
